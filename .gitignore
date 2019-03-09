@@ -1,0 +1,5 @@
+.DS_Store
+
+src/*
+!src/Dockerfile
+!src/docker-entrypoint.sh
