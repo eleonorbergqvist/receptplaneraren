@@ -11,12 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
-Route::get('{view}', function ($view) {
+Route::get('{view}', function () {
     return file_get_contents(public_path("index.html"));
 })->where('view', '.*');
 
