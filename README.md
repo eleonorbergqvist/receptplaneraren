@@ -16,5 +16,8 @@ This is a app scaffolder for laravel with docker support and react activated by 
 - Now open [localhost:8000](localhost:8000)
 - Done!
 
+## References
+- https://laravel.com/docs/5.8/http-tests
+
 ## License
 MIT
