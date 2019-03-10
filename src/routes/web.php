@@ -17,6 +17,6 @@ Route::get('/', function () {
 
 
 Route::get('{view}', function ($view) {
-    return view('app');
+    return file_get_contents(public_path("index.html"));
 })->where('view', '.*');
 
