@@ -1,7 +1,7 @@
 version: '3'
 services: 
   web: 
-    image: eleonorebergqvist/laravel-docker-scaffold
+    image: eleonorebergqvist/receptplaneraren
     build: src
     tty: true
     volumes:
