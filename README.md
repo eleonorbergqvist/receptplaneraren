@@ -1,18 +1,20 @@
-# Laravel-Docker-Scaffold
+# Receptplaneraren
 
-This is a app scaffolder for laravel with docker support and react activated by default.
+This is a recipe app.
 
 ## Features
 - MySQL
 - Auto migrations on startup
 - React activated by default
 - Local dev server (with `php artisan serve`)
+- A SPA built in create-react-app and typescript
 
-## Usage
-- Make sure you have docker installed
-- Open this repo
+## Installing
+- `cd frontend`
+- `npm install`
+- `npm run build`
+- `cd -`
 - Run `docker-compose up`
-- ...Wait
 - Now open [localhost:8000](localhost:8000)
 - Done!
 
