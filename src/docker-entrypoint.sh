@@ -26,6 +26,10 @@ case "$CMD" in
             php artisan migrate:fresh
         fi
 
+        echo "Installing composer packages"
+        composer global require laravel/installer
+        composer install
+
         echo "Applying migrations"
         php artisan migrate
 
