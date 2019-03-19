@@ -1,0 +1,48 @@
+.login {
+  height: 100vh;
+}
+
+.login__container--img {
+  background-image: url("/Images/brooke-lark-254998-unsplash.jpg");
+  background-size: cover;
+
+}
+
+.login__container--left {
+
+}
+
+.login__brand {
+  padding-top: 50px;
+  padding-left: 50px;
+  color: #ff6e00;
+  font-weight: 400;
+  font-size: 30px;
+}
+
+.login__container--bg {
+  background-color: seashell;
+}
+
+.login__container--right {
+  background-color: white;
+  margin-top: 50px;
+  margin-right: 25px;
+  margin-left: 25px;
+  padding: 70px;
+  border-radius: 5px;
+
+}
+
+.login__title {
+  color: pink;
+  font-weight: 600;
+  font-size: 20px;
+  padding-bottom: 15px;
+}
+
+.login__info--small {
+  font-size: 10px;
+  color: gray;
+  padding: 5px;
+}
