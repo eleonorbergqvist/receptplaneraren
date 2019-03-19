@@ -1,0 +1,20 @@
+.header {
+    background-color: seashell;
+}
+
+.header__title {
+    color: #ff6e00;
+    font-weight: 400;
+}
+
+.header__button--pink {
+    color: white;
+    background-color: #ff667f;
+    border-style: none;
+}
+
+.header__button--yellow {
+    color: white;
+    background-color: #ffca44;
+    border-style: none;
+}
