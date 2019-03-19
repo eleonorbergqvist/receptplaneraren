@@ -26,19 +26,25 @@ export const Header = (props: HeaderProps) => (
 
     <div id="navbarBasicExample" className="navbar-menu">
       <div className="navbar-start">
-        <a className="navbar-item">
-          Home
-        </a>
+        <Link to={`/`}>
+          <a className="navbar-item">
+            Home
+          </a>
+        </Link>
       </div>
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-            <a className="header__button--yellow button">
-              Sign up
-            </a>
-            <a className="header__button--pink button">
-              Log in
-            </a>
+            <Link to={`/register`}>
+              <a className="header__button--yellow button">
+                Sign up
+              </a>          
+            </Link>
+            <Link to={`/login`}>
+              <a className="header__button--pink button">
+                Log in
+              </a>
+            </Link>
           </div>
         </div>
       </div>
