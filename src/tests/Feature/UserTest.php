@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -45,8 +46,8 @@ class UserTest extends TestCase
                 'email',
                 'password',
                 'user_name',
-                'last_login',
-                'reset_token',
+                // 'last_login',
+                // 'reset_token',
                 'updated_at',
                 'created_at',
                 'id'
@@ -54,22 +55,23 @@ class UserTest extends TestCase
         ]);
     }
 
-    /** @test */
-    public function it_will_show_a_user()
-    {
-        $this->post(route('users.store'), [
-            'user_name'       => 'Kalle Anka',
-            'email' => 'test@test.com'
-        ]);
+    // /** @test XXX */
+    // public function it_will_show_a_user()
+    // {
+    //     $this->post(route('users.store'), [
+    //         'password' => '124hkjsL9)',
+    //         'user_name'       => 'Kalle Anka',
+    //         'email' => 'test@test.com'
+    //     ]);
 
-        $user = User::all()->first();
+    //     $user = User::all()->first();
 
-        $response = $this->get(route('users.show', $user->id));
+    //     $response = $this->get(route('users.show', $user->id));
 
-        $response->assertStatus(200);
+    //     $response->assertStatus(200);
 
-        $response->assertJson($user->toArray());
-    }
+    //     $response->assertJson($user->toArray());
+    // }
 
     /** @test */
     // public function it_will_update_a_task()
@@ -125,12 +127,6 @@ class UserTest extends TestCase
     // }
 
     /** @test */
-    public function testExample()
-    {
-        $response = $this->get('/api/user');
-
-        $response->assertStatus(200);
-    }
 }
 
 
