@@ -1,8 +1,47 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import { connect } from "react-redux";
+import {create, ApiResponse, ApisauceInstance} from 'apisauce';
 
-class Register extends Component {
+import { iRootState, Dispatch } from "../../store"
+
+const mapState = (state: iRootState) => ({
+  user: state.user,
+})
+
+const mapDispatch = (dispatch: Dispatch) => ({
+  setToken: dispatch.user.setToken,
+})
+
+type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
+// to include additional typings
+// use `type Props = connectedProps & { ...additionalTypings }
+type Props = connectedProps
+
+
+class Register extends Component<Props> {
+
+  handleSubmit = (values: any): void => {
+    const api: ApisauceInstance = create({
+      baseURL: 'http://localhost:8000/api',
+      headers: {"Content-Type": "application/json"}
+    });
+
+    api.post('/register', { 
+      'user_name': values.user_name, 
+      'email': values.email, 
+      'password': values.password,
+    })
+    .then((res: ApiResponse<any>) => {
+        console.log(res.data);
+        sessionStorage.setItem('jwtToken', res.data.access_token)
+
+        this.props.setToken(res.data.access_token);
+
+    });
+  }
+  
   render() {
       return (
         <div className="login columns">
@@ -14,7 +53,7 @@ class Register extends Component {
           <div className="login__container--bg column">
             <div className="login__container--right">
               <h2 className="login__title">Sign Up</h2>
-              <RegisterForm />
+              <RegisterForm onSubmit={this.handleSubmit} />
               <p className="login__info--small">Already have an account? <Link to={`/login`}>Log in.</Link>.</p>
             </div>
           </div>
@@ -23,4 +62,4 @@ class Register extends Component {
     }
 }
 
-export default Register;
+export default connect(mapState, mapDispatch)(Register);

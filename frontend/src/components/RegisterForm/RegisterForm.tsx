@@ -1,32 +1,50 @@
 import React, { Component } from "react";
-import {create, ApiResponse, ApisauceInstance} from 'apisauce';
 
-class RegisterForm extends Component {
+export interface RegisterFormProps { onSubmit: any };
+export interface RegisterFormState {
+  user_name: string;
+  email: string;
+  password: string;
+};
 
-  handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-    const data = event.target;
-    console.log(data);
+class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
 
-    const api: ApisauceInstance = create({
-      baseURL: 'http://localhost:8000/api',
-      headers: {"Content-Type": "application/json"}
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState({
+      [event.currentTarget.name]: event.currentTarget.value
+    } as { 
+      [K in keyof RegisterFormState]: RegisterFormState[K] 
     });
+  };
 
-    api.post('/register', { 'user_name': 'Laban', 'email': 'laaaa@la.la', 'password': '1234'})
-    .then((res: ApiResponse<any>) => {
-        console.log(res.data);
-        sessionStorage.setItem('jwtToken', res.data.access_token);
+  handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const { 
+      user_name,
+      email,
+      password,
+    } = this.state;
+
+    this.props.onSubmit({
+      user_name,
+      email,
+      password,
     });
   }
-
 
   render() {
     return(
       <form onSubmit={this.handleSubmit}>
         <div className="field">
           <p className="control has-icons-left has-icons-right">
-            <input className="input" type="text" placeholder="User Name" name="user_name"/>
+            <input 
+              className="input" 
+              type="text" 
+              placeholder="User Name" 
+              name="user_name" 
+              onChange={this.handleChange} 
+              />
             <span className="icon is-small is-left">
               <i className="fas fa-envelope"></i>
             </span>
@@ -37,7 +55,13 @@ class RegisterForm extends Component {
         </div>
         <div className="field">
           <p className="control has-icons-left has-icons-right">
-            <input className="input" type="email" placeholder="Email" name="email"/>
+            <input 
+              className="input" 
+              type="email" 
+              placeholder="Email" 
+              name="email" 
+              onChange={this.handleChange} 
+              />
             <span className="icon is-small is-left">
               <i className="fas fa-envelope"></i>
             </span>
@@ -48,7 +72,7 @@ class RegisterForm extends Component {
         </div>
         <div className="field">
           <p className="control has-icons-left">
-            <input className="input" type="password" placeholder="Password" name="password" />
+            <input className="input" type="password" placeholder="Password" name="password" onChange={this.handleChange}  />
             <span className="icon is-small is-left">
               <i className="fas fa-lock"></i>
             </span>
