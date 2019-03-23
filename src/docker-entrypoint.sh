@@ -33,8 +33,8 @@ case "$CMD" in
         echo "Applying migrations"
         php artisan migrate
 
-        echo "Generating JWT-secret"
-        php artisan jwt:secret
+        # echo "Generating JWT-secret"
+        # php artisan jwt:secret
 
         echo "Start server"
         exec php artisan serve --host=0.0.0.0 --port=8000
