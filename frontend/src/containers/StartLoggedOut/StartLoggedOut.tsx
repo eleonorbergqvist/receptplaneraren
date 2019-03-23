@@ -5,6 +5,7 @@ import { Footer } from "../../components/Footer/Footer";
 import { Card } from "../../components/Card/Card";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import "./StartLoggedOut.css";
+import { Modal } from "../../components/Modal/Modal";
 
 class StartLoggedOut extends Component {
   async componentDidMount() {
@@ -92,6 +93,7 @@ class StartLoggedOut extends Component {
           </section>
         </main>
         <Footer copyrightText="Copyright 2019. Informational text." />
+        <Modal text="You have been logged out." />
       </div>
     );
   }
