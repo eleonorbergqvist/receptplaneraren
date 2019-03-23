@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Redirect } from 'react-router';
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import { connect } from "react-redux";
 import {create, ApiResponse, ApisauceInstance} from 'apisauce';
@@ -34,15 +35,14 @@ class Register extends Component<Props> {
       'password': values.password,
     })
     .then((res: ApiResponse<any>) => {
-        console.log(res.data);
-        sessionStorage.setItem('jwtToken', res.data.access_token)
-
         this.props.setToken(res.data.access_token);
-
     });
   }
   
   render() {
+    if (this.props.user) {
+      return <Redirect to={"/welcome"} />
+    }
       return (
         <div className="login columns">
           <div className="login__container--img column">

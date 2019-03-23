@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router'
+import { Redirect } from 'react-router';
 import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
@@ -37,11 +37,6 @@ class LogIn extends Component<Props> {
     .then((res: ApiResponse<any>) => {
         console.log(res.data)
         this.props.setToken(res.data.access_token);
-
-        // const { history } = this.props
-        this.setState({
-          loggedIn: true
-        })
     });
   }
 

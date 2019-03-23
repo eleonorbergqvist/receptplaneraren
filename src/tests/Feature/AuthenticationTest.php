@@ -44,7 +44,7 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->post('api/register', [
             'email' => 'test@email.com',
-            'password' => '12546',
+            'password' => '123546',
             'user_name' => 'Testy Test',
         ]);
 

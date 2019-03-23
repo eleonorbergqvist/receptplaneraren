@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./RegisterForm.css";
 
 export interface RegisterFormProps { onSubmit: any };
 export interface RegisterFormState {
