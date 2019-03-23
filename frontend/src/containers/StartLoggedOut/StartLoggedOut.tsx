@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
-import { Card } from "../../components/Card/Card"
+import { Card } from "../../components/Card/Card";
+import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import "./StartLoggedOut.css";
 
 class StartLoggedOut extends Component {
@@ -11,10 +12,15 @@ class StartLoggedOut extends Component {
     console.log(response);
   }
 
+  public buttons = [
+    <PrimaryMenuButton text="Sign Up" link={"/register"} class="header__button--yellow" />,
+    <PrimaryMenuButton text="Log In" link={"/login"} class="header__button--pink" />,
+  ];
+
   render() {
     return (
       <div className="StartLoggedOut">
-        <Header output="Dumb Component" />
+        <Header buttons={this.buttons} />
         <main>
           <section className="start__container--img">
             <div className="container">

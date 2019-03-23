@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import PrimaryMenuButton from "../PrimaryMenuButton/PrimaryMenuButton";
 import "./Header.css";
 
-export interface HeaderProps {output: string};
+export interface HeaderProps {buttons: JSX.Element[]};
 
 export const Header = (props: HeaderProps) => (
   <nav className="header navbar" role="navigation" aria-label="main navigation">
@@ -26,7 +27,7 @@ export const Header = (props: HeaderProps) => (
 
     <div id="navbarBasicExample" className="navbar-menu">
       <div className="navbar-start">
-        <Link to={`/`}>
+        <Link to="/">
           <a className="navbar-item">
             Home
           </a>
@@ -35,16 +36,7 @@ export const Header = (props: HeaderProps) => (
       <div className="navbar-end">
         <div className="navbar-item">
           <div className="buttons">
-            <Link to={`/register`}>
-              <a className="header__button--yellow button">
-                Sign up
-              </a>          
-            </Link>
-            <Link to={`/login`}>
-              <a className="header__button--pink button">
-                Log in
-              </a>
-            </Link>
+            {props.buttons}
           </div>
         </div>
       </div>

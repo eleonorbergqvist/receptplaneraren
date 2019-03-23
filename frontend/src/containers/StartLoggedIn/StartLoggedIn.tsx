@@ -2,14 +2,23 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Header } from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
-import { Tabs } from "../../components/Tabs/Tabs"
+import { Tabs } from "../../components/Tabs/Tabs";
+import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
+
 
 class StartLoggedIn extends Component {
+
+  public buttons = [
+    <PrimaryMenuButton text="Create Recipe" link={"#"} class="header__button--yellow" />,
+    <PrimaryMenuButton text="Browse Recipes" link={"#"} class="header__button--yellow" />,
+    <PrimaryMenuButton text="Settings" link={"#"} class="header__button--yellow" />,
+    <PrimaryMenuButton text="Log Out" link={"/"} class="header__button--pink" />,
+  ];
 
   render() {
     return (
       <React.Fragment>
-        <Header output="" />
+        <Header buttons={this.buttons} />
           <main className="container">
             <div className="start__Container columns">
               <div className="column">
