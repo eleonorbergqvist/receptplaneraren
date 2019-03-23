@@ -50,4 +50,31 @@ class AuthenticationTest extends TestCase
 
         $response->assertStatus(400);
     }
+
+    /** @test */
+    public function it_will_login_and_authenticate_user()
+    {
+        $response = $this->post('api/login', [
+            'email' => 'test@email.com',
+            'password' => '123456',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'access_token',
+            'token_type',
+            'expires_in'
+        ]);
+    }
+
+    /** @test */
+    public function it_will_not_login_if_details_are_incorrect()
+    {
+        $response = $this->post('api/login', [
+            'email' => 'XX@XXX.com',
+            'password' => 'XXXXX',
+        ]);
+
+        $response->assertStatus(401);
+    }
 }
