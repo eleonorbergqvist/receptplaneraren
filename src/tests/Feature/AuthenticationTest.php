@@ -15,7 +15,7 @@ class AuthenticationTest extends TestCase
         parent::setUp();
 
         $user = new User([
-             'email'    => 'test1@email.com',
+             'email'    => 'test@email.com',
              'password' => '123456',
              'user_name' => 'Test Person',
          ]);
@@ -27,7 +27,7 @@ class AuthenticationTest extends TestCase
     public function it_will_register_a_user()
     {
         $response = $this->post('api/register', [
-            'email'    => 'test2@email.com',
+            'email'    => 'test1@email.com',
             'password' => '123456',
             'user_name' => 'Test Person',
         ]);
@@ -37,5 +37,17 @@ class AuthenticationTest extends TestCase
             'token_type',
             'expires_in'
         ]);
+    }
+
+    /** @test */
+    public function it_wont_register_user_because_email_is_taken()
+    {
+        $response = $this->post('api/register', [
+            'email' => 'test@email.com',
+            'password' => '12546',
+            'user_name' => 'Testy Test',
+        ]);
+
+        $response->assertStatus(400);
     }
 }
