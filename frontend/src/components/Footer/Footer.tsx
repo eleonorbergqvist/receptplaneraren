@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 
-export interface FooterProps {copyrightText: string};
+export interface FooterProps {
+  copyrightText: string;
+}
 
 export const Footer = (props: FooterProps) => {
-  return(
+  return (
     <React.Fragment>
       <footer className="footer footer">
         <div className="content has-text-centered">
@@ -14,4 +16,4 @@ export const Footer = (props: FooterProps) => {
       </footer>
     </React.Fragment>
   );
-}
+};

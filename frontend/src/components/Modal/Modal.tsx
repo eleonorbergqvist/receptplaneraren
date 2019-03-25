@@ -1,19 +1,35 @@
-import React from 'react';
+import React from "react";
 
-export interface ModalProps { 
-  text: string, 
-};
+export interface ModalProps {
+  text: string;
+  onClose: Function;
+}
 
-export const Modal = (props: ModalProps) => (
-  <div className="modal">
-    <div className="modal-background"></div>
-    <div className="modal-content">
-      <section className="modal-card-body">
-        <h1>{props.text}</h1>
-        <button className="button is-success is-large">
-          Ok
-        </button>
-      </section>
-    </div>
-  </div>
-);
+class Modal extends React.Component<ModalProps> {
+  handleClick = (event: any) => {
+    const { onClose } = this.props
+    
+    onClose();
+  };
+
+  render() {
+    return (
+      <div className={`is-active modal`}>
+        <div className="modal-background" />
+        <div className="modal-content">
+          <section className="modal-card-body">
+            <h1>{this.props.text}</h1>
+            <button
+              className="button is-success is-large"
+              onClick={this.handleClick}
+            >
+              Ok
+            </button>
+          </section>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Modal;

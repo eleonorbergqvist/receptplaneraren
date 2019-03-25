@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Redirect } from 'react-router';
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
+ import { Redirect } from 'react-router';
 import { connect } from "react-redux";
 import Api from "../../services/Api";
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
 
 import { iRootState, Dispatch } from "../../store"
 import { ApiResponse } from "apisauce";
@@ -11,6 +11,7 @@ import { FormikActions } from "formik";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
+  isLoggedIn: state.user.access_token !== null,
 })
 
 const mapDispatch = (dispatch: Dispatch) => ({
@@ -26,25 +27,30 @@ type Props = connectedProps
 class Register extends Component<Props> {
    handleSubmit = async (values: any, actions: FormikActions<any>) => {
     const api = Api.create();
+
+    actions.setSubmitting(true);
+
     const response: ApiResponse<any> = await api.register({
       "user_name": values.user_name, 
       "email": values.email, 
       "password": values.password,
     })
 
+    actions.setSubmitting(false);
+
     if (!response.ok) {
-      alert("ERROR");
-      console.log(response.originalError);
-      console.log(response.problem);
-      // TODO: add error handling
+      console.log(response.data);
+      // TODO: Replace with proper error reporting
+      actions.setErrors({
+        'general': "Ogiltigt användarnamn/lösenord",
+      })
+      return;
     }
-    alert("SUCCESS");
+    
     this.props.setToken(response.data.access_token);
   }
   
   render() {
-    console.log(this.props.user);
-
     if (this.props.user.access_token) {
       return <Redirect to={"/welcome"} />
     }
