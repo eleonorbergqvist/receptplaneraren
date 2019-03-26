@@ -41,8 +41,10 @@ class Register extends Component<Props> {
     if (!response.ok) {
       console.log(response.data);
       // TODO: Replace with proper error reporting
+
+      const { email } = response.data;
       actions.setErrors({
-        'general': "Ogiltigt användarnamn/lösenord",
+        'apiError': email,
       })
       return;
     }

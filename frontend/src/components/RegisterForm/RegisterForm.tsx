@@ -10,6 +10,7 @@ import {
 import * as Yup from "yup";
 import Input from "../Input/Input";
 import "./RegisterForm.css";
+import { string } from "prop-types";
 
 export interface RegisterFormProps {
   onSubmit: any;
@@ -26,6 +27,7 @@ interface iFormValues {
   password: string;
   password_confirmation: string;
   consent: boolean;
+  apiError: any;
 }
 
 const validationSchema = Yup.object().shape({
@@ -56,7 +58,8 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
       user_name: "",
       password: "",
       password_confirmation: "",
-      consent: false
+      consent: false,
+      apiError: "",
     };
     return (
       <div className="RegisterForm">
@@ -78,6 +81,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
           }}
           render={(formikBag: FormikProps<iFormValues>) => (
             <Form>
+              {(formikBag.errors.apiError) && <p>{formikBag.errors.apiError}</p>}
               <Input
                 name="user_name"
                 className=""

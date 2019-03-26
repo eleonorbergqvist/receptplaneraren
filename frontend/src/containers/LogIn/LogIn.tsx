@@ -44,8 +44,8 @@ class LogIn extends Component<Props> {
       });
       return;
     }
-
-    this.props.setToken(response.data.access_token);
+    console.log(response.data)
+    // this.props.setToken(response.data.access_token);
   };
 
   render() {
