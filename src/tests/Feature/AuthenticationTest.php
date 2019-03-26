@@ -72,9 +72,12 @@ class AuthenticationTest extends TestCase
     {
         $response = $this->post('api/login', [
             'email' => 'XX@XXX.com',
-            'password' => 'XXXXX',
+            'password' => 'XXXXXX',
         ]);
 
         $response->assertStatus(401);
+        $response->assertJsonStructure([
+            'error',
+        ]);
     }
 }

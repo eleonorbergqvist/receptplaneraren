@@ -39,13 +39,8 @@ class Register extends Component<Props> {
     actions.setSubmitting(false);
 
     if (!response.ok) {
-      console.log(response.data);
-      // TODO: Replace with proper error reporting
-
-      const { email } = response.data;
-      actions.setErrors({
-        'apiError': email,
-      })
+      // TODO: Add support for general errors (such as 401 etc)
+      actions.setErrors(response.data);
       return;
     }
     

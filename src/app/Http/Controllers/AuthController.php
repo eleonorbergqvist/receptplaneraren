@@ -6,13 +6,15 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\QueryException;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class AuthController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['login', 'register']]);
+    // }
 
     public function register(Request $request)
     {
@@ -37,7 +39,7 @@ class AuthController extends Controller
             return response()->json($errorInfo, 500);
         }
 
-        $token = auth()->login($user);
+        $token = auth('api')->login($user);
 
         return $this->respondWithToken($token);
     }
@@ -45,29 +47,27 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:6',
         ]);
+
         if ($validator->fails()) {
-            return response()->json($validator->errors());
+            return response()->json($validator->errors(), 400);
         }
 
         $credentials = $request->only('email', 'password');
 
-        try {
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-            } catch (JWTException $e) {
-                return response()->json(['error' => 'could_not_create_token'], 500);
-            }
+        $token = JWTAuth::attempt($credentials);
+        if (!$token) {
+            return response()->json(['error' => 'invalid_credentials'], 401);
+        }
 
         return $this->respondWithToken($token);
     }
 
     public function logout()
     {
-        auth()->logout(true);
+        auth('api')->logout(true);
 
         return response()->json(['message' => 'Successfully logged out']);
     }
@@ -77,7 +77,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
 }
