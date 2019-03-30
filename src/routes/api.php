@@ -34,3 +34,11 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 Route::put('/users/{user}', 'UserController@update')->name('users.update');
 
 Route::delete('/users/{user}', 'UserController@destory')->name('users.destroy');
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'password'
+], function () {
+    Route::post('create', 'PasswordResetController@create')->name('password.create');
+    Route::post('reset', 'PasswordResetController@reset')->name('password.reset');
+});

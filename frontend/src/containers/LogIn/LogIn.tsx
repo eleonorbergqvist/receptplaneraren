@@ -67,7 +67,7 @@ class LogIn extends Component<Props> {
               Don't have an account? <Link to={`/register`}>Sign up</Link>.
             </p>
             <LoginForm onSubmit={this.handleSubmit} />
-            <p className="login__info--small">Forgot password? Click here.</p>
+            <p className="login__info--small">Forgot password? <Link to={`/password/create`}>Click here.</Link></p>
           </div>
         </div>
       </div>

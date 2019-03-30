@@ -1,4 +1,5 @@
 import apisauce from "apisauce";
+import { StringSchema } from "yup";
 
 const create = (baseURL = "http://localhost:8000/api/") => {
   const api = apisauce.create({
@@ -15,15 +16,29 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       email: values.email,
       password: values.password
     });
+
   const logIn = (values: any) =>
     api.post("/login", {
       email: values.email,
       password: values.password
     });
 
+  const passwordCreate = (values: any) =>
+    api.post("/password/create", {
+      email: values.email,
+    });
+
+  const passwordReset = (values: any) =>
+    api.post("/password/reset", {
+      reset_token: values.reset_token,
+      password: values.password,
+    });
+
   return {
     register,
-    logIn
+    logIn,
+    passwordCreate,
+    passwordReset,
   };
 };
 
