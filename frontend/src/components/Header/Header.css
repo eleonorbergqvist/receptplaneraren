@@ -18,3 +18,21 @@
     background-color: #ffca44;
     border-style: none;
 }
+
+@media screen and (max-width: 1087px) {
+    .buttons .button:not(:last-child):not(.is-fullwidth) {
+        margin-right: 0;
+    }
+
+    .header__buttons {
+        display: block;
+    }
+
+    .header__button--yellow {
+        display: block;
+    }
+
+    .header__button--pink {
+        display: block;
+    } 
+}

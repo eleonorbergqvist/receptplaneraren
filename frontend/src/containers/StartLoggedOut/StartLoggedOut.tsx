@@ -3,7 +3,7 @@ import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { iRootState, Dispatch } from "../../store";
 import { Link } from "react-router-dom";
-import { Header } from "../../components/Header/Header";
+import Header from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { Card } from "../../components/Card/Card";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
