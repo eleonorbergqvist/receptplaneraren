@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   checkout_code:
     docker:
@@ -11,6 +12,7 @@ jobs:
           key: v1-repo-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - .
+
   frontend:
     docker:
       - image: circleci/node:latest
@@ -30,6 +32,7 @@ jobs:
           command: |
             cd frontend
             npm test
+            
   laravle:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/php:7.2-node-browsers
@@ -73,7 +76,3 @@ workflows:
       - laravel:
           requires:
             - checkout_code
-      #- deploy:
-      #    requires:
-      #      - frontend
-      #      - laravel
