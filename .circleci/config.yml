@@ -25,5 +25,5 @@ jobs:
           paths:
             - src/vendor
       # - run: php artisan migrate --env=testing --database=sqlite_testing --force
-      - run: php artisan migrate --database=mysql_test
+      - run: cd src && php artisan migrate --database=mysql_test
       - run: echo "hello world" # run the `echo` command
