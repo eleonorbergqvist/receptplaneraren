@@ -15,7 +15,7 @@ jobs:
       - run: sudo apt install -y zlib1g-dev
       - run: sudo composer self-update
       - run: sudo docker-php-ext-install zip pdo_mysql
-      - run: cp .env.circleci .env
+      - run: cd src && cp .env.circleci .env
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
             - composer-v1-{{ checksum "src/composer.lock" }}
