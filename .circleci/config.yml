@@ -2,7 +2,28 @@ version: 2
 jobs:
   build:
     docker: # use the docker executor type; machine and macos executors are also supported
-      - image: circleci/node:4.8.2 # the primary container, where your job's commands are run
+      - image: circleci/php:7.2-node-browsers
+      - image: circleci/mysql:5
+        environment:
+          MYSQL_DATABASE: mysql
+          MYSQL_USER: mysql
+          MYSQL_PASSWORD: mysql
+          MYSQL_ROOT_PASSWORD: mysql
+    working_directory: ~/laravel  
     steps:
       - checkout # check out the code in the project directory
+      - run: sudo apt install -y zlib1g-dev
+      - run: sudo composer self-update
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
+            - composer-v1-{{ checksum "src/composer.lock" }}
+            # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/2.0/caching/)
+            - composer-v1-
+      - run: cd src && composer install -n --prefer-dist
+      - save_cache: # special step to save the dependency cache with the `composer.lock` cache key template
+          key: composer-v1-{{ checksum "src/composer.lock" }}
+          paths:
+            - src/vendor
+      # - run: php artisan migrate --env=testing --database=sqlite_testing --force
+      - run: php artisan migrate --database=mysql_test
       - run: echo "hello world" # run the `echo` command
