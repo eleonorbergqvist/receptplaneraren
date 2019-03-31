@@ -1,5 +1,23 @@
 version: 2
 jobs:
+  frontend:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/repo
+    steps:
+      - checkout # check out the code in the project directory
+      - restore_cache:
+          key: v1-npm-{{ checksum "frontend/package.json" }}
+      - run: cd frontend && npm install
+      - save_cache:
+          key: v1-npm-{{ checksum "frontend/package.json" }}
+          paths:
+            - ~/repo/frontend/node_modules
+      - run:
+          command: |
+            cd frontend
+            npm test
+
   build:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/php:7.2-node-browsers
@@ -9,7 +27,7 @@ jobs:
           MYSQL_USER: mysql
           MYSQL_PASSWORD: mysql
           MYSQL_ROOT_PASSWORD: mysql
-    working_directory: ~/laravel  
+    working_directory: ~/repo  
     steps:
       - checkout # check out the code in the project directory
       - run: sudo apt install -y zlib1g-dev
@@ -26,7 +44,7 @@ jobs:
           key: composer-v1-{{ checksum "src/composer.lock" }}
           paths:
             - src/vendor
-      # - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: cd src && php artisan migrate --database=mysql --force
       - run: cd src && php artisan jwt:secret && php artisan key:generate
       - run: cd src && php vendor/bin/phpunit
+    
