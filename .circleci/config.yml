@@ -1,11 +1,24 @@
 version: 2
 jobs:
+  checkout_code:
+    docker:
+      - image: circleci/node:latest
+      - image: circleci/php:7.2-node-browsers
+      - image: circleci/mysql:5
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - .
   frontend:
     docker:
       - image: circleci/node:latest
     working_directory: ~/repo
     steps:
-      - checkout # check out the code in the project directory
+      - restore_cache:
+        keys:
+          - v1-repo-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: v1-npm-{{ checksum "frontend/package.json" }}
       - run: cd frontend && npm install
@@ -17,8 +30,7 @@ jobs:
           command: |
             cd frontend
             npm test
-
-  build:
+  laravle:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/php:7.2-node-browsers
       - image: circleci/mysql:5
@@ -29,7 +41,9 @@ jobs:
           MYSQL_ROOT_PASSWORD: mysql
     working_directory: ~/repo  
     steps:
-      - checkout # check out the code in the project directory
+      - restore_cache:
+        keys:
+          - v1-repo-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
       - run: sudo apt install -y zlib1g-dev
       - run: sudo composer self-update
       - run: sudo docker-php-ext-install zip pdo_mysql
@@ -48,3 +62,18 @@ jobs:
       - run: cd src && php artisan jwt:secret && php artisan key:generate
       - run: cd src && php vendor/bin/phpunit
     
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - checkout_code:
+      - frontend:
+          requires:
+            - checkout_code
+      - laravel:
+          requires:
+            - checkout_code
+      #- deploy:
+      #    requires:
+      #      - frontend
+      #      - laravel
