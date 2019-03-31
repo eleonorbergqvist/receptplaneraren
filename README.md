@@ -8,6 +8,7 @@ This is a recipe app.
 - React activated by default
 - Local dev server (with `php artisan serve`)
 - A SPA built in create-react-app and typescript
+- Continious integration with Circle CI
 
 ## Installing
 - `cd frontend`
