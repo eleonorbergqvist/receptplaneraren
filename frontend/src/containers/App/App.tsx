@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import StartLoggedIn from "../StartLoggedIn/StartLoggedIn";
 import StartLoggedOut from "../StartLoggedOut/StartLoggedOut";
 import LogIn from "../LogIn/LogIn";
@@ -13,16 +14,17 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Switch>
-          <Route exact path="/" component={StartLoggedOut} />
-          <Route path="/welcome" component={StartLoggedIn} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={LogIn} />
-          <Route path="/logout" component={LogOut} />
-          <Route path="/password/create" component={CreateResetPassword} />
-          <Route path="/password/reset/:token" component={ResetPassword} />
-          
-        </Switch>
+       <BrowserRouter>
+          <Switch>
+            <Route exact path="/" component={StartLoggedOut} />
+            <Route path="/welcome" component={StartLoggedIn} />
+            <Route path="/register" component={Register} />
+            <Route path="/login" component={LogIn} />
+            <Route path="/logout" component={LogOut} />
+            <Route path="/password/create" component={CreateResetPassword} />
+            <Route path="/password/reset/:token" component={ResetPassword} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
