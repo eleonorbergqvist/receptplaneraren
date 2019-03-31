@@ -14,6 +14,7 @@ jobs:
       - checkout # check out the code in the project directory
       - run: sudo apt install -y zlib1g-dev
       - run: sudo composer self-update
+      - run: sudo docker-php-ext-install zip pdo_mysql
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
             - composer-v1-{{ checksum "src/composer.lock" }}
