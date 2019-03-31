@@ -32,8 +32,8 @@ jobs:
           command: |
             cd frontend
             npm test
-            
-  laravle:
+
+  laravel:
     docker: # use the docker executor type; machine and macos executors are also supported
       - image: circleci/php:7.2-node-browsers
       - image: circleci/mysql:5
