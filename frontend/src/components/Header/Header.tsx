@@ -14,7 +14,7 @@ class Header extends Component<HeaderProps, HeaderState> {
     burgerIsActive: false
   }
 
-  handleBurgerMenuClick = (e:any) => {
+  handleToggleMenuClick = () => {
     this.setState({ burgerIsActive: !this.state.burgerIsActive });
   }
 
@@ -30,7 +30,7 @@ class Header extends Component<HeaderProps, HeaderState> {
             aria-label="menu"
             aria-expanded="false"
             data-target="navbarBasicExample"
-            onClick={this.handleBurgerMenuClick}
+            onClick={this.handleToggleMenuClick}
           >
             <span aria-hidden="true" />
             <span aria-hidden="true" />
