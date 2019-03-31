@@ -28,4 +28,4 @@ jobs:
             - src/vendor
       # - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: cd src && php artisan migrate --database=mysql --force
-      - run: echo "hello world" # run the `echo` command
+      - run: cd src && php vendor/bin/phpunit
