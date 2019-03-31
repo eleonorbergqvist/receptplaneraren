@@ -28,4 +28,5 @@ jobs:
             - src/vendor
       # - run: php artisan migrate --env=testing --database=sqlite_testing --force
       - run: cd src && php artisan migrate --database=mysql --force
+      - run: cd src && php artisan jwt:secret
       - run: cd src && php vendor/bin/phpunit
