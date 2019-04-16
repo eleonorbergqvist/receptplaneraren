@@ -14,17 +14,9 @@ class RecipeTagController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $tags = RecipeTag::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return response()->json($tags);
     }
 
     /**
@@ -35,29 +27,17 @@ class RecipeTagController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'slug' => 'required|unique:recipe_tags',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RecipeTag  $recipeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RecipeTag $recipeTag)
-    {
-        //
-    }
+        $tag = RecipeTag::create($request->all());
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RecipeTag  $recipeTag
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RecipeTag $recipeTag)
-    {
-        //
+        return response()->json([
+            'message' => 'Great success! New tag created',
+            'recipe-tag' => $tag
+        ]);
     }
 
     /**
@@ -67,9 +47,15 @@ class RecipeTagController extends Controller
      * @param  \App\RecipeTag  $recipeTag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RecipeTag $recipeTag)
+    public function update(Request $request, $id)
     {
-        //
+          $tag = RecipeTag::findOrFail($id);
+          $tag->update($request->all());
+
+          return response()->json([
+              'message' => 'Great success! Recipe tag updated',
+              'recipe-tag' => $tag
+          ]);
     }
 
     /**
@@ -78,8 +64,13 @@ class RecipeTagController extends Controller
      * @param  \App\RecipeTag  $recipeTag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RecipeTag $recipeTag)
+    public function destroy($id)
     {
-        //
+        $tag = RecipeTag::findOrFail($id);
+        $tag->delete();
+
+        return response()->json([
+            'message' => 'Successfully deleted recipe tag!'
+        ]);
     }
 }

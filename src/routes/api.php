@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\RecipeTagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,12 @@ Route::post('/recipes', 'RecipeController@store')->name('recipes.store');
 Route::get('/recipes/{id}', 'RecipeController@show')->name('recipes.show');
 Route::put('/recipes/{id}', 'RecipeController@update')->name('recipes.update');
 Route::delete('/recipes/{id}', 'RecipeController@destroy')->name('recipes.destroy');
+
+Route::get('/recipe-tags', 'RecipeTagController@index')->name('recipe-tags.index');
+Route::post('/recipe-tags', 'RecipeTagController@store')->name('recipe-tags.store');
+Route::put('/recipe-tags/{id}', 'RecipeTagController@update')->name('recipe-tags.update');
+Route::delete('/recipe-tags/{id}', 'RecipeTagController@destroy')->name('recipe-tags.destroy');
+
 
 Route::group([
     'middleware' => 'api',
