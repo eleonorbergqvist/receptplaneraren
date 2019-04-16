@@ -8,6 +8,11 @@ class Ingredient extends Model
 {
     public $table = "ingredients";
 
+    protected $fillable = [
+        'name',
+        'slug',
+    ];
+
     public function recipeIngredient()
     {
         return $this->belongsTo('App\RecipeIngredient');

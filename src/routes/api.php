@@ -43,6 +43,12 @@ Route::post('/recipe-tags', 'RecipeTagController@store')->name('recipe-tags.stor
 Route::put('/recipe-tags/{id}', 'RecipeTagController@update')->name('recipe-tags.update');
 Route::delete('/recipe-tags/{id}', 'RecipeTagController@destroy')->name('recipe-tags.destroy');
 
+Route::get('/ingredients', 'IngredientController@index')->name('ingredients.index');
+Route::post('/ingredients', 'IngredientController@store')->name('ingredients.store');
+Route::get('/ingredients/{id}', 'IngredientController@show')->name('ingredients.show');
+Route::put('/ingredients/{id}', 'IngredientController@update')->name('ingredients.update');
+Route::delete('/ingredients/{id}', 'IngredientController@destroy')->name('ingredients.destroy');
+
 
 Route::group([
     'middleware' => 'api',
