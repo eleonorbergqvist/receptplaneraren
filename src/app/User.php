@@ -13,6 +13,16 @@ class User extends Authenticatable implements JWTSubject
 
     public $table = "users";
 
+    public function recipes()
+    {
+        $this->hasMany('App\Recipe');
+    }
+
+    public function dayMeals()
+    {
+        $this->hasMany('App\DayMeal');
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
