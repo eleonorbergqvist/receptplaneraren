@@ -8,6 +8,14 @@ class Recipe extends Model
 {
     public $table = 'recipes';
 
+    protected $fillable = [
+        'status',
+        'instructions',
+        'title',
+        'slug',
+        'user_id',
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User');

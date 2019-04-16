@@ -19,18 +19,19 @@ class RecipeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created resource in storage.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
             'slug' => 'required',
-            // 'user_id' => 'required'
+            'user_id' => 'required'
         ]);
 
         $recipe = Recipe::create($request->all());
@@ -42,25 +43,18 @@ class RecipeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function show(Recipe $recipe)
+    public function show($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+
+        return response()->json([
+            'recipe' => $recipe
+        ]);
     }
 
     /**
@@ -81,9 +75,27 @@ class RecipeController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Recipe $recipe)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+
+            //Ta birt detta?
+            'status' => 'required',
+            'instructions' => 'required',
+            'preparation_time' => 'nullable',
+            'title' => 'required',
+            'image' => 'nullable',
+            'slug' => 'required',
+            'portions' => 'nullable',
+          ]);
+
+          $recipe = Recipe::findOrFail($id);
+          $recipe->update($request->all());
+
+          return response()->json([
+              'message' => 'Great success! Recipe updated',
+              'recipe' => $recipe
+          ]);
     }
 
     /**
@@ -92,8 +104,13 @@ class RecipeController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recipe $recipe)
+    public function destroy($id)
     {
-        //
+        $recipe = Recipe::findOrFail($id);
+        $recipe->delete();
+
+        return response()->json([
+            'message' => 'Successfully deleted recipe!'
+        ]);
     }
 }
