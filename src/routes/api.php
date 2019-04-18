@@ -32,27 +32,29 @@ Route::get('/users/{user}', 'UserController@show')->name('users.show');
 Route::put('/users/{user}', 'UserController@update')->name('users.update');
 Route::delete('/users/{user}', 'UserController@destory')->name('users.destroy');
 
-Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
-Route::post('/recipes', 'RecipeController@store')->name('recipes.store');
-Route::get('/recipes/{id}', 'RecipeController@show')->name('recipes.show');
-Route::put('/recipes/{id}', 'RecipeController@update')->name('recipes.update');
-Route::delete('/recipes/{id}', 'RecipeController@destroy')->name('recipes.destroy');
+Route::middleware(['jwt.auth'])->group(function () {
+    Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
+    Route::post('/recipes', 'RecipeController@store')->name('recipes.store');
+    Route::get('/recipes/{id}', 'RecipeController@show')->name('recipes.show');
+    Route::put('/recipes/{id}', 'RecipeController@update')->name('recipes.update');
+    Route::delete('/recipes/{id}', 'RecipeController@destroy')->name('recipes.destroy');
 
-Route::get('/recipe-tags', 'RecipeTagController@index')->name('recipe-tags.index');
-Route::post('/recipe-tags', 'RecipeTagController@store')->name('recipe-tags.store');
-Route::put('/recipe-tags/{id}', 'RecipeTagController@update')->name('recipe-tags.update');
-Route::delete('/recipe-tags/{id}', 'RecipeTagController@destroy')->name('recipe-tags.destroy');
+    Route::get('/recipe-tags', 'RecipeTagController@index')->name('recipe-tags.index');
+    Route::post('/recipe-tags', 'RecipeTagController@store')->name('recipe-tags.store');
+    Route::put('/recipe-tags/{id}', 'RecipeTagController@update')->name('recipe-tags.update');
+    Route::delete('/recipe-tags/{id}', 'RecipeTagController@destroy')->name('recipe-tags.destroy');
 
-Route::get('/ingredients', 'IngredientController@index')->name('ingredients.index');
-Route::post('/ingredients', 'IngredientController@store')->name('ingredients.store');
-Route::get('/ingredients/{id}', 'IngredientController@show')->name('ingredients.show');
-Route::put('/ingredients/{id}', 'IngredientController@update')->name('ingredients.update');
-Route::delete('/ingredients/{id}', 'IngredientController@destroy')->name('ingredients.destroy');
+    Route::get('/ingredients', 'IngredientController@index')->name('ingredients.index');
+    Route::post('/ingredients', 'IngredientController@store')->name('ingredients.store');
+    Route::get('/ingredients/{id}', 'IngredientController@show')->name('ingredients.show');
+    Route::put('/ingredients/{id}', 'IngredientController@update')->name('ingredients.update');
+    Route::delete('/ingredients/{id}', 'IngredientController@destroy')->name('ingredients.destroy');
 
-Route::get('/recipe-ingredients', 'RecipeIngredientController@index')->name('recipe-ingredients.index');
-Route::post('/recipe-ingredients', 'RecipeIngredientController@store')->name('recipe-ingredients.store');
-// Route::put('/recipe-ingredients/{id}', 'RecipeIngredientController@update')->name('recipe-ingredients.update');
-Route::delete('/recipe-ingredients/{id}', 'RecipeIngredientController@destroy')->name('recipe-ingredients.destroy');
+    Route::get('/recipe-ingredients', 'RecipeIngredientController@index')->name('recipe-ingredients.index');
+    Route::post('/recipe-ingredients', 'RecipeIngredientController@store')->name('recipe-ingredients.store');
+    // Route::put('/recipe-ingredients/{id}', 'RecipeIngredientController@update')->name('recipe-ingredients.update');
+    Route::delete('/recipe-ingredients/{id}', 'RecipeIngredientController@destroy')->name('recipe-ingredients.destroy');
+});
 
 Route::group([
     'middleware' => 'api',
