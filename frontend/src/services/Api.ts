@@ -34,11 +34,36 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       password: values.password,
     });
 
+  const recipeCreate = (values: any, jwtToken: string | null) =>
+    api.post("/recipes", {
+      status: "test", //add buttons in form
+      instructions: values.instructions,
+      title: values.title,
+    }, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}` 
+      }
+    }
+  );
+
+  const recipeIngredientCreate = (values: any, jwtToken: string | null) =>
+    api.post("/recipe-ingredients", {
+      ingredients: values.ingredients,
+      recipe_id: values.recipe_id,
+    }, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
   return {
     register,
     logIn,
     passwordCreate,
     passwordReset,
+    recipeCreate,
+    recipeIngredientCreate,
   };
 };
 

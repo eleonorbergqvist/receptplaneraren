@@ -31,7 +31,7 @@ const Input = (props: InputProps) => (
           <i className="fas fa-check" />
         </span>
       </div>
-      {props.error && <p className="help is-success">{props.error}</p>}
+      {props.error && <p className="help is-danger">{props.error}</p>}
     </div>
   </React.Fragment>
 );

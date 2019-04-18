@@ -7,7 +7,8 @@ import LogIn from "../LogIn/LogIn";
 import LogOut from "../LogOut/LogOut";
 import Register from "../Register/Register";
 import ResetPassword from "../ResetPassword/ResetPassword";
-import CreateResetPassword from "../CreateResetPassword/CreateResetPassword"
+import CreateResetPassword from "../CreateResetPassword/CreateResetPassword";
+import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import "./App.css";
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
             <Route path="/register" component={Register} />
             <Route path="/login" component={LogIn} />
             <Route path="/logout" component={LogOut} />
+            <Route path="/recipe/create" component={CreateRecipe} />
             <Route path="/password/create" component={CreateResetPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
           </Switch>
