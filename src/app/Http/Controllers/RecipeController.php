@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Recipe;
 use Illuminate\Http\Request;
+use Cocur\Slugify\Slugify;
+use JWTAuth;
+use Auth;
 
 class RecipeController extends Controller
 {
@@ -30,11 +33,17 @@ class RecipeController extends Controller
             'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
-            'slug' => 'required',
-            'user_id' => 'required'
         ]);
 
-        $recipe = Recipe::create($request->all());
+        $recipe = new Recipe;
+        $slugify = new Slugify();
+
+        $recipe->status = $request->status;
+        $recipe->instructions = $request->instructions;
+        $recipe->title = $request->title;
+        $recipe->slug = $slugify->slugify($request->title);
+        $recipe->user_id = Auth::user()->id;
+        $recipe->save();
 
         return response()->json([
             'message' => 'Great success! New recipe created',
