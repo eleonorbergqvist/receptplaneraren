@@ -30,33 +30,40 @@ class RecipeIngredientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'amount' => 'required',
-            'measurement' => 'required',
-            'ingredient' => 'required',
-            'recipe_id' => 'required',
+            'ingredients.*.amount' => 'required',
+            'ingredients.*.measurement' => 'required',
+            'ingredients.*.ingredient'    => 'required',
+            'recipe_id'    => 'required',
         ]);
 
-        $ingredient = Ingredient::where('name', $request->ingredient)->first();
+        $recipeIngredients = [];
+        foreach ($request->ingredients as $ingredientData) {
 
-        if (!$ingredient) {
-            $ingredient = new Ingredient();
-            $ingredient->name = $request->ingredient;
-            $slugify = new Slugify();
-            $ingredient->slug = $slugify->slugify($request->ingredient);
-            $ingredient->save();
-            $this->ingredient = $ingredient;
+            $ingredient = Ingredient::where('name', $ingredientData["ingredient"])->first();
+
+            if (!$ingredient) {
+                $ingredient = new Ingredient();
+                $ingredient->name = $ingredientData["ingredient"];
+
+                $slugify = new Slugify();
+                $ingredient->slug = $slugify->slugify($ingredientData["ingredient"]);
+                $ingredient->save();
+                $this->ingredient = $ingredient;
+            }
+
+            $recipeIngredient = new RecipeIngredient();
+            $recipeIngredient->amount = $ingredientData["amount"];
+            $recipeIngredient->measurement = $ingredientData["measurement"];
+            $recipeIngredient->recipe_id = $request->recipe_id;
+            $recipeIngredient->ingredient_id = $ingredient->id;
+            $recipeIngredient->save();
+
+            $recipeIngredients[] = $recipeIngredient;
         }
 
-        $recipeIngredient = new RecipeIngredient();
-        $recipeIngredient->amount = $request->amount;
-        $recipeIngredient->measurement = $request->measurement;
-        $recipeIngredient->recipe_id = $request->recipe_id;
-        $recipeIngredient->ingredient_id = $ingredient->id;
-        $recipeIngredient->save();
-
         return response()->json([
-            'message' => 'Great success! New recipe ingredient created',
-            'recipe-ingredient' => $recipeIngredient
+            'message' => 'Great success! New recipe ingredients created',
+            'recipeIngredients' => $recipeIngredients
         ]);
     }
 

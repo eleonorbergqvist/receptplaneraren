@@ -10,6 +10,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use JWTAuth;
 
 
 class RecipeIngredientTest extends TestCase
@@ -29,7 +30,10 @@ class RecipeIngredientTest extends TestCase
 
         $user->save();
         $user->fresh();
+        $token = JWTAuth::attempt(['email' => 'test@test.test',
+        'password' => '124hkjsL9)']);
         $this->user = $user;
+        $this->token = $token;
 
         $recipe = new Recipe([
             'status' => $this->faker->text(),
@@ -62,13 +66,24 @@ class RecipeIngredientTest extends TestCase
         $recipe = Recipe::all()->first();
 
         $response = $this->post(route('recipe-ingredients.store'), [
-            'amount' => '100',
-            'measurement' => '1',
-            'ingredient' => 'Tomat',
+            'ingredients' => [
+                [
+                    'amount' => '100',
+                    'measurement' => 'dl',
+                    'ingredient' => 'tomat'
+                ],
+                [
+                    'amount' => '10',
+                    'measurement' => 'kg',
+                    'ingredient' => 'gurka'
+                ],
+            ],
             'recipe_id' => $recipe->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
+        echo $response->exception;
         $response->assertStatus(200);
+
 
         $this->assertDatabaseHas('recipe_ingredients', [
             'amount' => '100'
@@ -76,12 +91,14 @@ class RecipeIngredientTest extends TestCase
 
         $response->assertJsonStructure([
             'message',
-            'recipe-ingredient' => [
-                'id',
-                'amount',
-                'measurement',
-                'recipe_id',
-                'ingredient_id',
+            'recipeIngredients' => [
+                [
+                    'id',
+                    'amount',
+                    'measurement',
+                    'recipe_id',
+                    'ingredient_id',
+                ]
             ]
         ]);
     }
