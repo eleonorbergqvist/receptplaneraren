@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Cocur\Slugify\Slugify;
 use JWTAuth;
 use Auth;
+use App\RecipeTag;
 
 class RecipeController extends Controller
 {
@@ -33,6 +34,7 @@ class RecipeController extends Controller
             'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
+            'tags' => 'nullable',
         ]);
 
         $recipe = new Recipe;
@@ -43,11 +45,15 @@ class RecipeController extends Controller
         $recipe->title = $request->title;
         $recipe->slug = $slugify->slugify($request->title);
         $recipe->user_id = Auth::user()->id;
+
         $recipe->save();
+        $recipe->recipeTags()->sync($request->tags);
+        $recipeTags = $recipe->recipeTags()->allRelatedIds()->toArray();;
 
         return response()->json([
-            'message' => 'Great success! New recipe created',
-            'recipe' => $recipe
+            'message' => 'Great success! New recipe with tags created',
+            'recipe' => $recipe,
+            'recipeTags' => $recipeTags,
         ]);
     }
 

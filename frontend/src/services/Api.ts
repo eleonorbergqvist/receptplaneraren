@@ -39,6 +39,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       status: "test", //add buttons in form
       instructions: values.instructions,
       title: values.title,
+      tags: values.tags,
     }, {
       headers: {
         Authorization: `Bearer ${jwtToken}` 
@@ -57,6 +58,15 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     }
   );
 
+  const recipeTags = (jwtToken: string | null) =>
+    // api.setHeader('Authorization', `Bearer ${jwtToken}`);
+    api.get('/recipe-tags', {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
   return {
     register,
     logIn,
@@ -64,6 +74,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     passwordReset,
     recipeCreate,
     recipeIngredientCreate,
+    recipeTags,
   };
 };
 

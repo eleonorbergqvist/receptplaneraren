@@ -10,6 +10,7 @@ import Api from "../../services/Api";
 import "./CreateRecipe.css";
 import Header from "../../components/Header/Header";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
+import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
 import { Footer } from "../../components/Footer/Footer";
 import RecipeForm from "../../components/RecipeForm/RecipeForm";
 
@@ -28,7 +29,17 @@ type connectedProps = ReturnType<typeof mapState> &
 // use `type Props = connectedProps & { ...additionalTypings }
 type Props = connectedProps;
 
-class CreateRecipe extends Component<Props> {
+interface CreateRecipeState {
+  tags: any[];
+  selectedTags: Number[];
+}
+
+class CreateRecipe extends Component<Props, CreateRecipeState> {
+  state: CreateRecipeState = {
+    tags: [],
+    selectedTags: [],
+  }
+
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
 
     console.log('CreateRecipe.handleSubmit');
@@ -41,6 +52,7 @@ class CreateRecipe extends Component<Props> {
     const response: ApiResponse<any> = await api.recipeCreate({
       instructions: values.description,
       title: values.title,
+      tags: this.state.selectedTags,
     }, this.props.user.access_token);
     
     actions.setSubmitting(false);
@@ -52,11 +64,13 @@ class CreateRecipe extends Component<Props> {
       return;
     }
 
+    //
+
     actions.setSubmitting(true);
 
     const recipe_id = response.data.recipe.id;
 
-    const response2: ApiResponse<any> = await api.recipeIngredientCreate({
+    const ingredientResponse: ApiResponse<any> = await api.recipeIngredientCreate({
 
       ingredients: values.ingredients,
       recipe_id: recipe_id,
@@ -64,13 +78,12 @@ class CreateRecipe extends Component<Props> {
 
     actions.setSubmitting(false);
 
-    if (!response2.ok) {
+    if (!ingredientResponse.ok) {
       actions.setErrors({
         general: "Fel, kunde inte spara ingredienser"
       });
       return;
     }
-
   };
 
   public buttons = [
@@ -100,6 +113,34 @@ class CreateRecipe extends Component<Props> {
     />
   ];
 
+  public tags = [
+    "tag1", "tag2", "tag3", "tag4", "tag5"];
+
+  async componentDidMount () {
+    const api = Api.create();
+
+    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    this.setState({ tags: response.data })
+
+    if (!response.ok) {
+        console.log("TAG ERRORRR")
+      return;
+    }
+  }
+
+  handleToggleTag = (tag: iRecipeTag) => {
+    let { selectedTags } = this.state
+
+    if (selectedTags.includes(tag.id)) {
+      selectedTags = selectedTags.filter(x => x !== tag.id)
+    } else {
+      selectedTags = [tag.id, ...selectedTags]
+    }
+
+    this.setState({ selectedTags });
+  }
+
+
   render() {
     if (!this.props.isLoggedIn) {
       return <Redirect to={"/"} />;
@@ -111,6 +152,11 @@ class CreateRecipe extends Component<Props> {
         <div className="CreateRecipe__Container columns">
           <div className="CreateRecipe__Container--Left column">
             Create Recipe and tabs
+            <RecipeTags 
+              tags={this.state.tags} 
+              selectedTags={this.state.selectedTags}
+              onToggleTag={this.handleToggleTag} 
+            />
           </div>
           <div className="CreateRecipe__Container--Right column">
             <RecipeForm onSubmit={this.handleSubmit} />

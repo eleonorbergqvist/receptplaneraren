@@ -5,9 +5,11 @@ namespace Tests\Feature;
 use App\User;
 use App\Recipe;
 use Tests\TestCase;
+use App\RecipeTag;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use JWTAuth;
 
 
 class RecipeTest extends TestCase
@@ -20,14 +22,18 @@ class RecipeTest extends TestCase
         parent::setUp();
 
         $user = new User([
-             'email'    => 'test@email.com',
-             'password' => '123456',
+             'email'    => 'test@test.test',
+             'password' => '124hkjsL9)',
              'user_name' => 'Test Person',
          ]);
 
         $user->save();
-
+        $user->fresh();
         $this->user = $user;
+
+        $token = JWTAuth::attempt(['email' => 'test@test.test',
+        'password' => '124hkjsL9)']);
+        $this->token = $token;
     }
 
     /** @test */
@@ -163,6 +169,42 @@ class RecipeTest extends TestCase
 
         $response->assertJsonStructure([
             'message'
+        ]);
+    }
+
+    /** @test */
+    public function it_will_save_recipe_and_its_tags()
+    {
+        $tags = factory(RecipeTag::class, 2)->create();
+
+        $response = $this->post(route('recipes.store'), [
+            'status' => $this->faker->text(),
+            'instructions' => $this->faker->text(),
+            'title' => 'TestRecept',
+            'slug' => $this->faker->slug(),
+            'user_id' => $this->user->id,
+            'tags' => $tags,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+
+        $response->assertStatus(200);
+
+        $this->assertDatabaseHas('recipes', [
+            'title' => 'TestRecept'
+        ]);
+
+        $response->assertJsonStructure([
+            'message',
+            'recipe' => [
+                'status',
+                'instructions',
+                'title',
+                'slug',
+                'user_id',
+                'updated_at',
+                'created_at',
+                'id'
+            ],
+            'recipeTags',
         ]);
     }
 

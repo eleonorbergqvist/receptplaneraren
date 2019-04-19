@@ -15,6 +15,6 @@ class RecipeTag extends Model
 
     public function recipes()
     {
-        return $this->belongsToMany('App\Recipe')->using('App\RecipeRecipeTag');
+        return $this->belongsToMany('App\Recipe')->using('App\RecipeRecipeTag')->withTimestamps();
     }
 }

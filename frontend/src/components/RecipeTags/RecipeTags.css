@@ -1,0 +1,8 @@
+.selected {
+  background-color: deeppink;
+
+}
+
+.not-selected {
+  background-color: seashell;
+}
