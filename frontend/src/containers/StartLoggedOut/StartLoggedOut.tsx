@@ -73,7 +73,7 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
           <section className="start__container--img">
             <div className="container">
               <div className="columns">
-                <div className="column">
+                <div className="column is-two-fifths">
                   <div className="start__card--main card">
                     <div className="start__card--text card-content">
                       <h2 className="start__card--title">

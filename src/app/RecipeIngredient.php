@@ -17,11 +17,11 @@ class RecipeIngredient extends Model
 
     public function ingredient()
     {
-        return $this->hasOne('App\Ingredient');
+        return $this->belongsTo('App\Ingredient');
     }
 
-    public function recipes()
+    public function recipe()
     {
-        return $this->hasMany('App\Recipe');
+        return $this->belongsTo('App\Recipe');
     }
 }

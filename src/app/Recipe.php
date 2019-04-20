@@ -23,7 +23,7 @@ class Recipe extends Model
 
     public function recipeIngredients()
     {
-        return $this->belongsToMany('App\RecipeIngredient');
+        return $this->hasMany('App\RecipeIngredient');
     }
 
     public function recipeTags()

@@ -1,0 +1,23 @@
+.RecipeListItem {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.levelHeader {
+  display: block;
+}
+
+.levelContent {
+  display: block;
+  padding-right: 1rem;
+  max-width: 500px;
+}
+
+.levelLink {
+  display: inline-block;
+  padding-right: 2rem;
+}
+
+.levelHr {
+  color:grey;
+}

@@ -208,6 +208,75 @@ class RecipeTest extends TestCase
         ]);
     }
 
+    /** @test */
+    public function it_will_show_all_recipes_with_tags_and_ingredients()
+    {
+        $tags = factory(RecipeTag::class, 2)->create();
+
+        $response = $this->post(route('recipes.store'), [
+            'status' => $this->faker->text(),
+            'instructions' => $this->faker->text(),
+            'title' => 'TestRecept',
+            'slug' => $this->faker->slug(),
+            'user_id' => $this->user->id,
+            'tags' => $tags,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+
+        $recipe = Recipe::all()->first();
+
+        $response = $this->post(route('recipe-ingredients.store'), [
+            'ingredients' => [
+                [
+                    'amount' => '100',
+                    'measurement' => 'dl',
+                    'ingredient' => 'tomat'
+                ],
+                [
+                    'amount' => '10',
+                    'measurement' => 'kg',
+                    'ingredient' => 'gurka'
+                ],
+            ],
+            'recipe_id' => $recipe->id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
+
+        $response = $this->get(route('recipes.indexAndTagsAndIngredients'),
+            ['Authorization' => 'Bearer ' . $this->token]);
+
+        echo $response->exception;
+        $response->assertStatus(200);
+
+        var_dump($response->getContent());
+
+        $response->assertJsonStructure([
+            'message',
+            'recipes' => [
+                '*' => [
+                    'status',
+                    'instructions',
+                    'title',
+                    'slug',
+                    'user_id',
+                    'updated_at',
+                    'created_at',
+                    'id',
+                    'recipe_tags' => [
+                        '*' => [
+                            'id',
+                        ]
+                    ],
+                    'recipe_ingredients' => [
+                        '*' => [
+                            'amount',
+                            'measurement',
+                            'ingredient',
+                        ]
+                    ],
+                ],
+            ],
+        ]);
+    }
+
 }
 
 

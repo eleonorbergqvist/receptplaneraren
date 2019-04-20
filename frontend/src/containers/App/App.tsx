@@ -10,6 +10,7 @@ import ResetPassword from "../ResetPassword/ResetPassword";
 import CreateResetPassword from "../CreateResetPassword/CreateResetPassword";
 import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import "./App.css";
+import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
 
 class App extends Component {
   render() {
@@ -23,6 +24,7 @@ class App extends Component {
             <Route path="/login" component={LogIn} />
             <Route path="/logout" component={LogOut} />
             <Route path="/recipe/create" component={CreateRecipe} />
+            <Route path="/recipe/browse" component={BrowseRecipes} />
             <Route path="/password/create" component={CreateResetPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
           </Switch>

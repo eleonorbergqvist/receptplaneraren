@@ -96,13 +96,13 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     <PrimaryMenuButton
       key={1}
       text="Create Recipe"
-      link={"#"}
+      link={"/recipe/create"}
       class="header__button--yellow is-active"
     />,
     <PrimaryMenuButton
       key={2}
       text="Browse Recipes"
-      link={"#"}
+      link={"/recipe/browse"}
       class="header__button--yellow"
     />,
     <PrimaryMenuButton
@@ -155,19 +155,21 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     return (
       <div className="CreateRecipe">
         <Header buttons={this.buttons} />
-        <div className="CreateRecipe__Container columns">
-          <div className="CreateRecipe__Container--Left column">
-            Create Recipe and tabs
-            <RecipeTags 
-              tags={this.state.tags} 
-              selectedTags={this.state.selectedTags}
-              onToggleTag={this.handleToggleTag} 
-            />
+        <main className="container">
+          <div className="CreateRecipe__Container columns">
+            <div className="CreateRecipe__Container--Left column is-two-fifths">
+              Create Recipe and tabs
+              <RecipeTags 
+                tags={this.state.tags} 
+                selectedTags={this.state.selectedTags}
+                onToggleTag={this.handleToggleTag} 
+              />
+            </div>
+            <div className="CreateRecipe__Container--Right column">
+              <RecipeForm onSubmit={this.handleSubmit} />
+            </div>
           </div>
-          <div className="CreateRecipe__Container--Right column">
-            <RecipeForm onSubmit={this.handleSubmit} />
-          </div>
-        </div>
+        </main>
         <Footer copyrightText="" />
       </div>
     );

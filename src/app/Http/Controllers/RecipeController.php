@@ -25,6 +25,21 @@ class RecipeController extends Controller
         return response()->json($recipes);
     }
 
+        /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAndTagsAndIngredients()
+    {
+        $recipes = Recipe::all()->load(["recipeTags", "recipeIngredients.ingredient"]);
+
+        return response()->json([
+            'message' => 'Great success!',
+            'recipes' => $recipes,
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

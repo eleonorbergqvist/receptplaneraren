@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { iRootState } from "../../store";
-import { Link } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
 import { Tabs } from "../../components/Tabs/Tabs";
@@ -21,13 +20,13 @@ class StartLoggedIn extends Component<Props> {
     <PrimaryMenuButton
       key={1}
       text="Create Recipe"
-      link={"#"}
+      link={"/recipe/create"}
       class="header__button--yellow"
     />,
     <PrimaryMenuButton
       key={2}
       text="Browse Recipes"
-      link={"#"}
+      link={"/recipe/browse"}
       class="header__button--yellow"
     />,
     <PrimaryMenuButton
@@ -54,7 +53,7 @@ class StartLoggedIn extends Component<Props> {
         <Header buttons={this.buttons} />
         <main className="container">
           <div className="start__Container columns">
-            <div className="column">
+            <div className="column is-two-fifths">
               <h1>Vecka 12</h1>
               <span className="icon">
                 <i className="fas fa-caret-left" />
@@ -76,7 +75,6 @@ class StartLoggedIn extends Component<Props> {
               </p>
               <button className="button">Generate Shoppinglist</button>
               <br />
-              <Link to={`/`}>Visit StartLoggedOut page.</Link>
             </div>
             <div className="column">
               <Tabs />
