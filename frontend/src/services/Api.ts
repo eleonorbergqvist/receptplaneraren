@@ -68,15 +68,23 @@ const create = (baseURL = "http://localhost:8000/api/") => {
   );
 
   const recipeImage = (values: any, jwtToken: string | null) =>
-  api.post('/recipes/image', {
-    recipe_id: values.recipe_id,
-    image: values.image,
-  }, {
-    headers: {
-      Authorization: `Bearer ${jwtToken}`
+    api.post('/recipes/image', {
+      recipe_id: values.recipe_id,
+      image: values.image,
+    }, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
     }
-  }
-);
+  );
+
+  const recipesAllInfo = (jwtToken: string | null) =>
+    api.get('/recipesAll', {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
 
   return {
     register,
@@ -87,6 +95,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     recipeIngredientCreate,
     recipeTags,
     recipeImage,
+    recipesAllInfo,
   };
 };
 

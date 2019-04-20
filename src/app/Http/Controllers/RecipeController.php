@@ -109,16 +109,17 @@ class RecipeController extends Controller
         // Validate type of file
         if(in_array($fileType, [ 'jpeg', 'png', 'gif' ])) {
             // Set a unique name to the file and save
-            $file_name = 'public/Images/' . uniqid() . '.' . $fileType;
-            Storage::disk('local')->put($file_name, $imageData);
-            $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+            $file_name = 'images/' . uniqid() . '.' . $fileType;
+            Storage::disk('local')->put('public/'.$file_name, $imageData);
+            // $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
 
-            $recipe->image = $path.$file_name;
+            $recipe->image = $file_name;
             $recipe->save();
 
             return response()->json([
                 'message' => 'Successfully stored recipe image!',
-                'path' => $path.$file_name,
+                // 'path' => $path.$file_name,
+                'path' => $file_name,
             ]);
         }
         else {

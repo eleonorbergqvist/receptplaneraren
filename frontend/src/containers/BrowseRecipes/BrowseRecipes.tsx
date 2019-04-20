@@ -8,6 +8,8 @@ import Header from "../../components/Header/Header";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import { Footer } from "../../components/Footer/Footer";
 import "./BrowseRecipes.css";
+import { any } from "prop-types";
+import { RecipeFormProps } from "../../components/RecipeForm/RecipeForm";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -25,18 +27,32 @@ type connectedProps = ReturnType<typeof mapState> &
 type Props = connectedProps;
 
 interface RecipeListItemProps {
-
+  key: number;
+  recipe: iRecipe;
 }
+
+interface iRecipe {
+  instructions: string,
+  title: string,
+  image: string,
+  id: number,
+  tags: number[],
+} 
+
+interface BrowseRecipesState {
+  recipes: iRecipe[];
+  tags: any;
+  selectedTags: any;
+}
+const BASE_URL: string = 'http://localhost:8000/storage/';
 
 const RecipeListItem = (props: RecipeListItemProps) => {
   return (
     <div className="level">
       <div className="level-left">
         <div className="RecipeListItem content">
-            <h2 className="levelHeader">My Recipe</h2>
-            <p className="levelContent">Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet, 
-            consectetur adipiscing elit. Phasellus nec iaculis mauris.</p>
+            <h2 className="levelHeader">{props.recipe.title}</h2>
+            <p className="levelContent">{props.recipe.instructions}</p>
             <a className="levelLink" href="#">Read more</a>
             <a className="levelLink" href="#">Add to week</a>
         </div>
@@ -44,7 +60,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
 
       <div className="level-right">
         <figure className="level-item image is-128x128">
-          <img src="https://bulma.io/images/placeholders/128x128.png" />
+          <img src={BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png"}/>
         </figure>
       </div>
       <hr className="levelHr"/>
@@ -53,10 +69,11 @@ const RecipeListItem = (props: RecipeListItemProps) => {
 }
 
 class BrowseRecipes extends Component<Props> {
-  // state: CreateRecipeState = {
-  //   tags: [],
-  //   selectedTags: [],
-  // }
+  state: BrowseRecipesState = {
+    tags: [],
+    selectedTags: [],
+    recipes: [],
+  }
 
   public buttons = [
     <PrimaryMenuButton
@@ -87,15 +104,24 @@ class BrowseRecipes extends Component<Props> {
 
   async componentDidMount () {
     // Get all recipes with tags (belonging to user?)
-    // const api = Api.create();
+    const api = Api.create();
 
-    // const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
-    // this.setState({ tags: response.data })
+    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    this.setState({ tags: response.data })
 
-    // if (!response.ok) {
-    //     console.log("TAG ERRORRR")
-    //   return;
-    // }
+    if (!response.ok) {
+        console.log("TAG ERRORRR")
+      return;
+    }
+
+    const recipesResponse: ApiResponse<any> = await api.recipesAllInfo(this.props.user.access_token);
+    console.log(recipesResponse);
+    this.setState({ recipes: recipesResponse.data.recipes })
+
+    if (!response.ok) {
+      console.log("RECIPE ERRORRR")
+    return;
+    }
   }
 
   render() {
@@ -131,7 +157,8 @@ class BrowseRecipes extends Component<Props> {
                   </div>
                 </div>
               </div>
-              <RecipeListItem />
+              {this.state.recipes.map((recipe: iRecipe, index: any) => (
+                <RecipeListItem key={index} recipe={recipe} />))}
             </div>
           </div>
         </main> 
