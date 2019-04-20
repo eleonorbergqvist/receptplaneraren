@@ -76,11 +76,17 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       recipe_id: recipe_id,
     }, this.props.user.access_token);
 
+    const imageResponse: ApiResponse<any> = await api.recipeImage({
+
+      image: values.image,
+      recipe_id: recipe_id,
+    }, this.props.user.access_token);
+
     actions.setSubmitting(false);
 
-    if (!ingredientResponse.ok) {
+    if (!imageResponse.ok) {
       actions.setErrors({
-        general: "Fel, kunde inte spara ingredienser"
+        general: "Fel, kunde inte spara bild"
       });
       return;
     }

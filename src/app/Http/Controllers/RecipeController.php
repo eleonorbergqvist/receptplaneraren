@@ -8,6 +8,9 @@ use Cocur\Slugify\Slugify;
 use JWTAuth;
 use Auth;
 use App\RecipeTag;
+use finfo;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\File;
 
 class RecipeController extends Controller
 {
@@ -55,6 +58,60 @@ class RecipeController extends Controller
             'recipe' => $recipe,
             'recipeTags' => $recipeTags,
         ]);
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Recipe  $recipe
+     * @return \Illuminate\Http\Response
+     */
+    public function storeImage(Request $request)
+    {
+        $request->validate([
+            'recipe_id' => 'required',
+            // 'image' => 'required|image64:jpeg,jpg,png,gif',
+        ]);
+
+        $recipe = Recipe::findOrFail($request->recipe_id);
+
+        list($type, $imageData) = explode(';', $request->image);
+        list(, $imageData) = explode(',', $imageData);
+
+
+        $imageData = base64_decode($imageData);
+        // Get file mime type
+        preg_match(
+            '/data:[a-z]*\/([a-z]*)/',
+            substr($type, 0, 50),
+            $imageMimeMatches
+        );
+
+        $mimeType = $imageMimeMatches[1];
+        $fileType = $mimeType;
+
+        // Validate type of file
+        if(in_array($fileType, [ 'jpeg', 'png', 'gif' ])) {
+            // Set a unique name to the file and save
+            $file_name = 'public/Images/' . uniqid() . '.' . $fileType;
+            Storage::disk('local')->put($file_name, $imageData);
+            $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
+
+            $recipe->image = $path.$file_name;
+            $recipe->save();
+
+            return response()->json([
+                'message' => 'Successfully stored recipe image!',
+                'path' => $path.$file_name,
+            ]);
+        }
+        else {
+            // echo 'Error : Only JPEG, PNG & GIF allowed';
+            return response()->json([
+                'message' => 'Error : Only JPEG, PNG & GIF allowed'
+            ]);
+        }
     }
 
     /**

@@ -35,6 +35,7 @@ Route::delete('/users/{user}', 'UserController@destory')->name('users.destroy');
 Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
     Route::post('/recipes', 'RecipeController@store')->name('recipes.store');
+    Route::post('/recipes/image', 'RecipeController@storeImage')->name('recipes.storeImage');
     Route::get('/recipes/{id}', 'RecipeController@show')->name('recipes.show');
     Route::put('/recipes/{id}', 'RecipeController@update')->name('recipes.update');
     Route::delete('/recipes/{id}', 'RecipeController@destroy')->name('recipes.destroy');

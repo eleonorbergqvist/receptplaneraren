@@ -61,7 +61,7 @@ interface InputListProps {
 class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
   state: RecipeFormState = {
     title: "",
-    image: "",
+    image: "https://bulma.io/images/placeholders/128x128.png",
     description: "",
     ingredients: [emptyIngredient],
   }
@@ -87,6 +87,23 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
     this.setState({ ingredients })
   }
 
+  handleInputFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const fileList = e.target.files || [];
+
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      const reader = new FileReader();
+      reader.onload = (e: Event) => {
+        if (typeof reader.result === 'string') {
+          this.setState({ image: reader.result })
+        }
+      }
+      reader.readAsDataURL(file);
+    }
+    
+  }
+
   render() {
     const onSubmit = this.props.onSubmit;
     let initialValues = {
@@ -109,7 +126,7 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
             onSubmit(
               {
                 title: values.title,
-                // image: values.image,
+                image: this.state.image,
                 description: values.description,
                 ingredients: values.ingredients,
               },
@@ -119,13 +136,35 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
           render={(formikBag: FormikProps<iFormValues>) => (
             <Form>
               {/* {formikBag.errors.general && <p>{formikBag.errors.general}</p>} */}
+              <div className="columns">
+                <div className="column">
+                <figure className="image is-128x128">
+                  <img id="imagePreview" src={this.state.image} />
+                </figure>
+                </div>
+                <div className="column">
+                  <div className="file is-boxed">
+                    <label className="file-label">
+                      <input className="file-input" type="file" name="resume" 
+                        onChange={this.handleInputFileChange}
+                        accept='image/*'
+                      />
+                      <span className="file-cta">
+                        <span className="file-icon">
+                          <i className="fas fa-upload"></i>
+                        </span>
+                        <span className="file-label">
+                          Choose an image…
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                {formikBag.errors.image 
+                  && <p className="help is-danger">{formikBag.errors.image}</p>
+                }
+              </div>
 
-              <figure className="image is-128x128">
-                <img src="https://bulma.io/images/placeholders/128x128.png" />
-              </figure>
-              {formikBag.errors.image 
-                && <p className="help is-danger">{formikBag.errors.image}</p>
-              }
 
               <label>Title</label>
               <Input
