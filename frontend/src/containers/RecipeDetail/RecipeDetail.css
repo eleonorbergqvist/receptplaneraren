@@ -1,0 +1,36 @@
+.RecipeDetail {
+  
+}
+
+.RecipeDetail__Container--Top {
+  background-color: blueviolet;
+}
+
+.RecipeDetail__Container--Bottom {
+  background-color: orange;
+}
+
+.RecipeDetail__Container--Side {
+  background-color: salmon;
+}
+
+.RecipeDetail__Container--Main {
+  /* background-color: dodgerblue; */
+}
+
+.RecipeDetail__Container--Ingredients {
+  background-color: dodgerblue;
+
+}
+
+.RecipeDetail__Container--Image {
+  background-color: seagreen !important;
+  align-self: flex-start !important;
+
+  align-items: flex-start !important;
+}
+
+.RecipeDetail__Image {
+  align-self: flex-start !important;
+  padding-top: 0 !important;
+}

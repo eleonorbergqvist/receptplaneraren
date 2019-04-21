@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
@@ -35,7 +36,7 @@ interface iRecipe {
   instructions: string,
   title: string,
   image: string,
-  id: number,
+  slug: string,
   tags: number[],
 } 
 
@@ -53,10 +54,12 @@ const RecipeListItem = (props: RecipeListItemProps) => {
         <div className="RecipeListItem content">
             <h2 className="levelHeader">{props.recipe.title}</h2>
             <p className="levelContent">{props.recipe.instructions}</p>
-            <a className="levelLink" href="#">Read more</a>
+            <Link className="levelLink" to={`/recipe/detail/${props.recipe.slug}`}>Read more</Link>
             <a className="levelLink" href="#">Add to week</a>
         </div>
       </div>
+
+      
 
       <div className="level-right">
         <figure className="level-item image is-128x128">

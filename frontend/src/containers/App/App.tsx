@@ -11,6 +11,7 @@ import CreateResetPassword from "../CreateResetPassword/CreateResetPassword";
 import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import "./App.css";
 import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
+import RecipeDetail from "../RecipeDetail/RecipeDetail";
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
             <Route path="/logout" component={LogOut} />
             <Route path="/recipe/create" component={CreateRecipe} />
             <Route path="/recipe/browse" component={BrowseRecipes} />
+            <Route path="/recipe/detail/:slug" component={RecipeDetail} />
             <Route path="/password/create" component={CreateResetPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
           </Switch>

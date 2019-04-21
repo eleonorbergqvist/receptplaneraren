@@ -136,10 +136,18 @@ class RecipeController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $recipe = Recipe::findOrFail($id);
+    // public function show($id)
+    // {
+    //     $recipe = Recipe::findOrFail($id);
 
+    //     return response()->json([
+    //         'recipe' => $recipe
+    //     ]);
+    // }
+
+    public function show($slug)
+    {
+        $recipe = Recipe::where('slug', $slug)->first()->load(["recipeTags", "recipeIngredients.ingredient"]);
         return response()->json([
             'recipe' => $recipe
         ]);
