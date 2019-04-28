@@ -33,6 +33,13 @@ Route::put('/users/{user}', 'UserController@update')->name('users.update');
 Route::delete('/users/{user}', 'UserController@destory')->name('users.destroy');
 
 Route::middleware(['jwt.auth'])->group(function () {
+
+    Route::get('/daymeals', 'DayMealController@index')->name('daymeals.index');
+    Route::get('/daymeals-current', 'DayMealController@getCurrentWeek')->name('daymeals.getCurrentWeek');
+    // Route::get('/daymeals/{week}', 'DayMealController@showWeek')->name('daymeals.showWeek');
+    Route::put('/daymeals-update', 'DayMealController@update')->name('daymeals.update');
+
+
     Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
     Route::get('/recipesAll', 'RecipeController@indexAndTagsAndIngredients')->name('recipes.indexAndTagsAndIngredients');
 
