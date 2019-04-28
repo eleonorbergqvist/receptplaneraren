@@ -154,10 +154,8 @@ class DayMealController extends Controller
             'recipe_id' => 'required',
         ]);
 
-        error_log($request->recipe_id);
         $datestring = CarbonImmutable::createFromTimeString($request->date)->toDateString();
-        error_log($datestring);
-//Change migration to use datetime only.....
+
         $daymeal = DayMeal::updateOrCreate(
             [
                 'date' => $datestring,
@@ -168,9 +166,6 @@ class DayMealController extends Controller
                 'recipe_id' => $request->recipe_id
             ]
         );
-
-        error_log($daymeal->id);
-        error_log($daymeal->recipe_id);
 
         return response()->json([
             'message' => 'Great success! Daymeal added',

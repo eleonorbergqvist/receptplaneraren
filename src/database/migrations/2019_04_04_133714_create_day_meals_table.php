@@ -16,7 +16,7 @@ class CreateDayMealsTable extends Migration
         Schema::create('day_meals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->dateTime('date');
+            $table->date('date');
             $table->unsignedTinyInteger('meal_type');
             $table->unsignedBigInteger('user_id');
             $table
