@@ -7,7 +7,7 @@ $factory->define(App\Recipe::class, function (Faker $faker) {
         'status' => $faker->text(),
         'instructions' => $faker->text(),
         'title' => $faker->word(),
-        'slug' => $faker->slug(),
+        'slug' => $faker->unique()->slug(),
         'user_id' => factory(App\User::class),
     ];
 });
