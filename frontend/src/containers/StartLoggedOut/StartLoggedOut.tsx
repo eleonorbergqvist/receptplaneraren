@@ -54,7 +54,6 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
   ];
 
   handleLoggedOutModalClose = () => {
-    console.log("Random");
     this.setState({ modelIsOpen: false });
   }
 

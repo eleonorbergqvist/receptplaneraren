@@ -94,6 +94,28 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     }
   );
 
+  const daymealsGetCurrentWeek = (jwtToken: string | null) =>
+    api.get(`/daymeals-current`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
+  const daymealUpdate = (values: any, jwtToken: string | null) =>
+  api.put("/daymeals-update", {
+    date: values.date,
+    meal_type: values.meal_type,
+    recipe_id: values.recipe_id,
+  }, {
+    headers: {
+      Authorization: `Bearer ${jwtToken}`
+    }
+  }
+);
+
+  
+
   
 
   return {
@@ -107,6 +129,8 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     recipeImage,
     recipesAllInfo,
     recipeBySlug,
+    daymealsGetCurrentWeek,
+    daymealUpdate,
   };
 };
 

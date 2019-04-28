@@ -14,6 +14,39 @@
     border-bottom-width: 0;
 }
 
+.tabs__tabNav--0 {
+    background-color: #a5ffe2;
+}
+
+.tabs__tabNav--1 {
+    background-color: #ffeda5;
+}
+
+.tabs__tabNav--2 {
+    background-color: #72cdff;
+}
+
+.tabs__tabNav--3 {
+    background-color: #ff9372;
+}
+
+.tabs__tabNav--4 {
+    background-color: #fcb3ea;
+}
+
+.tabs__tabNav--5 {
+    background-color: #fcb2c2;
+}
+
+.tabs__tabNav--6 {
+    background-color: #d59bff;
+}
+
+.tabs__tabNav--selected {
+    background-color: #000;
+}
+
+/* FIXME: Remove */
 .tabs__dayNav--Mo {
     background-color: #a5ffe2;
 }

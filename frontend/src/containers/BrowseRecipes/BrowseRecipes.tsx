@@ -11,6 +11,7 @@ import { Footer } from "../../components/Footer/Footer";
 import "./BrowseRecipes.css";
 import { any } from "prop-types";
 import { RecipeFormProps } from "../../components/RecipeForm/RecipeForm";
+import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -28,8 +29,9 @@ type connectedProps = ReturnType<typeof mapState> &
 type Props = connectedProps;
 
 interface RecipeListItemProps {
-  key: number;
-  recipe: iRecipe;
+  key: number,
+  recipe: iRecipe,
+  onOpenModal: any,
 }
 
 interface iRecipe {
@@ -38,16 +40,23 @@ interface iRecipe {
   image: string,
   slug: string,
   tags: number[],
+  id: number,
 } 
 
 interface BrowseRecipesState {
-  recipes: iRecipe[];
-  tags: any;
-  selectedTags: any;
+  recipes: iRecipe[],
+  tags: any,
+  selectedTags: any,
+  modalIsOpen: boolean,
+  clickedRecipe: iRecipe,
 }
 const BASE_URL: string = 'http://localhost:8000/storage/';
 
 const RecipeListItem = (props: RecipeListItemProps) => {
+  const handleClick = () => {
+    props.onOpenModal(props.recipe);
+  }
+
   return (
     <div className="level">
       <div className="level-left">
@@ -55,7 +64,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
             <h2 className="levelHeader">{props.recipe.title}</h2>
             <p className="levelContent">{props.recipe.instructions}</p>
             <Link className="levelLink" to={`/recipe/detail/${props.recipe.slug}`}>Read more</Link>
-            <a className="levelLink" href="#">Add to week</a>
+            <a className="levelLink" href="#" onClick={handleClick}>Add to week</a>
         </div>
       </div>
 
@@ -76,6 +85,15 @@ class BrowseRecipes extends Component<Props> {
     tags: [],
     selectedTags: [],
     recipes: [],
+    modalIsOpen: false,
+    clickedRecipe: {
+      instructions: '',
+      title: '',
+      image: '',
+      slug: '',
+      tags: [],
+      id: 0,
+    },
   }
 
   public buttons = [
@@ -127,6 +145,33 @@ class BrowseRecipes extends Component<Props> {
     }
   }
 
+  handleOpenModal = (recipe: iRecipe) => {
+    console.log("Open Modal");
+    this.setState({ modalIsOpen: true });
+    this.setState({ clickedRecipe: recipe });
+  }
+
+  handleModalClose = () => {
+    console.log("Close Modal");
+    this.setState({ modalIsOpen: false });
+    
+  }
+
+  // handleAddRecipe = async (props: any) => {
+  //   const api = Api.create();
+  //   const response: ApiResponse<any> = await api.daymealUpdate({
+  //     date: props.date,
+  //     meal_type: props.meal_type,
+  //     recipe_id: props.recipe_id,
+  //   }, this.props.user.access_token);;
+
+  //   if (!response.ok) {
+  //       console.log("DAYMEAL ERRORRR")
+  //     return;
+  //   }
+  //   console.log('BrowseRecipe.handleAddRecipe')
+  // }
+
   render() {
     if (!this.props.isLoggedIn) {
       return <Redirect to={"/"} />;
@@ -161,11 +206,18 @@ class BrowseRecipes extends Component<Props> {
                 </div>
               </div>
               {this.state.recipes.map((recipe: iRecipe, index: any) => (
-                <RecipeListItem key={index} recipe={recipe} />))}
+                <RecipeListItem key={index} recipe={recipe} onOpenModal={this.handleOpenModal} />))}
             </div>
           </div>
         </main> 
         <Footer copyrightText="" />
+        {this.state.modalIsOpen && (
+          <AddDayMealModal 
+            text="Add meal to weekly plan"
+            recipe={this.state.clickedRecipe}
+            // onSubmit={this.handleAddRecipe} 
+            onClose={this.handleModalClose} />
+        )}
       </div>
     );
   }
