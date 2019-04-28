@@ -119,9 +119,6 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     />
   ];
 
-  public tags = [
-    "tag1", "tag2", "tag3", "tag4", "tag5"];
-
   async componentDidMount () {
     const api = Api.create();
 
