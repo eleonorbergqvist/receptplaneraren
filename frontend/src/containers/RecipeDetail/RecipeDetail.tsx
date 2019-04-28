@@ -30,7 +30,7 @@ interface RecipeDetailState {
   recipe: iRecipe;
 }
 
-interface iRecipe {
+export interface iRecipe {
   instructions: string,
   title: string,
   image: string,
