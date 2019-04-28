@@ -1,4 +1,5 @@
 import React from "react";
+import { FormikErrors } from "formik"; 
 
 export interface InputProps {
   type: string;
@@ -8,7 +9,7 @@ export interface InputProps {
   value: string;
   onChange: any;
   onBlur: any;
-  error: string;
+  error: string | FormikErrors<any>;
 }
 
 const Input = (props: InputProps) => (
