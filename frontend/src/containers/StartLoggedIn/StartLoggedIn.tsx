@@ -4,13 +4,11 @@ import { connect } from "react-redux";
 import { iRootState } from "../../store";
 import Header from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
-import Tabs, { TabNav, RecipeItem, dayMealToLabel } from "../../components/Tabs/Tabs";
+import Tabs, { TabNav, RecipeItem, EmptyRecipeItem, dayMealToLabel } from "../../components/Tabs/Tabs";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import { iRecipe } from "../RecipeDetail/RecipeDetail";
 import Api from "../../services/Api";
 import { ApiResponse } from "apisauce";
-
-
 
 
 const mapState = (state: iRootState) => ({
@@ -28,9 +26,9 @@ interface StartLoggedInState {
   isLoggedOut: boolean,
 }
 
-interface iDay {
-  day: {breakfast: iRecipe, lunch: iRecipe, dinner: iRecipe}
-}
+// interface iDay {
+//   day: {breakfast: iRecipe, lunch: iRecipe, dinner: iRecipe}
+// }
 
 class StartLoggedIn extends Component<Props> {
   // TODO: Rename to WeeklyPlan?
@@ -69,10 +67,6 @@ class StartLoggedIn extends Component<Props> {
   ];
 
   async componentDidMount () {
-    // Get daymeal for current week
-    // const url = window.location.pathname;
-    // const slug = url.substr(url.lastIndexOf('/') + 1);
-    // console.log(slug);
     const api = Api.create();
 
     const response: ApiResponse<any> = await api.daymealsGetCurrentWeek(this.props.user.access_token);
@@ -121,6 +115,17 @@ class StartLoggedIn extends Component<Props> {
 
     let day = weekmeals[this.state.selectedTab] || [];
     let daymeals = day[1];
+    const emptyMeal = {
+      meal_type: 0,
+      id: 0,
+      recipe: {
+        title: '',
+        recipe_ingredients: [],
+        recipe_tags: [],
+        instructions: '',
+        image: '',
+      }
+    }
 
     return (
       <React.Fragment>
@@ -167,7 +172,9 @@ class StartLoggedIn extends Component<Props> {
               />
               <DayMealList 
                 meals={daymeals} 
-                renderMissingMeal={(mealType:number) => <p key={mealType}>Pleasw add -> {dayMealToLabel(mealType)}</p>}
+                renderMissingMeal={(mealType:number) => {
+                  return <EmptyRecipeItem key={mealType} mealType={mealType} />
+                }}
                 renderMealItem={(meal:any, index:number) => {
                   return <RecipeItem key={meal.id} data={meal} />
                 }}

@@ -26,15 +26,6 @@ export interface RecipeItemProps {
   },
 }
 
-// export interface RecipeItemContentProps {
-//   mealType: any,
-//   recipe: any,
-
-  // ingredients: [],
-  // preparation: string,
-  // image: string,
-  // portions: number,
-// }
 
 export const dayMealToLabel = (mealType:number) => {
   switch (mealType) {
@@ -101,6 +92,29 @@ export const RecipeItem = (props: RecipeItemProps) => {
               </div>
             </div>
             <br />
+            <button disabled className="button">Browse new</button>
+          </div>
+        </div>
+    </div>
+  )
+};
+
+interface EmptyRecipeItemProps {
+  mealType: number,
+}
+export const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
+  const { mealType } = props;
+  const typeLabel = dayMealToLabel(mealType);
+
+  return (
+    <div className="recipeitem">
+      <div className="content tabs__mealContainer columns">
+          <div className="column">
+            <h3>{typeLabel}</h3>
+          </div>
+          <div className="column">
+          </div>
+          <div className="column">
             <button disabled className="button">Browse new</button>
           </div>
         </div>
