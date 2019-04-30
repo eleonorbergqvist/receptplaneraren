@@ -8,7 +8,9 @@ import Tabs, { TabNav, RecipeItem, EmptyRecipeItem, dayMealToLabel } from "../..
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import { iRecipe } from "../RecipeDetail/RecipeDetail";
 import Api from "../../services/Api";
+import * as moment from 'moment';
 import { ApiResponse } from "apisauce";
+import { strict } from "assert";
 
 
 const mapState = (state: iRootState) => ({
@@ -20,7 +22,8 @@ type connectedProps = ReturnType<typeof mapState>;
 type Props = connectedProps;
 
 interface StartLoggedInState {
-  week: string,
+  week: number | null,
+  mondayDate: string,
   weekmeals: any,
   selectedTab: any,
   isLoggedOut: boolean,
@@ -33,7 +36,8 @@ interface StartLoggedInState {
 class StartLoggedIn extends Component<Props> {
   // TODO: Rename to WeeklyPlan?
   state: StartLoggedInState = {
-    week: '',
+    week: null,
+    mondayDate: '',
     weekmeals: [],
     selectedTab: 0,
     isLoggedOut: false,
@@ -66,10 +70,40 @@ class StartLoggedIn extends Component<Props> {
     />
   ];
 
-  async componentDidMount () {
-    const api = Api.create();
+ componentDidMount () {
+    const week = moment.default().isoWeek();
+    const monday = moment.default().startOf('isoWeek').format('YYYY-MM-DD');
 
-    const response: ApiResponse<any> = await api.daymealsGetCurrentWeek(this.props.user.access_token);
+    this.setState({ 
+      week: week,
+      mondayDate: monday,
+    }, () => this.getDayMealsData(this.state.mondayDate));
+  }
+
+  handleWeekChange = async (e: React.FormEvent, direction:number) => {
+    e.preventDefault();
+    let newMondayDate = moment.default(this.state.mondayDate, 'YYYY-MM-DD');;
+
+    if (direction === 1) {
+      newMondayDate.add(7, 'days');
+    }
+
+    if (direction === -1) {
+      newMondayDate.subtract(7, 'days');
+    }
+
+    this.setState({
+      mondayDate: newMondayDate.format('YYYY-MM-DD'),
+      week: newMondayDate.isoWeek()
+    }, () => this.getDayMealsData(this.state.mondayDate));
+
+    // TODO: använda debounce vid många click
+
+  }
+
+  getDayMealsData = async (monday: string) => {
+    const api = Api.create();
+    const response: ApiResponse<any> = await api.daymealsByDate(this.props.user.access_token, monday);
 
     if (response.status === 401) {
       this.setState({
@@ -81,9 +115,8 @@ class StartLoggedIn extends Component<Props> {
     if (!response.ok) {
       throw Error("DAYMEAL ERROR");
     }
-  
+
     this.setState({ 
-      week: response.data.week,
       weekmeals: response.data.daymeals,
     })
   }
@@ -115,17 +148,6 @@ class StartLoggedIn extends Component<Props> {
 
     let day = weekmeals[this.state.selectedTab] || [];
     let daymeals = day[1];
-    const emptyMeal = {
-      meal_type: 0,
-      id: 0,
-      recipe: {
-        title: '',
-        recipe_ingredients: [],
-        recipe_tags: [],
-        instructions: '',
-        image: '',
-      }
-    }
 
     return (
       <React.Fragment>
@@ -134,10 +156,10 @@ class StartLoggedIn extends Component<Props> {
           <div className="start__Container columns">
             <div className="column is-two-fifths">
               <h1>Vecka {this.state.week}</h1>
-              <span className="icon">
+              <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
                 <i className="fas fa-caret-left" />
               </span>
-              <span className="icon">
+              <span id="right" className="icon" onClick={e => this.handleWeekChange(e, 1)}>
                 <i className="fas fa-caret-right" />
               </span>
               <p>

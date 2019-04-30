@@ -74,7 +74,6 @@ class DayMealTest extends TestCase
         $response->assertStatus(200);
 
 
-
         $response->assertJsonStructure([
             'week',
             'daymeals' => [
@@ -84,12 +83,19 @@ class DayMealTest extends TestCase
     }
 
     /** @test */
-    public function it_will_show_all_day_meals_for_a_given_week()
+    public function it_will_show_all_day_meals_for_the_week_given_a_date()
     {
-        $week = 17;
-        $daymeals = factory(DayMeal::class, 10)->create();
+        $monday = '2019-04-29';
 
-        $response = $this->get(route('daymeals.showWeek', $week),
+        $daymeal = new DayMeal([
+            'date' => $monday,
+            'meal_type' => 1,
+            'user_id' => $this->user->id,
+            'recipe_id' => $this->recipe->id,
+        ]);
+        $daymeal->save();
+
+        $response = $this->get(route('daymeals.showWeek', $monday),
             ['Authorization' => 'Bearer ' . $this->token]);
 
 

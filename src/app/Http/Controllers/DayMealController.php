@@ -32,10 +32,8 @@ class DayMealController extends Controller
     public function getCurrentWeek()
     {
         $now = CarbonImmutable::now();
-
-        //fel vecka söndag ändra
-        // $week = CarbonImmutable::now()->week();
-        $week = 17;
+        //kolla upp datum
+        $week = CarbonImmutable::now()->isoWeek();
 
         $startDate = $now->startOfWeek(CarbonImmutable::MONDAY);
         $endDate = CarbonImmutable::now()->endOfWeek(CarbonImmutable::SUNDAY);
@@ -83,61 +81,65 @@ class DayMealController extends Controller
         ]);
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  \App\DayMeal  $dayMeal
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function showWeek($week)
-    // {
-    //     // Get the daymeals with recipes, tags, recipeingredients, ingredients for the selected week.
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\DayMeal  $dayMeal
+     * @return \Illuminate\Http\Response
+     */
+    public function showWeek($monday)
+    {
+    // Get the daymeals with recipes, tags, recipeingredients, ingredients for the selected week.
+        $carbonMonday = CarbonImmutable::createFromFormat('Y-m-d', $monday);
+        $week = $carbonMonday->isoWeek();
+        $startDate = $carbonMonday->startOfWeek(CarbonImmutable::MONDAY)->format('Y-m-d');
+        $endDate = $carbonMonday->endOfWeek(CarbonImmutable::SUNDAY)->format('Y-m-d');
+        error_log($startDate);
+        error_log($endDate);
+        error_log($week);
 
-    //     $dt = CarbonImmutable::now();
-    //     $monday = $dt->startOfWeek(CarbonImmutable::MONDAY);
-    //     $tuesday = $monday->addDay();
-    //     $sunday = CarbonImmutable::now()->endOfWeek(CarbonImmutable::SUNDAY);
-    //     $week = CarbonImmutable::now()->week();
+        $daymeals = DayMeal::with(
+            'user',
+            'recipe.recipeIngredients.ingredient',
+            'recipe.recipeTags'
+        )->orderBy(
+            'date'
+        )->whereBetween(
+            'date',[$startDate, $endDate]
+        )->get();
+        $daymeals = $daymeals->toArray();
 
-    //     // echo "Monday? 22/4?: ", $monday;
+        $daymealsByDate = array_reduce($daymeals, function($acc, $daymeal) {
+            $date = date("Y-m-d", strtotime($daymeal['date']));
 
-    //     $days = [
-    //         $monday,
-    //         $monday->addDays(1)->format('Y-m-d'),
-    //         $monday->addDays(2)->format('Y/m/d'),
-    //         $monday->addDays(3)->format('Y/m/d'),
-    //         $monday->addDays(4)->format('Y/m/d'),
-    //         $monday->addDays(5)->format('Y/m/d'),
-    //         $monday->addDays(6)->format('Y/m/d'),
-    //     ];
+            $meals = $acc[$date] ?? [];
+            $meals[] = $daymeal;
 
-    //     // echo "First day of this week: ", $monday;
-    //     // echo "Last day of this week: ", $sunday;
-    //     // echo "Weeknumber: ", $week;
-    //     // echo "Tuesday: ", $tuesday;
-    //     // print_r($days);
-    //     // $recipes = Recipe::all()->load(["recipeTags", "recipeIngredients.ingredient"]);
-    //     $daymealsOfWeek = [];
-    //     //Hämta alla daymeals från db
-    //     foreach ($days as $day) {
-    //         $daymealsOfDay[] = DayMeal::whereDate('date', $day);
-    //         // whereDate('date', '=', date('Y-m-d'))
-    //         //inspektera sql anropen genom laravel?
-    //     }
+            $acc[$date] = $meals;
+            return $acc;
+        }, []);
 
-    //     $daymealsOfWeek[] = $daymealsOfDay;
-    //     print_r($daymealsOfWeek);
+        $formattedDaymeals = [];
+        foreach ($daymealsByDate as $key => $value) {
+            $formattedDaymeals[] = [$key, $value];
+        }
 
+        $formattedDaymeals = array_map(function ($item) {
+            $date = $item[0];
+            $daymeals = $item[1];
 
-    //     //returera vecka samt alla daymeals
-    //     return response()->json([
-    //         // 'firstday' => $monday,
-    //         // 'lastday' => $sunday,
-    //         'week' => $week,
-    //         'daymeals' => $daymealsOfWeek,
-    //     ]);
+            usort($daymeals, function($a, $b) {
+                return $a['meal_type'] <=> $b['meal_type'];
+            });
 
-    // }
+            return [$date, $daymeals];
+        }, $formattedDaymeals);
+
+        return response()->json([
+            'week' => $week,
+            'daymeals' => $formattedDaymeals,
+        ]);
+    }
 
     /**
      * Update the specified resource in storage.

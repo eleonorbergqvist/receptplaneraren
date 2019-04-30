@@ -76,6 +76,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
     actions.setSubmitting(true);
 
     // fixa så isoweckor används... UTC???
+    // const isoWeek = moment.default().isoWeek();
     const date = moment.default().day(values.day).week(values.week).format('YYYY-MM-DD HH:mm:ss');
     let meal_type;
     

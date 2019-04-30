@@ -94,8 +94,8 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     }
   );
 
-  const daymealsGetCurrentWeek = (jwtToken: string | null) =>
-    api.get(`/daymeals-current`, {}, {
+  const daymealsByDate = (jwtToken: string | null, monday: string) =>
+    api.get(`/daymeals/${monday}`, {}, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
       }
@@ -129,7 +129,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     recipeImage,
     recipesAllInfo,
     recipeBySlug,
-    daymealsGetCurrentWeek,
+    daymealsByDate,
     daymealUpdate,
   };
 };
