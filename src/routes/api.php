@@ -40,6 +40,8 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::get('/daymeals/{monday}', 'DayMealController@showWeek')->name('daymeals.showWeek');
     Route::put('/daymeals-update', 'DayMealController@update')->name('daymeals.update');
 
+    Route::get('/shopping-list/{monday}', 'ShoppingListController@showWeek')->name('shoppingList.showWeek');
+
 
     Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
     Route::get('/recipesAll', 'RecipeController@indexAndTagsAndIngredients')->name('recipes.indexAndTagsAndIngredients');

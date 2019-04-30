@@ -114,6 +114,14 @@ const create = (baseURL = "http://localhost:8000/api/") => {
   }
 );
 
+  const shoppingList = (jwtToken: string | null, monday: string) =>
+    api.get(`/shopping-list/${monday}`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
   
 
   
@@ -131,6 +139,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     recipeBySlug,
     daymealsByDate,
     daymealUpdate,
+    shoppingList,
   };
 };
 

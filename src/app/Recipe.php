@@ -30,4 +30,8 @@ class Recipe extends Model
     {
         return $this->belongsToMany('App\RecipeTag')->using('App\RecipeRecipeTag')->withTimestamps();
     }
+
+    public function daymeals() {
+        return $this->hasMany('App\DayMeal');
+    }
 }

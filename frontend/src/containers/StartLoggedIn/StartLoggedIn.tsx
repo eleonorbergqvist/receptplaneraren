@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { iRootState } from "../../store";
@@ -27,6 +27,7 @@ interface StartLoggedInState {
   weekmeals: any,
   selectedTab: any,
   isLoggedOut: boolean,
+  shoppingList: any,
 }
 
 // interface iDay {
@@ -41,6 +42,7 @@ class StartLoggedIn extends Component<Props> {
     weekmeals: [],
     selectedTab: 0,
     isLoggedOut: false,
+    shoppingList: [],
   }
 
   public buttons = [
@@ -129,6 +131,29 @@ class StartLoggedIn extends Component<Props> {
     });
   }
 
+  handleShoppingList = async (e: FormEvent) => {
+    e.preventDefault();
+    const monday = this.state.mondayDate;
+    const api = Api.create();
+    const response: ApiResponse<any> = await api.shoppingList(this.props.user.access_token, monday);
+
+    if (response.status === 401) {
+      this.setState({
+        isLoggedOut: true,
+      })
+      return;
+    }
+    
+    if (!response.ok) {
+      throw Error("SHOPPINGLIST ERROR");
+    }
+
+    console.log(response.data.shoppinglist);
+    this.setState({
+      shoppingList: response.data.shoppinglist
+    })
+  }
+
   render() {
     const { weekmeals } = this.state
 
@@ -174,8 +199,12 @@ class StartLoggedIn extends Component<Props> {
                 bibendum a nunc. Quisque quam magna, sollicitudin egestas orci
                 a, congue aliquam nibh.
               </p>
-              <button className="button">Generate Shoppinglist</button>
+              <button className="button" onClick={this.handleShoppingList}>Generate Shoppinglist</button>
               <br />
+              {this.state.shoppingList.map((ingredient: any, index: number) => {
+                console.log('test');
+                return <li key={index}>{ingredient.amount}{ingredient.measurement}{ingredient.ingredient.name}</li>
+              })}
             </div>
             <div className="column">
 
