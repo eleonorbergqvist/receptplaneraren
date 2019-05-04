@@ -13,7 +13,7 @@ import InputList from '../InputList/InputList';
 import "./RecipeForm.css";
 
 export interface RecipeFormProps {
-  onSubmit: any,
+  onSubmit: Function,
 }
 
 export interface RecipeFormState {

@@ -64,13 +64,13 @@ export const HeaderLoggedOut = (props:any) => {
       key={1}
       text="Sign Up"
       link={"/register"}
-      class="header__button--yellow"
+      className="header__button--yellow"
     />,
     <PrimaryMenuButton
       key={2}
       text="Log In"
       link={"/login"}
-      class="header__button--pink"
+      className="header__button--pink"
     />
   ];
 
@@ -83,25 +83,25 @@ export const HeaderLoggedIn = (props:any) => {
       key={1}
       text="Create Recipe"
       link={"/recipe/create"}
-      class="header__button--yellow"
+      className="header__button--yellow"
     />,
     <PrimaryMenuButton
       key={2}
       text="Browse Recipes"
       link={"/recipe/browse"}
-      class="header__button--yellow"
+      className="header__button--yellow"
     />,
     <PrimaryMenuButton
       key={3}
       text="Settings"
       link={"#"}
-      class="header__button--yellow"
+      className="header__button--yellow"
     />,
     <PrimaryMenuButton
       key={4}
       text="Log Out"
       link={"/logout"}
-      class="header__button--pink"
+      className="header__button--pink"
     />
   ];
 

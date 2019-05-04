@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface SelectProps {
-  itemsArray: any[],
+  options: string[],
   name: string,
   value: string,
   onChange: any,
@@ -18,7 +18,7 @@ const Select = (props: SelectProps) => (
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-      {props.itemsArray.map((item, index) =>
+      {props.options.map((item, index) =>
         <option key={index}>{item}</option>
       )}
       </select>

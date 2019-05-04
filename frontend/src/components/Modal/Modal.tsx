@@ -7,9 +7,7 @@ export interface ModalProps {
 
 class Modal extends React.Component<ModalProps> {
   handleClick = (event: any) => {
-    const { onClose } = this.props
-    
-    onClose();
+    this.props.onClose();
   };
 
   render() {

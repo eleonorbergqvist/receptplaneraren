@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 export interface PrimaryMenuButtonProps {
   text: string;
   link: string;
-  class: string;
+  className: string;
 }
 
 const PrimaryMenuButton = (props: PrimaryMenuButtonProps) => (
-  <Link className={`${props.class} button`} to={props.link}>
+  <Link className={`${props.className} button`} to={props.link}>
     {props.text}
   </Link>
 );

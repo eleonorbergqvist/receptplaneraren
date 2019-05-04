@@ -174,7 +174,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
               render={(formikBag: FormikProps<iFormValues>) => (
                 <Form>
                   <h1>{this.props.text}</h1>
-                  <Select name="week" itemsArray={this.state.weekList}
+                  <Select name="week" options={this.state.weekList}
                     value={formikBag.values.week}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
@@ -187,7 +187,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   }
                   <Select
                     name="day"
-                    itemsArray={this.state.dayList}
+                    options={this.state.dayList}
                     value={formikBag.values.day}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
@@ -200,7 +200,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   }
                   <Select
                     name="meal"
-                    itemsArray={this.state.mealList}
+                    options={this.state.mealList}
                     value={formikBag.values.meal}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
