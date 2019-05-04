@@ -13,7 +13,7 @@ export interface IngredientsInputProps {
 
 uz.Classes.addDefaults();
 
-// volume = 0, mass = 1, piece = 2
+// TODO: volume = 0, mass = 1, piece = 2
 const MEASUREMENT_LIST: {label: String, type: Number}[] = [
   {label: 'ml', type: 0},
   {label: 'l', type: 0},
@@ -30,9 +30,6 @@ const MEASUREMENT_LIST: {label: String, type: Number}[] = [
   {label: 'lb', type: 1},
   {label: 'piece', type: 2},
 ];
-
-//const findMeasureUnit = (amount: number, measurement: number) => {
-//}
 
 const IngredientsInput = (props: IngredientsInputProps) => {
 

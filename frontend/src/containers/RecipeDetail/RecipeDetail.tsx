@@ -7,6 +7,7 @@ import { iRootState, Dispatch } from "../../store";
 import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import { getEnv } from "../../config";
 import "./RecipeDetail.css";
 
 const mapState = (state: iRootState) => ({
@@ -20,10 +21,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-// to include additional typings
 type Props = connectedProps & { api: iApi }
-
-const BASE_URL: string = 'http://localhost:8000/storage/';
 
 interface RecipeDetailState {
   recipe: iRecipe,
@@ -64,7 +62,6 @@ class RecipeDetail extends Component<Props> {
   }
 
   async componentDidMount () {
-    // Get recipe with tags by slug/id
     const url = window.location.pathname;
     const slug = url.substr(url.lastIndexOf('/') + 1);
     this.setState({ slug: slug });
@@ -121,7 +118,7 @@ class RecipeDetail extends Component<Props> {
                 <div className="column RecipeDetail__Container--Image">
                   <img
                     className="image is-1by1 RecipeDetail__Image"
-                    src={BASE_URL+this.state.recipe.image || 'https://bulma.io/images/placeholders/256x256.png'}
+                    src={getEnv('IMAGE_PREFIX')+this.state.recipe.image || getEnv('FALLBACK_IMAGE')}
                     alt=""
                   />
                 </div>

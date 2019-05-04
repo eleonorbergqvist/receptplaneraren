@@ -8,6 +8,7 @@ import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
+import { getEnv } from "../../config";
 import "./BrowseRecipes.css";
 
 const mapState = (state: iRootState) => ({
@@ -46,7 +47,6 @@ interface BrowseRecipesState {
   modalIsOpen: boolean,
   clickedRecipe: iRecipe,
 }
-const BASE_URL: string = 'http://localhost:8000/storage/';
 
 const RecipeListItem = (props: RecipeListItemProps) => {
   const handleClick = () => {
@@ -68,7 +68,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
         <figure className="level-item image is-128x128">
           <img
             alt=""
-            src={BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png"} />
+            src={getEnv('IMAGE_PREFIX')+props.recipe.image || getEnv('FALLBACK_IMAGE')} />
         </figure>
       </div>
       <hr className="levelHr"/>

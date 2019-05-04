@@ -10,6 +10,7 @@ import * as Yup from "yup";
 import Input from "../Input/Input";
 import InputList from "../InputList/InputList";
 import { emptyIngredient } from '../InputList/InputList';
+import { getEnv } from '../../config'
 import "./RecipeEditForm.css";
 
 export interface RecipeEditFormProps {
@@ -39,9 +40,6 @@ interface iFormValues {
   ingredients: iIngredient[];
 }
 
-
-const BASE_URL: string = 'http://localhost:8000/storage/';
-
 const validationSchema = Yup.object().shape({
   title: Yup.string()
     .required("Title is required!"),
@@ -62,7 +60,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState>
 
     this.state = {
       title: props.recipe.title,
-      image: BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png",
+      image: getEnv('IMAGE_PREFIX')+props.recipe.image || getEnv('FALLBACK_IMAGE'),
       instructions: props.recipe.instructions,
       ingredients: [emptyIngredient],
       isImageChanged: false,

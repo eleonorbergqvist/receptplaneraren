@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { getEnv } from "../../config";
 import "./Tabs.css";
 
 interface TabProps {
@@ -50,7 +51,6 @@ export const RecipeItem = (props: RecipeItemProps) => {
 
   const typeLabel = dayMealToLabel(mealType);
   console.log(recipe);
-  const BASE_URL: string = 'http://localhost:8000/storage/';
 
   return (
     <div className="recipeitem">
@@ -78,7 +78,7 @@ export const RecipeItem = (props: RecipeItemProps) => {
             <div className="card">
               <div className="card-image">
                 <img
-                  src={BASE_URL+recipe.image || "https://bulma.io/images/placeholders/1280x960.png"}
+                  src={getEnv('IMAGE_PREFIX')+recipe.image || getEnv('FALLBACK_IMAGE')}
                   alt=""
                 />
               </div>
