@@ -1,6 +1,6 @@
 import React from "react";
-import "./IngredientsInput.css";
 import * as uz from 'unitz-ts';
+import "./IngredientsInput.css";
 
 export interface IngredientsInputProps {
   index: number,

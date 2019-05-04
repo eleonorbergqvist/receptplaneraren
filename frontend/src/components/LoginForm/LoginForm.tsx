@@ -9,18 +9,24 @@ import * as Yup from "yup";
 import Input from "../Input/Input";
 import "./LoginForm.css";
 
-export interface LoginFormProps {
-  onSubmit: any;
-}
 export interface LoginFormState {
   email: string;
   password: string;
 }
 
-interface iFormValues {
+interface FormValues {
   email: string;
   password: string;
   general: string;
+}
+
+export interface OnSubmitValues {
+  email: string;
+  password: string;
+}
+
+export interface LoginFormProps {
+  onSubmit: (data: OnSubmitValues, actions: FormikActions<FormValues>) => void
 }
 
 const validationSchema = Yup.object().shape({
@@ -31,6 +37,7 @@ const validationSchema = Yup.object().shape({
     .min(6, "Password has to be longer than 6 characters!")
     .required("Password is required!")
 });
+
 class LoginForm extends Component<LoginFormProps, LoginFormState> {
   render() {
     const onSubmit = this.props.onSubmit;
@@ -45,8 +52,8 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={(
-            values: iFormValues,
-            actions: FormikActions<iFormValues>
+            values: FormValues,
+            actions: FormikActions<FormValues>
           ) => {
             onSubmit(
               {
@@ -56,7 +63,7 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
               actions
             );
           }}
-          render={(formikBag: FormikProps<iFormValues>) => (
+          render={(formikBag: FormikProps<FormValues>) => (
             <Form>
               {formikBag.errors.general && <p>{formikBag.errors.general}</p>}
 

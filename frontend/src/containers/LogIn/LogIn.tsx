@@ -7,7 +7,7 @@ import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import Api from "../../services/Api";
 
-import LoginForm from "../../components/LoginForm/LoginForm";
+import LoginForm, { OnSubmitValues } from "../../components/LoginForm/LoginForm";
 import "./LogIn.css";
 
 const mapState = (state: iRootState) => ({
@@ -23,10 +23,10 @@ type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
 // to include additional typings
 // use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps;
+type LogInProps = connectedProps;
 
-class LogIn extends Component<Props> {
-  handleSubmit = async (values: any, actions: FormikActions<any>) => {
+class LogIn extends Component<LogInProps> {
+  handleSubmit = async (values: OnSubmitValues, actions: FormikActions<any>) => {
     const api = Api.create();
 
     actions.setSubmitting(true);
@@ -77,5 +77,5 @@ class LogIn extends Component<Props> {
 
 export default connect(
   mapState,
-  mapDispatch
+  mapDispatch,
 )(LogIn);

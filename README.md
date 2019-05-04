@@ -22,5 +22,9 @@ This is a recipe app.
 ## References
 - https://laravel.com/docs/5.8/http-tests
 
+## Storybook
+- cd frontend
+- npm run storybook
+
 ## License
 MIT
