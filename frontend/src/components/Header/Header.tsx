@@ -22,10 +22,11 @@ class Header extends Component<HeaderProps, HeaderState> {
     return (
       <nav className="header navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a className="header__title navbar-item">Receptplaneraren</a>
+          <a href="#" className="header__title navbar-item">Receptplaneraren</a>
 
           <a
             role="button"
+            href="#"
             className= {"navbar-burger burger " + (this.state.burgerIsActive ? 'is-active' : '')}
             aria-label="menu"
             aria-expanded="false"

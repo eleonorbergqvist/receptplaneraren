@@ -13,15 +13,15 @@ import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import Api from "../../services/Api";
 
-type connectedProps = ReturnType<typeof mapState>;
-// to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps & AddDayMealModalProps;
-
 const mapState = (state: iRootState) => ({
   user: state.user,
   isLoggedIn: state.user.access_token !== null
 });
+
+type connectedProps = ReturnType<typeof mapState>;
+// to include additional typings
+// use `type Props = connectedProps & { ...additionalTypings }
+type Props = connectedProps & AddDayMealModalProps;
 
 interface AddDayMealModalProps {
   text: string,
@@ -32,7 +32,7 @@ interface AddDayMealModalProps {
 
 interface iRecipe {
   id: number,
-} 
+}
 
 interface AddDayMealModalState {
   weekList: number[],
@@ -79,7 +79,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
     // const isoWeek = moment.default().isoWeek();
     const date = moment.default().day(values.day).week(values.week).format('YYYY-MM-DD HH:mm:ss');
     let meal_type;
-    
+
     switch (values.meal) {
       case 'Breakfast':
       meal_type = 0;
@@ -131,7 +131,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
     }
     this.setState({ weekList: allWeeks });
     // this.setState({ currentDay: moment.default().
-    //   isoWeekday(moment.default().isoWeekday()).format('dddd') 
+    //   isoWeekday(moment.default().isoWeekday()).format('dddd')
     // })
   }
 // remove touched validation
@@ -170,7 +170,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
               render={(formikBag: FormikProps<iFormValues>) => (
                 <Form>
                   <h1>{this.props.text}</h1>
-                  <Select name="week" itemsArray={this.state.weekList} 
+                  <Select name="week" itemsArray={this.state.weekList}
                     value={formikBag.values.week}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
@@ -178,12 +178,12 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     //   formikBag.touched.week ? formikBag.errors.week || "" : ""
                     // }
                   />
-                  {formikBag.errors.week 
+                  {formikBag.errors.week
                     && <p className="help is-danger">{formikBag.errors.week}</p>
                   }
-                  <Select 
-                    name="day" 
-                    itemsArray={this.state.dayList} 
+                  <Select
+                    name="day"
+                    itemsArray={this.state.dayList}
                     value={formikBag.values.day}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
@@ -191,12 +191,12 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     //   formikBag.touched.day ? formikBag.errors.day || "" : ""
                     // }
                   />
-                  {formikBag.errors.day 
+                  {formikBag.errors.day
                     && <p className="help is-danger">{formikBag.errors.day}</p>
                   }
                   <Select
-                    name="meal" 
-                    itemsArray={this.state.mealList} 
+                    name="meal"
+                    itemsArray={this.state.mealList}
                     value={formikBag.values.meal}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
@@ -204,7 +204,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     //   formikBag.touched.meal ? formikBag.errors.meal || "" : ""
                     // }
                   />
-                  {formikBag.errors.meal 
+                  {formikBag.errors.meal
                     && <p className="help is-danger">{formikBag.errors.meal}</p>
                   }
 

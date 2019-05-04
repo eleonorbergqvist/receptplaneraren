@@ -1,4 +1,4 @@
-import React, { Component, FormEvent } from "react";
+import React, { FormEvent } from "react";
 import "./RecipeTags.css";
 
 export interface RecipeTagProps {
@@ -20,14 +20,14 @@ export const RecipeTags = (props: RecipeTagProps) => {
   }
 
   return (
-    <div className="RecipeTags"> 
+    <div className="RecipeTags">
       {props.tags.map(tag => {
         const isSelected = props.selectedTags.includes(tag.id);
 
         return (
-          <button 
+          <button
             className={isSelected ? "button selected" : "button not-selected"}
-            onClick={e => handleOnClick(e, tag)} 
+            onClick={e => handleOnClick(e, tag)}
             key={tag.id
           }>{tag.name}</button>
         )

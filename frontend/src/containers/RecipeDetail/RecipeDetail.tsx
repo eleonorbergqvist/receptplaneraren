@@ -37,18 +37,18 @@ export interface iRecipe {
   id: number,
   recipe_tags: iRecipeTag[],
   recipe_ingredients: iRecipeIngredient[],
-} 
+}
 
 interface iRecipeTag {
   id: number,
   name: string,
-} 
+}
 
 interface iRecipeIngredient {
   amount: number,
   measurement: string,
   ingredient: { name: string },
-} 
+}
 
 class RecipeDetail extends Component<Props> {
   state: RecipeDetailState = {
@@ -59,7 +59,7 @@ class RecipeDetail extends Component<Props> {
       id: 0,
       recipe_tags: [],
       recipe_ingredients: [],
-     } 
+     }
   }
 
   public buttons = [
@@ -142,7 +142,11 @@ class RecipeDetail extends Component<Props> {
                   </ul>
                 </div>
                 <div className="column RecipeDetail__Container--Image">
-                  <img className="image is-1by1 RecipeDetail__Image" src={BASE_URL+this.state.recipe.image || 'https://bulma.io/images/placeholders/256x256.png'} />
+                  <img
+                    className="image is-1by1 RecipeDetail__Image"
+                    src={BASE_URL+this.state.recipe.image || 'https://bulma.io/images/placeholders/256x256.png'}
+                    alt=""
+                  />
                 </div>
               </div>
               <h2>Instructions</h2>
@@ -152,7 +156,7 @@ class RecipeDetail extends Component<Props> {
           <div className="colums RecipeDetail__Container--Bottom">
             <button className="button">Add to week</button>
           </div>
-        </main> 
+        </main>
         <Footer copyrightText="" />
       </div>
     );

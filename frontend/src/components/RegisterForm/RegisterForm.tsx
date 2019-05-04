@@ -5,12 +5,10 @@ import {
   FormikProps,
   Form,
   Field,
-  FieldProps
 } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";
 import "./RegisterForm.css";
-import { string } from "prop-types";
 
 export interface RegisterFormProps {
   onSubmit: any;
@@ -145,7 +143,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
                       name="consent"
                       type="checkbox"
                     />
-                    I agree to the <a href="#">terms and conditions</a>
+                    I agree to the <a href="/terms-and-conditions">terms and conditions</a>
                   </label>
                 </div>
                 <p className="help is-success">

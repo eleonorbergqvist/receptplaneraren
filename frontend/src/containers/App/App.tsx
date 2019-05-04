@@ -12,6 +12,7 @@ import CreateRecipe from "../CreateRecipe/CreateRecipe";
 import "./App.css";
 import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
 import RecipeDetail from "../RecipeDetail/RecipeDetail";
+import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
             <Route path="/recipe/detail/:slug" component={RecipeDetail} />
             <Route path="/password/create" component={CreateResetPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
+            <Route path="/terms-and-conditions" component={TermsAndConditions} />
           </Switch>
         </BrowserRouter>
       </div>

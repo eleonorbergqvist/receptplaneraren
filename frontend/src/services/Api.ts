@@ -1,13 +1,9 @@
 import apisauce from "apisauce";
-import { StringSchema } from "yup";
 
 const create = (baseURL = "http://localhost:8000/api/") => {
   const api = apisauce.create({
     baseURL,
-    headers: {
-      // 'Cache-Control': 'no-cache'
-    },
-    timeout: 10000
+    timeout: 10000,
   });
 
   const register = (values: any) =>
@@ -42,7 +38,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       tags: values.tags,
     }, {
       headers: {
-        Authorization: `Bearer ${jwtToken}` 
+        Authorization: `Bearer ${jwtToken}`
       }
     }
   );
@@ -121,10 +117,6 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       }
     }
   );
-
-  
-
-  
 
   return {
     register,

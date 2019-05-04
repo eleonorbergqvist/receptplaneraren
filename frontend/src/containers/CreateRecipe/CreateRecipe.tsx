@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
@@ -54,7 +53,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       title: values.title,
       tags: this.state.selectedTags,
     }, this.props.user.access_token);
-    
+
     actions.setSubmitting(false);
 
     if (!response.ok) {
@@ -156,10 +155,10 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">
               Create Recipe and tabs
-              <RecipeTags 
-                tags={this.state.tags} 
+              <RecipeTags
+                tags={this.state.tags}
                 selectedTags={this.state.selectedTags}
-                onToggleTag={this.handleToggleTag} 
+                onToggleTag={this.handleToggleTag}
               />
             </div>
             <div className="CreateRecipe__Container--Right column">

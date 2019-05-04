@@ -4,8 +4,6 @@ import {
   FormikActions,
   FormikProps,
   Form,
-  Field,
-  FieldProps
 } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";

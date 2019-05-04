@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Tabs.css";
-
-
 
 interface TabProps {
   daymealsForWeek: any,
@@ -14,7 +11,7 @@ interface TabState {
 
 export interface RecipeItemProps {
   data: {
-    meal_type: number, 
+    meal_type: number,
     id: number,
     recipe: {
       title: any,
@@ -26,7 +23,6 @@ export interface RecipeItemProps {
   },
 }
 
-
 export const dayMealToLabel = (mealType:number) => {
   switch (mealType) {
     case 0:
@@ -35,12 +31,14 @@ export const dayMealToLabel = (mealType:number) => {
       return "LUNCH";
     case 2:
       return "DINNER";
+    default:
+      return "UNSPECIFIED";
   }
 }
 
 export const RecipeItem = (props: RecipeItemProps) => {
-  const { 
-    recipe, 
+  const {
+    recipe,
     meal_type: mealType,
     id,
   } = props.data;
@@ -62,10 +60,10 @@ export const RecipeItem = (props: RecipeItemProps) => {
             <h5>{recipe.title || 'No title'}</h5>
             <h5>Ingredients</h5>
             <ul>
-              {recipe.recipe_ingredients.map((recipeIngredient: any, index: number)  => 
+              {recipe.recipe_ingredients.map((recipeIngredient: any, index: number)  =>
               <li key={index} >
               {recipeIngredient.amount}
-              {recipeIngredient.measurement} 
+              {recipeIngredient.measurement}
               {recipeIngredient.ingredient.name}
               </li>)}
             </ul>
@@ -81,11 +79,11 @@ export const RecipeItem = (props: RecipeItemProps) => {
               <div className="card-image">
                 <img
                   src={BASE_URL+recipe.image || "https://bulma.io/images/placeholders/1280x960.png"}
-                  alt="Placeholder image"
+                  alt=""
                 />
               </div>
               <div className="card-content">
-              {recipe.recipe_tags.map((recipeTag: any, index: number)  => 
+              {recipe.recipe_tags.map((recipeTag: any, index: number)  =>
                 <li key={index}>
                   {recipeTag.name}
                 </li>)}
@@ -135,7 +133,7 @@ interface TabNavState {
 export class TabNav extends Component<TabNavProps, TabNavState> {
   render() {
     const { items, onChange, selected } = this.props;
-    
+
     return (
       <div className="tabs">
         {items.map((item:any) => {
@@ -146,7 +144,7 @@ export class TabNav extends Component<TabNavProps, TabNavState> {
           }
 
           return (
-            <a 
+            <a
               className={className}
               key={item.value}
               onClick={e => onChange(item)}
@@ -168,7 +166,7 @@ class Tabs extends Component<TabProps, TabState> {
       <div className="tabs__dayContainer"> */}
         <RecipeItem
           data={this.props.daymealsForWeek}/>
-      </div> 
+      </div>
     )
   }
 }

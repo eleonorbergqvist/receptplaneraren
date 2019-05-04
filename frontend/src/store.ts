@@ -9,8 +9,8 @@ const persistPlugin = createRematchPersist({
 })
 
 export const store = init({
-    models,
-    plugins: [persistPlugin],
+  models,
+  plugins: [persistPlugin],
 })
 
 export type Store = typeof store

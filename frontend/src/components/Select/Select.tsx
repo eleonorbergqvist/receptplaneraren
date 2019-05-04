@@ -1,5 +1,4 @@
 import React from "react";
-import { FormikErrors } from "formik"; 
 
 export interface SelectProps {
   itemsArray: any[],
@@ -13,15 +12,15 @@ export interface SelectProps {
 const Select = (props: SelectProps) => (
   <div className="field">
     <div className="select">
-      <select className="select" 
+      <select className="select"
         name={props.name}
         value={props.value}
         onChange={props.onChange}
         onBlur={props.onBlur}
       >
-      {props.itemsArray.map((item, index) =>     
-                <option key={index}>{item}</option>
-              )}
+      {props.itemsArray.map((item, index) =>
+        <option key={index}>{item}</option>
+      )}
       </select>
     </div>
     {/* {props.error && <p className="help is-danger">{props.error}</p>} */}

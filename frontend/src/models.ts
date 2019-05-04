@@ -1,5 +1,3 @@
-import LogOut from "./containers/LogOut/LogOut";
-
 const initialState = {
   access_token: null,
 }

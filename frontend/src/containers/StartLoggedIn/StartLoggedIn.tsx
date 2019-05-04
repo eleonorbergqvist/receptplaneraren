@@ -4,14 +4,11 @@ import { connect } from "react-redux";
 import { iRootState } from "../../store";
 import Header from "../../components/Header/Header";
 import { Footer } from "../../components/Footer/Footer";
-import Tabs, { TabNav, RecipeItem, EmptyRecipeItem, dayMealToLabel } from "../../components/Tabs/Tabs";
+import { TabNav, RecipeItem, EmptyRecipeItem } from "../../components/Tabs/Tabs";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
-import { iRecipe } from "../RecipeDetail/RecipeDetail";
 import Api from "../../services/Api";
 import * as moment from 'moment';
 import { ApiResponse } from "apisauce";
-import { strict } from "assert";
-
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -76,7 +73,7 @@ class StartLoggedIn extends Component<Props> {
     const week = moment.default().isoWeek();
     const monday = moment.default().startOf('isoWeek').format('YYYY-MM-DD');
 
-    this.setState({ 
+    this.setState({
       week: week,
       mondayDate: monday,
     }, () => this.getDayMealsData(this.state.mondayDate));
@@ -113,12 +110,12 @@ class StartLoggedIn extends Component<Props> {
       })
       return;
     }
-    
+
     if (!response.ok) {
       throw Error("DAYMEAL ERROR");
     }
 
-    this.setState({ 
+    this.setState({
       weekmeals: response.data.daymeals,
     })
   }
@@ -143,7 +140,7 @@ class StartLoggedIn extends Component<Props> {
       })
       return;
     }
-    
+
     if (!response.ok) {
       throw Error("SHOPPINGLIST ERROR");
     }
@@ -208,7 +205,7 @@ class StartLoggedIn extends Component<Props> {
             </div>
             <div className="column">
 
-              <TabNav 
+              <TabNav
                 items={[
                   {label: "Monday", value: 0},
                   {label: "Tuesday", value: 1},
@@ -217,12 +214,12 @@ class StartLoggedIn extends Component<Props> {
                   {label: "Friday", value: 4},
                   {label: "Saturday", value: 5},
                   {label: "Sunday", value: 6},
-                ]} 
+                ]}
                 selected={this.state.selectedTab}
                 onChange={this.handleTabNavChange}
               />
-              <DayMealList 
-                meals={daymeals} 
+              <DayMealList
+                meals={daymeals}
                 renderMissingMeal={(mealType:number) => {
                   return <EmptyRecipeItem key={mealType} mealType={mealType} />
                 }}
@@ -254,7 +251,7 @@ const DayMealList = (props: DayMealListProps) => {
   const meals = props.meals || [];
 
   const mealsByType = meals.reduce((acc:any, daymeal:any) => {
-    let mealsByType = acc[daymeal.meal_type] || []; 
+    let mealsByType = acc[daymeal.meal_type] || [];
     mealsByType = [...mealsByType, daymeal];
     acc[daymeal.meal_type]= mealsByType;
     return acc;

@@ -8,10 +8,8 @@ import Api from "../../services/Api";
 import Header from "../../components/Header/Header";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import { Footer } from "../../components/Footer/Footer";
-import "./BrowseRecipes.css";
-import { any } from "prop-types";
-import { RecipeFormProps } from "../../components/RecipeForm/RecipeForm";
 import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
+import "./BrowseRecipes.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -41,7 +39,7 @@ interface iRecipe {
   slug: string,
   tags: number[],
   id: number,
-} 
+}
 
 interface BrowseRecipesState {
   recipes: iRecipe[],
@@ -68,11 +66,11 @@ const RecipeListItem = (props: RecipeListItemProps) => {
         </div>
       </div>
 
-      
-
       <div className="level-right">
         <figure className="level-item image is-128x128">
-          <img src={BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png"}/>
+          <img
+            alt=""
+            src={BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png"} />
         </figure>
       </div>
       <hr className="levelHr"/>
@@ -154,7 +152,7 @@ class BrowseRecipes extends Component<Props> {
   handleModalClose = () => {
     console.log("Close Modal");
     this.setState({ modalIsOpen: false });
-    
+
   }
 
   // handleAddRecipe = async (props: any) => {
@@ -209,13 +207,13 @@ class BrowseRecipes extends Component<Props> {
                 <RecipeListItem key={index} recipe={recipe} onOpenModal={this.handleOpenModal} />))}
             </div>
           </div>
-        </main> 
+        </main>
         <Footer copyrightText="" />
         {this.state.modalIsOpen && (
-          <AddDayMealModal 
+          <AddDayMealModal
             text="Add meal to weekly plan"
             recipe={this.state.clickedRecipe}
-            // onSubmit={this.handleAddRecipe} 
+            // onSubmit={this.handleAddRecipe}
             onClose={this.handleModalClose} />
         )}
       </div>
