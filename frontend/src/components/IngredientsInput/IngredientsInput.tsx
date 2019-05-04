@@ -36,7 +36,8 @@ const MEASUREMENT_LIST: {label: String, type: Number}[] = [
 
 const IngredientsInput = (props: IngredientsInputProps) => {
 
-  const handleDelete = (_e: React.FormEvent<HTMLButtonElement>) => {
+  const handleDelete = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     props.onDelete(props.index);
   }
 

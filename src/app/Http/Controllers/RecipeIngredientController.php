@@ -83,6 +83,9 @@ class RecipeIngredientController extends Controller
             'recipe_id' => 'required',
         ]);
 
+        $recipeIngredients = RecipeIngredient::where('recipe_id', $request->recipe_id);
+        $recipeIngredients->delete();
+
         $recipeIngredients = [];
         foreach ($request->ingredients as $ingredientData) {
 
@@ -98,7 +101,6 @@ class RecipeIngredientController extends Controller
                 $ingredient->save();
                 $this->ingredient = $ingredient;
             }
-            //mörda alla recipeingredienser och spara om?
 
             $recipeIngredient = RecipeIngredient::updateOrCreate(
                 [
@@ -110,10 +112,8 @@ class RecipeIngredientController extends Controller
                     'measurement' => $ingredientData["measurement"],
                 ]
             );
-            // dd($recipeIngredient);
-            //kolla varför denna inte får med sig sitt id... :/
+
             $recipeIngredient->fresh();
-            // dd($recipeIngredient);
             $recipeIngredients[] = $recipeIngredient;
         }
 
