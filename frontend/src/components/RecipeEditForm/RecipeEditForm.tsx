@@ -8,12 +8,20 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";
-import IngredientsInput from "../IngredientsInput/IngredientsInput";
+import InputList from "../InputList/InputList";
+import { emptyIngredient } from '../InputList/InputList';
 import "./RecipeEditForm.css";
 
 export interface RecipeEditFormProps {
   onSubmit: any,
   recipe: iFormValues,
+}
+
+
+export interface iIngredient {
+  amount: number;
+  measurement: string;
+  ingredient: string;
 }
 
 export interface RecipeEditFormState {
@@ -31,17 +39,8 @@ interface iFormValues {
   ingredients: iIngredient[];
 }
 
-export interface iIngredient {
-  amount: number;
-  measurement: string;
-  ingredient: string;
-}
+
 const BASE_URL: string = 'http://localhost:8000/storage/';
-const emptyIngredient: iIngredient = {
-  amount: 0,
-  measurement: "",
-  ingredient: "",
-}
 
 const validationSchema = Yup.object().shape({
   title: Yup.string()
@@ -53,11 +52,6 @@ const validationSchema = Yup.object().shape({
   ingredients: Yup.array()
     .required("Ingredients are required!"),
 });
-
-interface InputListProps {
-  items: iIngredient[],
-  onChange: any,
-}
 
 class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState> {
 
@@ -234,48 +228,6 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState>
       </div>
     );
   }
-}
-
-// TODO: Move to new file
-// TODO: Add render prop
-const InputList = (props: InputListProps) => {
-  const handleChange = (index: number, item: any) => {
-    const items = [
-      ...props.items.slice(0, index),
-      item,
-      ...props.items.slice(index+1),
-    ];
-
-    props.onChange(items);
-  }
-
-  const handleAddItem = (e: FormEvent) => {
-    e.preventDefault();
-
-    props.onChange([
-      ...props.items,
-      emptyIngredient,
-    ]);
-  }
-
-  return (
-    <div>
-      <div>
-        {props.items.map((x, index) =>
-        <IngredientsInput {...x} key={index} index={index} onChange={handleChange}/>)}
-      </div>
-
-      <div className="field">
-        <p className="control">
-          <button
-            className="button" onClick={handleAddItem}
-          >
-            Add row +
-          </button>
-        </p>
-      </div>
-    </div>
-  )
 }
 
 export default RecipeEditForm;

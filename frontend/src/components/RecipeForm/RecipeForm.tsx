@@ -8,7 +8,8 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";
-import IngredientsInput from "../IngredientsInput/IngredientsInput";
+import { emptyIngredient } from '../InputList/InputList';
+import InputList from '../InputList/InputList';
 import "./RecipeForm.css";
 
 export interface RecipeFormProps {
@@ -33,12 +34,6 @@ export interface iIngredient {
   amount: number;
   measurement: string;
   ingredient: string;
-}
-
-const emptyIngredient: iIngredient = {
-  amount: 0,
-  measurement: "",
-  ingredient: "",
 }
 
 const validationSchema = Yup.object().shape({
@@ -230,48 +225,6 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
       </div>
     );
   }
-}
-
-// TODO: Move to new file
-// TODO: Add render prop
-const InputList = (props: InputListProps) => {
-  const handleChange = (index: number, item: any) => {
-    const items = [
-      ...props.items.slice(0, index),
-      item,
-      ...props.items.slice(index+1),
-    ];
-
-    props.onChange(items);
-  }
-
-  const handleAddItem = (e: FormEvent) => {
-    e.preventDefault();
-
-    props.onChange([
-      ...props.items,
-      emptyIngredient,
-    ]);
-  }
-
-  return (
-    <div>
-      <div>
-        {props.items.map((x, index) =>
-        <IngredientsInput {...x} key={index} index={index} onChange={handleChange}/>)}
-      </div>
-
-      <div className="field">
-        <p className="control">
-          <button
-            className="button" onClick={handleAddItem}
-          >
-            Add row +
-          </button>
-        </p>
-      </div>
-    </div>
-  )
 }
 
 export default RecipeForm;

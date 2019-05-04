@@ -3,11 +3,12 @@ import "./IngredientsInput.css";
 import * as uz from 'unitz-ts';
 
 export interface IngredientsInputProps {
-  index: number;
-  amount?: number;
-  measurement?: string;
-  ingredient: string;
-  onChange: Function;
+  index: number,
+  amount?: number,
+  measurement?: string,
+  ingredient: string,
+  onChange: Function,
+  onDelete: Function,
 }
 
 uz.Classes.addDefaults();
@@ -34,6 +35,11 @@ const MEASUREMENT_LIST: {label: String, type: Number}[] = [
 //}
 
 const IngredientsInput = (props: IngredientsInputProps) => {
+
+  const handleDelete = (_e: React.FormEvent<HTMLButtonElement>) => {
+    props.onDelete(props.index);
+  }
+
   const handleChange = (e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { onChange, ...ingredient } = props
 
@@ -75,6 +81,13 @@ const IngredientsInput = (props: IngredientsInputProps) => {
           onChange={handleChange}
         />
       </div>
+
+      <div className="control">
+        <button onClick={handleDelete} className="button is-danger">
+          Delete
+        </button>
+      </div>
+
     </div>
   )
 };
