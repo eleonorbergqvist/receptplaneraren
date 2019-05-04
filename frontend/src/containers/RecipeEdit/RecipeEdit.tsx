@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
@@ -96,7 +95,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
       tags: this.state.selectedTags,
       slug: this.state.slug,
     }, this.props.user.access_token);
-    
+
     actions.setSubmitting(false);
 
     if (!response.ok) {
@@ -112,7 +111,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
 
     const recipe_id = response.data.recipe.id;
 
-    const ingredientResponse: ApiResponse<any> = await api.recipeIngredientUpdate({
+    await api.recipeIngredientUpdate({
       ingredients: values.ingredients,
       recipe_id: recipe_id,
     }, this.props.user.access_token);
@@ -132,7 +131,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
       return;
     }
   };
-  
+
 
   async componentDidMount () {
     console.log(isEmpty(this.state.recipe));
@@ -156,7 +155,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
 
 
     let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
-      return  { 
+      return  {
         amount: ingredients.amount,
         measurement: ingredients.measurement,
         ingredient: ingredients.ingredient.name }
@@ -201,10 +200,10 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">
               Edit Recipe
-              <RecipeTags 
-                tags={this.state.tags} 
+              <RecipeTags
+                tags={this.state.tags}
                 selectedTags={this.state.selectedTags}
-                onToggleTag={this.handleToggleTag} 
+                onToggleTag={this.handleToggleTag}
               />
             </div>
             <div className="CreateRecipe__Container--Right column">

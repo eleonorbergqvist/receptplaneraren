@@ -30,8 +30,8 @@ const MEASUREMENT_LIST: {label: String, type: Number}[] = [
   {label: 'piece', type: 2},
 ];
 
-const findMeasureUnit = (amount: number, measurement: number) => {
-}
+//const findMeasureUnit = (amount: number, measurement: number) => {
+//}
 
 const IngredientsInput = (props: IngredientsInputProps) => {
   const handleChange = (e: React.FormEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -46,7 +46,7 @@ const IngredientsInput = (props: IngredientsInputProps) => {
   return (
     <div className="field has-addons">
       <div className="control">
-        <input 
+        <input
           type="text"
           name="amount"
           className="IngredientsInput__Amount input"
@@ -58,7 +58,7 @@ const IngredientsInput = (props: IngredientsInputProps) => {
       <div className="control">
         <div className="IngredientsInput__Measure select">
           <select name="measurement" value={props.measurement || undefined} className="IngredientsInput__Select" onChange={handleChange}>
-            {MEASUREMENT_LIST.map((x, index) =>     
+            {MEASUREMENT_LIST.map((x, index) =>
               <option key={index}>{x.label}</option>
             )}
           </select>

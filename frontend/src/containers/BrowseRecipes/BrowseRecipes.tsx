@@ -62,7 +62,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
             <h2 className="levelHeader">{props.recipe.title}</h2>
             <p className="levelContent">{props.recipe.instructions}</p>
             <Link className="levelLink" to={`/recipe/detail/${props.recipe.slug}`}>Read more</Link>
-            <a className="levelLink" href="#" onClick={handleClick}>Add to week</a>
+            <button className="levelLink" onClick={handleClick}>Add to week</button>
         </div>
       </div>
 

@@ -144,11 +144,11 @@ export class TabNav extends Component<TabNavProps, TabNavState> {
           }
 
           return (
-            <a
+            <button
               className={className}
               key={item.value}
               onClick={e => onChange(item)}
-            >{item.label}</a>
+            >{item.label}</button>
           )
         })}
       </div>

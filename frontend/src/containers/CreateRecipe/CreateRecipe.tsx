@@ -109,7 +109,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
 
     const recipe_id = response.data.recipe.id;
 
-    const ingredientResponse: ApiResponse<any> = await api.recipeIngredientCreate({
+    await api.recipeIngredientCreate({
       ingredients: values.ingredients,
       recipe_id: recipe_id,
     }, this.props.user.access_token);

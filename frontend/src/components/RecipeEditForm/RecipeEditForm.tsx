@@ -5,11 +5,10 @@ import {
   FormikProps,
   Form,
   Field,
-  FieldProps,
 } from "formik";
 import * as Yup from "yup";
 import Input from "../Input/Input";
-import IngredientsInput, { IngredientsInputProps } from "../IngredientsInput/IngredientsInput";
+import IngredientsInput from "../IngredientsInput/IngredientsInput";
 import "./RecipeEditForm.css";
 
 export interface RecipeEditFormProps {
@@ -37,7 +36,7 @@ export interface iIngredient {
   ingredient: string;
 }
 const BASE_URL: string = 'http://localhost:8000/storage/';
-const emptyIngredient: iIngredient = { 
+const emptyIngredient: iIngredient = {
   amount: 0,
   measurement: "",
   ingredient: "",
@@ -55,7 +54,7 @@ const validationSchema = Yup.object().shape({
 });
 
 interface InputListProps {
-  items: iIngredient[], 
+  items: iIngredient[],
   onChange: any,
 }
 
@@ -81,7 +80,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
 
     ingredients = [
       ...ingredients,
-      { 
+      {
         amount: 0,
         measurement: "",
         ingredient: "",
@@ -109,7 +108,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
       }
       reader.readAsDataURL(file);
     }
-    
+
   }
 
   render() {
@@ -120,7 +119,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
       instructions: this.props.recipe.instructions || "",
       ingredients: this.props.recipe.ingredients || [emptyIngredient],
     };
-    
+
     return (
       <div className="RecipeForm">
         <Formik
@@ -147,13 +146,13 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
               <div className="columns">
                 <div className="column">
                 <figure className="image is-128x128">
-                  <img id="imagePreview" src={BASE_URL+this.state.image} />
+                  <img id="imagePreview" src={BASE_URL+this.state.image} alt="" />
                 </figure>
                 </div>
                 <div className="column">
                   <div className="file is-boxed">
                     <label className="file-label">
-                      <input className="file-input" type="file" name="resume" 
+                      <input className="file-input" type="file" name="resume"
                         onChange={this.handleInputFileChange}
                         accept='image/*'
                       />
@@ -168,7 +167,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
                     </label>
                   </div>
                 </div>
-                {formikBag.errors.image 
+                {formikBag.errors.image
                   && <p className="help is-danger">{formikBag.errors.image}</p>
                 }
               </div>
@@ -189,11 +188,11 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
               />
 
               <label>Ingredients</label>
-              <InputList 
-                items={formikBag.values.ingredients} 
+              <InputList
+                items={formikBag.values.ingredients}
                 onChange={(ingredients: []) => formikBag.setFieldValue("ingredients", ingredients)}
               />
-              {formikBag.errors.ingredients 
+              {formikBag.errors.ingredients
                 && <p className="help is-danger">{formikBag.errors.ingredients}</p>
               }
 
@@ -201,17 +200,17 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
                 <label>Instructions</label>
                 <Field
                   component="textarea"
-                  className="textarea" 
-                  name="instructions" 
+                  className="textarea"
+                  name="instructions"
                   value={formikBag.values.instructions}
                   onChange={formikBag.handleChange}
                   onBlur={formikBag.handleBlur}
                   error={
                     formikBag.touched.instructions ? formikBag.errors.instructions || "" : ""
                   }
-                  placeholder="Instructions">   
+                  placeholder="Instructions">
                 </Field>
-                {formikBag.errors.instructions 
+                {formikBag.errors.instructions
                   && <p className="help is-danger">{formikBag.errors.instructions}</p>
                 }
               </div>
@@ -253,7 +252,7 @@ const InputList = (props: InputListProps) => {
     e.preventDefault();
 
     props.onChange([
-      ...props.items, 
+      ...props.items,
       emptyIngredient,
     ]);
   }
@@ -261,7 +260,7 @@ const InputList = (props: InputListProps) => {
   return (
     <div>
       <div>
-        {props.items.map((x, index) => 
+        {props.items.map((x, index) =>
         <IngredientsInput {...x} key={index} index={index} onChange={handleChange}/>)}
       </div>
 

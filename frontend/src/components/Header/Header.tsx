@@ -1,3 +1,4 @@
+/* eslint jsx-a11y/anchor-is-valid: 1 */
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
@@ -22,8 +23,7 @@ class Header extends Component<HeaderProps, HeaderState> {
     return (
       <nav className="header navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a href="#" className="header__title navbar-item">Receptplaneraren</a>
-
+          <a href="/" className="header__title navbar-item">Receptplaneraren</a>
           <a
             role="button"
             href="#"
@@ -55,5 +55,6 @@ class Header extends Component<HeaderProps, HeaderState> {
     )
   }
 }
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 
 export default Header;
