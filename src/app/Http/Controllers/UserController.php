@@ -48,7 +48,7 @@ class UserController extends Controller
       $user->update($request->all());
 
       return response()->json([
-          'message' => 'Great success! Task updated',
+          'message' => 'Great success! User updated',
           'user' => $user
       ]);
   }
@@ -58,7 +58,7 @@ class UserController extends Controller
       $user->delete();
 
       return response()->json([
-          'message' => 'Successfully deleted task!'
+          'message' => 'Successfully deleted user!'
       ]);
   }
 }

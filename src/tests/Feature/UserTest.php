@@ -26,7 +26,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_will_create_users()
+    public function it_will_create_a_user()
     {
         $response = $this->post(route('users.store'), [
             'email'       => 'test@test.test',
@@ -44,10 +44,7 @@ class UserTest extends TestCase
             'message',
             'user' => [
                 'email',
-                'password',
                 'user_name',
-                // 'last_login',
-                // 'reset_token',
                 'updated_at',
                 'created_at',
                 'id'
@@ -55,78 +52,85 @@ class UserTest extends TestCase
         ]);
     }
 
-    // /** @test XXX */
-    // public function it_will_show_a_user()
-    // {
-    //     $this->post(route('users.store'), [
-    //         'password' => '124hkjsL9)',
-    //         'user_name'       => 'Kalle Anka',
-    //         'email' => 'test@test.com'
-    //     ]);
+    /** @test */
+    public function it_will_show_one_user()
+    {
+        $this->post(route('users.store'), [
+            'password' => '124hkjsL9)',
+            'user_name' => 'Kalle Anka',
+            'email' => 'test@test.com'
+        ]);
 
-    //     $user = User::all()->first();
+        $user = User::all()->first();
 
-    //     $response = $this->get(route('users.show', $user->id));
+        $response = $this->get(route('users.show', $user->id));
 
-    //     $response->assertStatus(200);
+        $response->assertStatus(200);
 
-    //     $response->assertJson($user->toArray());
-    // }
+        $response->assertJsonStructure([
+            'user' => [
+                'email',
+                'user_name',
+                'updated_at',
+                'created_at',
+                'id'
+            ]
+        ]);
+    }
 
     /** @test */
-    // public function it_will_update_a_task()
-    // {
-    //     $this->post(route('tasks.store'), [
-    //         'title'       => 'This is a title',
-    //         'description' => 'This is a description'
-    //     ]);
+    public function it_will_update_a_user()
+    {
+        $this->post(route('users.store'), [
+            'password' => '124hkjsL9)',
+            'user_name' => 'Kalle Anka',
+            'email' => 'test@test.com'
+        ]);
 
-    //     $task = Task::all()->first();
+        $user = User::all()->first();
 
-    //     $response = $this->put(route('tasks.update', $task->id), [
-    //         'title' => 'This is the updated title'
-    //     ]);
+        $response = $this->put(route('users.update', $user->id), [
+            'user_name' => 'Updated name'
+        ]);
 
-    //     $response->assertStatus(200);
+        $response->assertStatus(200);
 
-    //     $task = $task->fresh();
+        $user = $user->fresh();
 
-    //     $this->assertEquals($task->title, 'This is the updated title');
+        $this->assertEquals($user->user_name, 'Updated name');
 
-    //     $response->assertJsonStructure([
-    //        'message',
-    //        'task' => [
-    //            'title',
-    //            'description',
-    //            'updated_at',
-    //            'created_at',
-    //            'id'
-    //        ]
-    //    ]);
-    // }
-
-    /** @test */
-    // public function it_will_delete_a_task()
-    // {
-    //     $this->post(route('tasks.store'), [
-    //         'title'       => 'This is a title',
-    //         'description' => 'This is a description'
-    //     ]);
-
-    //     $task = Task::all()->first();
-
-    //     $response = $this->delete(route('tasks.destroy', $task->id));
-
-    //     $task = $task->fresh();
-
-    //     $this->assertNull($user);
-
-    //     $response->assertJsonStructure([
-    //         'message'
-    //     ]);
-    // }
+        $response->assertJsonStructure([
+            'user' => [
+                'email',
+                'user_name',
+                'updated_at',
+                'created_at',
+                'id'
+            ]
+       ]);
+    }
 
     /** @test */
+    public function it_will_delete_a_user()
+    {
+        $this->post(route('users.store'), [
+            'password' => '124hkjsL9)',
+            'user_name' => 'Kalle Anka',
+            'email' => 'test@test.com'
+        ]);
+
+        $user = User::all()->first();
+
+        $response = $this->delete(route('users.destroy', $user->id));
+
+        $user = $user->fresh();
+
+        $this->assertNull($user);
+
+        $response->assertJsonStructure([
+            'message'
+        ]);
+    }
 }
 
 

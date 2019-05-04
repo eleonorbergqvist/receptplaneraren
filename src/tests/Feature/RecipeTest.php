@@ -93,7 +93,7 @@ class RecipeTest extends TestCase
 
         $recipe = Recipe::all()->first();
 
-        $response = $this->get(route('recipes.show', $recipe->id), ['Authorization' => 'Bearer ' . $this->token]);
+        $response = $this->get(route('recipes.show', $recipe->slug), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -122,7 +122,7 @@ class RecipeTest extends TestCase
 
         $recipe = Recipe::all()->first();
 
-        $response = $this->put(route('recipes.update', $recipe->id), [
+        $response = $this->put(route('recipes.update', $recipe->slug), [
             'title' => 'This is the updated title',
             'status' => $this->faker->text(),
             'instructions' => $this->faker->text(),

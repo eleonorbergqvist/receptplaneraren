@@ -26,11 +26,12 @@ Route::post('/register', 'AuthController@register');
 Route::post('/login', 'AuthController@login');
 Route::post('/logout', 'AuthController@logout');
 
+// TODO: move these to use middleware
 Route::get('/users', 'UserController@index')->name('users.index');
 Route::post('/users', 'UserController@store')->name('users.store');
 Route::get('/users/{user}', 'UserController@show')->name('users.show');
 Route::put('/users/{user}', 'UserController@update')->name('users.update');
-Route::delete('/users/{user}', 'UserController@destory')->name('users.destroy');
+Route::delete('/users/{user}', 'UserController@destroy')->name('users.destroy');
 
 Route::middleware(['jwt.auth'])->group(function () {
 
