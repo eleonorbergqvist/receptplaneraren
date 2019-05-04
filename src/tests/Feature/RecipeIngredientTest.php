@@ -133,7 +133,7 @@ class RecipeIngredientTest extends TestCase
     }
 
     /** @test */
-    public function it_will_update_a_recipe_ingredient()
+    public function it_will_delete_all_and_add_new_recipe_ingredients()
     {
         $recipe = Recipe::all()->first();
 
@@ -158,34 +158,16 @@ class RecipeIngredientTest extends TestCase
                     'ingredient' => [
                         'name' => 'TestIngrediens',
                     ],
-                    //ska name vara i egen array el inte??
                 ],
             ],
-            'recipe_id' => $recipeIngredient->id,
+            'recipe_id' => $this->recipe->id,
         ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
-        $recipeIngredient = $recipeIngredient->fresh();
+        $recipeIngredient = RecipeIngredient::all()->first();
 
         $this->assertEquals($recipeIngredient->amount, '200.00');
-        // dd($response->getData());
-
-        /*
-        +"message": "Great success! Recipe ingredient updated"
-        +"recipe-ingredients": array:1 [
-          0 => {#1155
-            +"id": 1
-            +"amount": "200"
-            +"measurement": "1"
-            +"created_at": "2019-05-04 07:25:43"
-            +"updated_at": "2019-05-04 07:25:44"
-            +"ingredient_id": 1
-            +"recipe_id": 1
-          }
-        ]
-        */
-
 
         $response->assertJsonStructure([
            'message',

@@ -7,6 +7,8 @@ use App\Ingredient;
 use Illuminate\Http\Request;
 use Cocur\Slugify\Slugify;
 
+
+
 class RecipeIngredientController extends Controller
 {
     /**
@@ -84,6 +86,7 @@ class RecipeIngredientController extends Controller
         ]);
 
         $recipeIngredients = RecipeIngredient::where('recipe_id', $request->recipe_id);
+
         $recipeIngredients->delete();
 
         $recipeIngredients = [];
