@@ -1,5 +1,6 @@
 import apisauce from "apisauce";
 
+
 const create = (baseURL = "http://localhost:8000/api/") => {
   const api = apisauce.create({
     baseURL,
@@ -64,7 +65,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       }
     }
   );
-  
+
 
   const recipeTags = (jwtToken: string | null) =>
     // api.setHeader('Authorization', `Bearer ${jwtToken}`);
@@ -162,6 +163,8 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     shoppingList,
   };
 };
+
+export type iApi = ReturnType<typeof create>;
 
 export default {
   create

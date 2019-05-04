@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import { iRootState, Dispatch } from "../../store";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
@@ -22,9 +22,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-// to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps;
+type Props = connectedProps & { api: iApi }
 
 interface CreateRecipeState {
   tags: any[];
@@ -38,8 +36,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   }
 
   async componentDidMount () {
-    const api = Api.create();
-
+    const { api } = this.props
     const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
     this.setState({ tags: response.data })
 
@@ -54,7 +51,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     console.log('CreateRecipe.handleSubmit');
     console.log(values);
 
-    const api = Api.create();
+    const { api } = this.props
 
     actions.setSubmitting(true);
 

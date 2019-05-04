@@ -5,7 +5,7 @@ import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 
 import LoginForm, { OnSubmitValues } from "../../components/LoginForm/LoginForm";
 import "./LogIn.css";
@@ -21,13 +21,11 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-// to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type LogInProps = connectedProps;
+type LogInProps = connectedProps & { api: iApi }
 
 class LogIn extends Component<LogInProps> {
   handleSubmit = async (values: OnSubmitValues, actions: FormikActions<any>) => {
-    const api = Api.create();
+    const { api } = this.props
 
     actions.setSubmitting(true);
 

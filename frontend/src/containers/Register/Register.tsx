@@ -4,7 +4,7 @@ import { Redirect } from 'react-router';
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import { iRootState, Dispatch } from "../../store"
 
@@ -19,12 +19,11 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatch>
 // to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps
+type Props = connectedProps & { api: iApi}
 
 class Register extends Component<Props> {
    handleSubmit = async (values: any, actions: FormikActions<any>) => {
-    const api = Api.create();
+    const { api } = this.props
 
     actions.setSubmitting(true);
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { iRootState, Dispatch } from "../../store";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import "./RecipeDetail.css";
@@ -21,8 +21,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
 // to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps;
+type Props = connectedProps & { api: iApi }
 
 const BASE_URL: string = 'http://localhost:8000/storage/';
 
@@ -70,8 +69,8 @@ class RecipeDetail extends Component<Props> {
     const slug = url.substr(url.lastIndexOf('/') + 1);
     this.setState({ slug: slug });
     console.log(slug);
-    const api = Api.create();
 
+    const { api } = this.props
     const response: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, slug);
     console.log(response);
     this.setState({ recipe: response.data.recipe })

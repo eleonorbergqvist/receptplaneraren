@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { iRootState } from "../../store";
+import * as Yup from "yup";
+import { RouteComponentProps } from "react-router-dom";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import {
@@ -10,10 +11,9 @@ import {
   FormikProps,
   Form,
 } from "formik";
+import { iRootState } from "../../store";
 import Input from "../../components/Input/Input";
-import * as Yup from "yup";
-import { RouteComponentProps } from "react-router-dom";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -21,7 +21,7 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-type Props = connectedProps & RouteComponentProps & FormValues & ResetPasswordProps;
+type Props = connectedProps & { api: iApi } & RouteComponentProps & FormValues & ResetPasswordProps;
 
 interface ResetPasswordState {
   reset_token: string;
@@ -52,8 +52,7 @@ const validationSchema = Yup.object().shape({
 class ResetPassword extends Component<Props, ResetPasswordState> {
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
     const { token } = this.props.match.params;
-
-    const api = Api.create();
+    const { api } = this.props
 
     actions.setSubmitting(true);
 

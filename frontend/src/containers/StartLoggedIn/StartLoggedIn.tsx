@@ -1,13 +1,13 @@
 import React, { Component, FormEvent } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
+import * as moment from 'moment';
+import { ApiResponse } from "apisauce";
 import { iRootState } from "../../store";
+import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { TabNav, RecipeItem, EmptyRecipeItem } from "../../components/Tabs/Tabs";
-import Api from "../../services/Api";
-import * as moment from 'moment';
-import { ApiResponse } from "apisauce";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -15,7 +15,7 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-type Props = connectedProps;
+type Props = connectedProps & { api: iApi }
 
 interface StartLoggedInState {
   week: number | null,
@@ -73,7 +73,7 @@ class StartLoggedIn extends Component<Props> {
   }
 
   getDayMealsData = async (monday: string) => {
-    const api = Api.create();
+    const { api } = this.props
     const response: ApiResponse<any> = await api.daymealsByDate(this.props.user.access_token, monday);
 
     if (response.status === 401) {
@@ -102,8 +102,9 @@ class StartLoggedIn extends Component<Props> {
 
   handleShoppingList = async (e: FormEvent) => {
     e.preventDefault();
+
     const monday = this.state.mondayDate;
-    const api = Api.create();
+    const { api } = this.props
     const response: ApiResponse<any> = await api.shoppingList(this.props.user.access_token, monday);
 
     if (response.status === 401) {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
@@ -22,8 +22,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
 // to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
-type Props = connectedProps;
+type Props = connectedProps & { api: iApi }
 
 interface RecipeListItemProps {
   key: number,
@@ -95,8 +94,7 @@ class BrowseRecipes extends Component<Props> {
 
   async componentDidMount () {
     // TODO: Get all recipes with tags (belonging to user?)
-    const api = Api.create();
-
+    const { api } = this.props
     const response: ApiResponse<any> = await api.recipeTags(
       this.props.user.access_token
     );

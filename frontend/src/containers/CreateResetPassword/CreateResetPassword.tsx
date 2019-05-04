@@ -12,7 +12,7 @@ import {
 } from "formik";
 import Input from "../../components/Input/Input";
 import * as Yup from "yup";
-import Api from "../../services/Api";
+import { iApi } from "../../services/Api";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -20,7 +20,7 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-type Props = connectedProps;
+type Props = connectedProps & { api: iApi }
 
 interface iFormValues {
   email: string;
@@ -36,7 +36,7 @@ const validationSchema = Yup.object().shape({
 
 class CreateResetPassword extends Component<Props> {
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
-    const api = Api.create();
+    const { api } = this.props
 
     actions.setSubmitting(true);
 
