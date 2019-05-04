@@ -59,7 +59,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     actions.setSubmitting(true);
 
     const response: ApiResponse<any> = await api.recipeCreate({
-      instructions: values.description,
+      instructions: values.instructions,
       title: values.title,
       tags: this.state.selectedTags,
     }, this.props.user.access_token);
