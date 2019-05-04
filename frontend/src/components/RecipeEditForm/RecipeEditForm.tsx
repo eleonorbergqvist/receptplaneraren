@@ -16,11 +16,12 @@ export interface RecipeEditFormProps {
   recipe: iFormValues,
 }
 
-export interface RecipeFormState {
-  title: string;
-  image: string;
-  instructions: string;
-  ingredients: iIngredient[];
+export interface RecipeEditFormState {
+  isImageChanged: boolean,
+  title: string,
+  image: string,
+  instructions: string,
+  ingredients: iIngredient[],
 }
 
 interface iFormValues {
@@ -58,7 +59,7 @@ interface InputListProps {
   onChange: any,
 }
 
-class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
+class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState> {
 
   constructor(props: RecipeEditFormProps) {
     super(props);
@@ -70,6 +71,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
       image: BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png",
       instructions: props.recipe.instructions,
       ingredients: [emptyIngredient],
+      isImageChanged: false,
     }
   }
 
@@ -95,7 +97,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
   }
 
   handleInputFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
+    this.setState({ isImageChanged: true });
     const fileList = e.target.files || [];
 
     if (fileList.length > 0) {
@@ -129,11 +131,10 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
             values: iFormValues,
             actions: FormikActions<iFormValues>
           ) => {
-            console.log("onSubmit!");
             onSubmit(
               {
                 title: values.title,
-                image: this.state.image,
+                image: this.state.isImageChanged ? this.state.image : '',
                 instructions: values.instructions,
                 ingredients: values.ingredients,
               },
