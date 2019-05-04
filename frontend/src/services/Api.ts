@@ -117,6 +117,14 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     }
   );
 
+  const recipeDelete = (recipeId: number, jwtToken: string | null) =>
+    api.delete(`/recipes/${recipeId}`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
   const daymealsByDate = (jwtToken: string | null, monday: string) =>
     api.get(`/daymeals/${monday}`, {}, {
       headers: {
@@ -158,6 +166,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     recipesAllInfo,
     recipeBySlug,
     recipeUpdate,
+    recipeDelete,
     daymealsByDate,
     daymealUpdate,
     shoppingList,

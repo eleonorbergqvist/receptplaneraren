@@ -212,6 +212,8 @@ class RecipeController extends Controller
         $recipe = Recipe::findOrFail($id);
         $recipe->delete();
 
+        //kolla så allt relaterad tas bort
+
         return response()->json([
             'message' => 'Successfully deleted recipe!'
         ]);

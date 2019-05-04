@@ -1,5 +1,5 @@
 import React from "react";
-import * as uz from 'unitz-ts';
+// import * as uz from 'unitz-ts';
 import "./IngredientsInput.css";
 
 export interface IngredientsInputProps {
@@ -11,7 +11,7 @@ export interface IngredientsInputProps {
   onDelete: Function,
 }
 
-uz.Classes.addDefaults();
+// uz.Classes.addDefaults();
 
 // TODO: volume = 0, mass = 1, piece = 2
 const MEASUREMENT_LIST: {label: String, type: Number}[] = [

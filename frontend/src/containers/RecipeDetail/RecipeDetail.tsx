@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, FormEvent } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -26,6 +26,7 @@ type Props = connectedProps & { api: iApi }
 interface RecipeDetailState {
   recipe: iRecipe,
   slug: string,
+  isDeleted: boolean,
 }
 
 export interface iRecipe {
@@ -59,6 +60,7 @@ class RecipeDetail extends Component<Props> {
       recipe_ingredients: [],
      },
      slug: '',
+     isDeleted: false,
   }
 
   async componentDidMount () {
@@ -78,9 +80,25 @@ class RecipeDetail extends Component<Props> {
     }
   }
 
+  handleDeleteRecipe = async (e: FormEvent) => {
+    e.preventDefault();
+    const { api } = this.props;
+    const recipeId = this.state.recipe.id;
+    const response: ApiResponse<any> = await api.recipeDelete(recipeId, this.props.user.access_token);
+    if (!response.ok) {
+      console.log("DELETE ERRORRR")
+      return;
+    }
+    this.setState({ isDeleted: true });
+  }
+
   render() {
     if (!this.props.isLoggedIn) {
       return <Redirect to={"/"} />;
+    }
+
+    if (this.state.isDeleted) {
+      return <Redirect to='/recipe/browse' />;
     }
 
     return (
@@ -88,7 +106,7 @@ class RecipeDetail extends Component<Props> {
         <HeaderLoggedIn />
         <main className="container content">
           <div className="colums RecipeDetail__Container--Top">
-          <button className="button">Delete</button>
+          <button onClick={this.handleDeleteRecipe} className="button">Delete</button>
           <Link to={`/recipe/edit/${this.state.slug}`} >
             <button className="button">Edit</button>
           </Link>
