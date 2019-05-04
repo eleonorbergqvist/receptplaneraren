@@ -1,6 +1,6 @@
 version: '3'
-services: 
-  web: 
+services:
+  web:
     image: eleonorebergqvist/receptplaneraren
     build: src
     tty: true
@@ -12,10 +12,10 @@ services:
       - db
     environment:
       - DB_HOST=db
-  db: 
+  db:
     image: mysql:5
     ports:
-        - "3306:3306"
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=laravel
       - MYSQL_DATABASE=laravel
@@ -25,4 +25,3 @@ services:
       #- "./docker/files/db-dumps/:/docker-entrypoint-initdb.d/"
       - "./db/:/var/lib/mysql"
     user: "1000:50"
-    # CREATE DATABASE IF NOT EXISTS laravel_test; GRANT ALL PRIVILEGES ON laravel_test.* TO 'laravel'@'%';
