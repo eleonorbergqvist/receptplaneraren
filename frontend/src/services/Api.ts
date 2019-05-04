@@ -54,6 +54,18 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     }
   );
 
+  const recipeIngredientUpdate = (values: any, jwtToken: string | null) =>
+    api.put("/recipe-ingredients", {
+      ingredients: values.ingredients,
+      recipe_id: values.recipe_id,
+    }, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+  
+
   const recipeTags = (jwtToken: string | null) =>
     // api.setHeader('Authorization', `Bearer ${jwtToken}`);
     api.get('/recipe-tags', {}, {
@@ -84,6 +96,20 @@ const create = (baseURL = "http://localhost:8000/api/") => {
 
   const recipeBySlug = (jwtToken: string | null, slug: string) =>
     api.get(`/recipes/${slug}`, {}, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
+    }
+  );
+
+  const recipeUpdate = (values: any, jwtToken: string | null) =>
+    api.put(`/recipes/${values.slug}`, {
+      status: 'test',
+      instructions: values.instructions,
+      title: values.title,
+      tags: values.tags,
+      slug: values.slug
+    }, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
       }
@@ -125,10 +151,12 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     passwordReset,
     recipeCreate,
     recipeIngredientCreate,
+    recipeIngredientUpdate,
     recipeTags,
     recipeImage,
     recipesAllInfo,
     recipeBySlug,
+    recipeUpdate,
     daymealsByDate,
     daymealUpdate,
     shoppingList,

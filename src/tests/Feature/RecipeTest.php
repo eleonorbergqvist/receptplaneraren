@@ -41,7 +41,7 @@ class RecipeTest extends TestCase
     {
         $recipes = factory(Recipe::class, 10)->create();
 
-        $response = $this->get(route('recipes.index'));
+        $response = $this->get(route('recipes.index'), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -57,7 +57,7 @@ class RecipeTest extends TestCase
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -89,11 +89,11 @@ class RecipeTest extends TestCase
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $recipe = Recipe::all()->first();
 
-        $response = $this->get(route('recipes.show', $recipe->id));
+        $response = $this->get(route('recipes.show', $recipe->id), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -118,7 +118,7 @@ class RecipeTest extends TestCase
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $recipe = Recipe::all()->first();
 
@@ -127,7 +127,7 @@ class RecipeTest extends TestCase
             'status' => $this->faker->text(),
             'instructions' => $this->faker->text(),
             'slug' => $this->faker->slug(),
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -157,11 +157,11 @@ class RecipeTest extends TestCase
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $recipe = Recipe::all()->first();
 
-        $response = $this->delete(route('recipes.destroy', $recipe->id));
+        $response = $this->delete(route('recipes.destroy', $recipe->id), [], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 

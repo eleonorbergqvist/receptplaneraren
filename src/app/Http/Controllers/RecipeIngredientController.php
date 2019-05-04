@@ -32,8 +32,8 @@ class RecipeIngredientController extends Controller
         $request->validate([
             'ingredients.*.amount' => 'required',
             'ingredients.*.measurement' => 'required',
-            'ingredients.*.ingredient'    => 'required',
-            'recipe_id'    => 'required',
+            'ingredients.*.ingredient' => 'required',
+            'recipe_id' => 'required',
         ]);
 
         $recipeIngredients = [];
@@ -67,23 +67,61 @@ class RecipeIngredientController extends Controller
         ]);
     }
 
-    // /**
-    //  * Update the specified resource in storage.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @param  \App\RecipeTag  $recipeTag
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function update(Request $request, $id)
-    // {
-    //       $recipeIngredient = RecipeIngredient::findOrFail($id);
-    //       $recipeIngredient->update($request->all());
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\RecipeTag  $recipeTag
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAllForRecipe(Request $request)
+    {
+        $request->validate([
+            'ingredients.*.amount' => 'required',
+            'ingredients.*.measurement' => 'required',
+            'ingredients.*.ingredient'    => 'required',
+            'recipe_id' => 'required',
+        ]);
 
-    //       return response()->json([
-    //           'message' => 'Great success! Recipe ingredient updated',
-    //           'recipe-ingredient' => $recipeIngredient
-    //       ]);
-    // }
+        $recipeIngredients = [];
+        foreach ($request->ingredients as $ingredientData) {
+
+            $ingredient = Ingredient::where('name', $ingredientData["ingredient"])->first();
+            $this->ingredient = $ingredient;
+
+            if (!$ingredient) {
+                $ingredient = new Ingredient();
+                $ingredient->name = $ingredientData["ingredient"];
+
+                $slugify = new Slugify();
+                $ingredient->slug = $slugify->slugify($ingredientData["ingredient"]);
+                $ingredient->save();
+                $this->ingredient = $ingredient;
+            }
+            //mörda alla recipeingredienser och spara om?
+
+            $recipeIngredient = RecipeIngredient::updateOrCreate(
+                [
+                    'recipe_id' => $request->recipe_id,
+                    'ingredient_id' => $this->ingredient->id,
+                ],
+                [
+                    'amount' => $ingredientData["amount"],
+                    'measurement' => $ingredientData["measurement"],
+                ]
+            );
+            // dd($recipeIngredient);
+            //kolla varför denna inte får med sig sitt id... :/
+            $recipeIngredient->fresh();
+            // dd($recipeIngredient);
+            $recipeIngredients[] = $recipeIngredient;
+        }
+
+        return response()->json([
+            'message' => 'Great success! Recipe ingredient updated',
+            'recipe-ingredients' => $recipeIngredients
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.

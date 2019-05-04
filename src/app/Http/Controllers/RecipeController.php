@@ -171,7 +171,7 @@ class RecipeController extends Controller
      * @param  \App\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         $request->validate([
 
@@ -185,7 +185,7 @@ class RecipeController extends Controller
             'portions' => 'nullable',
           ]);
 
-          $recipe = Recipe::findOrFail($id);
+          $recipe = Recipe::where('slug', $slug)->firstOrFail();
           $recipe->update($request->all());
 
           return response()->json([

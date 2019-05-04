@@ -13,6 +13,7 @@ import "./App.css";
 import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
 import RecipeDetail from "../RecipeDetail/RecipeDetail";
 import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
+import RecipeEdit from "../RecipeEdit/RecipeEdit";
 
 class App extends Component {
   render() {
@@ -28,6 +29,7 @@ class App extends Component {
             <Route path="/recipe/create" component={CreateRecipe} />
             <Route path="/recipe/browse" component={BrowseRecipes} />
             <Route path="/recipe/detail/:slug" component={RecipeDetail} />
+            <Route path="/recipe/edit/:slug" component={RecipeEdit} />
             <Route path="/password/create" component={CreateResetPassword} />
             <Route path="/password/reset/:token" component={ResetPassword} />
             <Route path="/terms-and-conditions" component={TermsAndConditions} />

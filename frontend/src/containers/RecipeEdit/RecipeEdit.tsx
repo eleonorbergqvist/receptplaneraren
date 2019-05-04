@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import Api from "../../services/Api";
-
-import "./CreateRecipe.css";
 import Header from "../../components/Header/Header";
 import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
 import { Footer } from "../../components/Footer/Footer";
-import RecipeForm from "../../components/RecipeForm/RecipeForm";
+import RecipeEditForm, { iIngredient } from "../../components/RecipeEditForm/RecipeEditForm";
+import './RecipeEdit.css';
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -24,19 +24,34 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-// to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
 type Props = connectedProps;
 
-interface CreateRecipeState {
-  tags: any[];
-  selectedTags: Number[];
+interface RecipeEditState {
+  tags: any[],
+  selectedTags: Number[],
+  recipe: iRecipe,
+  slug: string,
 }
 
-class CreateRecipe extends Component<Props, CreateRecipeState> {
-  state: CreateRecipeState = {
+interface iRecipe {
+  title: string;
+  image: string;
+  instructions: string;
+  ingredients: iIngredient[];
+}
+
+class RecipeEdit extends Component<Props, RecipeEditState> {
+  url = window.location.pathname;
+  state: RecipeEditState = {
+    slug: this.url.substr(this.url.lastIndexOf('/') + 1),
     tags: [],
     selectedTags: [],
+    recipe: {
+      title: '',
+      image: '',
+      instructions: '',
+      ingredients: [],
+    },
   }
 
   public buttons = [
@@ -66,39 +81,27 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     />
   ];
 
-
-  async componentDidMount () {
-    const api = Api.create();
-
-    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
-    this.setState({ tags: response.data })
-
-    if (!response.ok) {
-        console.log("TAG ERRORRR")
-      return;
-    }
-  }
-
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
 
-    console.log('CreateRecipe.handleSubmit');
+    console.log('RecipeEdit.handleSubmit');
     console.log(values);
 
     const api = Api.create();
 
     actions.setSubmitting(true);
 
-    const response: ApiResponse<any> = await api.recipeCreate({
-      instructions: values.description,
+    const response: ApiResponse<any> = await api.recipeUpdate({
+      instructions: values.instructions,
       title: values.title,
       tags: this.state.selectedTags,
+      slug: this.state.slug,
     }, this.props.user.access_token);
-
+    
     actions.setSubmitting(false);
 
     if (!response.ok) {
       actions.setErrors({
-        general: "Fel, kunde inte spara recept"
+        general: "Fel, kunde inte updatera recept"
       });
       return;
     }
@@ -109,12 +112,13 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
 
     const recipe_id = response.data.recipe.id;
 
-    const ingredientResponse: ApiResponse<any> = await api.recipeIngredientCreate({
+    const ingredientResponse: ApiResponse<any> = await api.recipeIngredientUpdate({
       ingredients: values.ingredients,
       recipe_id: recipe_id,
     }, this.props.user.access_token);
 
     const imageResponse: ApiResponse<any> = await api.recipeImage({
+
       image: values.image,
       recipe_id: recipe_id,
     }, this.props.user.access_token);
@@ -128,6 +132,49 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       return;
     }
   };
+  
+
+  async componentDidMount () {
+    console.log(isEmpty(this.state.recipe));
+    console.log(this.state.recipe)
+    const api = Api.create();
+
+    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    this.setState({ tags: response.data })
+
+    if (!response.ok) {
+        console.log("TAG ERRORRR")
+      return;
+    }
+
+    // Hämta receptdata
+    const recipeResponse: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, this.state.slug);
+    if (!recipeResponse.ok) {
+      console.log("RECIPE ERRORRR")
+      return;
+    }
+
+
+    let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
+      return  { 
+        amount: ingredients.amount,
+        measurement: ingredients.measurement,
+        ingredient: ingredients.ingredient.name }
+    });
+
+
+    const formattedRecipe: iRecipe = {
+      title: recipeResponse.data.recipe.title,
+      image: recipeResponse.data.recipe.image,
+      instructions: recipeResponse.data.recipe.instructions,
+      ingredients: ingredients,
+    };
+    this.setState({ recipe: formattedRecipe }, () => {
+      console.log(isEmpty(this.state.recipe));
+    });
+    console.log(this.state.recipe);
+
+  }
 
   handleToggleTag = (tag: iRecipeTag) => {
     let { selectedTags } = this.state
@@ -153,15 +200,17 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
         <main className="container">
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">
-              Create Recipe and tabs
-              <RecipeTags
-                tags={this.state.tags}
+              Edit Recipe
+              <RecipeTags 
+                tags={this.state.tags} 
                 selectedTags={this.state.selectedTags}
-                onToggleTag={this.handleToggleTag}
+                onToggleTag={this.handleToggleTag} 
               />
             </div>
             <div className="CreateRecipe__Container--Right column">
-              <RecipeForm onSubmit={this.handleSubmit} />
+              {this.state.recipe && !isEmpty(this.state.recipe) &&
+                <RecipeEditForm recipe={this.state.recipe} onSubmit={this.handleSubmit} />
+              }
             </div>
           </div>
         </main>
@@ -171,7 +220,9 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   }
 }
 
+const isEmpty  = (obj:Object) => Object.values(obj).every(x => (x === null || x === '' || x.length === 0));
+
 export default connect(
   mapState,
   mapDispatch
-)(CreateRecipe);
+)(RecipeEdit);

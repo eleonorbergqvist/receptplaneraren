@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
@@ -27,7 +28,8 @@ type Props = connectedProps;
 const BASE_URL: string = 'http://localhost:8000/storage/';
 
 interface RecipeDetailState {
-  recipe: iRecipe;
+  recipe: iRecipe,
+  slug: string,
 }
 
 export interface iRecipe {
@@ -59,7 +61,8 @@ class RecipeDetail extends Component<Props> {
       id: 0,
       recipe_tags: [],
       recipe_ingredients: [],
-     }
+     },
+     slug: '',
   }
 
   public buttons = [
@@ -93,6 +96,7 @@ class RecipeDetail extends Component<Props> {
     // Get recipe with tags by slug/id
     const url = window.location.pathname;
     const slug = url.substr(url.lastIndexOf('/') + 1);
+    this.setState({ slug: slug });
     console.log(slug);
     const api = Api.create();
 
@@ -116,8 +120,10 @@ class RecipeDetail extends Component<Props> {
         <Header buttons={this.buttons} />
         <main className="container content">
           <div className="colums RecipeDetail__Container--Top">
-            <button className="button">Delete</button>
+          <button className="button">Delete</button>
+          <Link to={`/recipe/edit/${this.state.slug}`} >
             <button className="button">Edit</button>
+          </Link>
           </div>
           <div className="columns">
             <div className="column is-one-third RecipeDetail__Container--Side">

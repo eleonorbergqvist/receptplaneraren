@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Ingredient;
+use App\User;
+use JWTAuth;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,12 +16,31 @@ class IngredientTest extends TestCase
     use DatabaseMigrations;
     use WithFaker;
 
+    public function setUp() : void
+    {
+        parent::setUp();
+
+        $user = new User([
+             'email'    => 'test@test.test',
+             'password' => '124hkjsL9)',
+             'user_name' => 'Test Person',
+         ]);
+
+        $user->save();
+        $user->fresh();
+        $this->user = $user;
+
+        $token = JWTAuth::attempt(['email' => 'test@test.test',
+        'password' => '124hkjsL9)']);
+        $this->token = $token;
+    }
+
     /** @test */
     public function it_will_show_all_ingredients()
     {
         $ingredients = factory(Ingredient::class, 10)->create();
 
-        $response = $this->get(route('ingredients.index'));
+        $response = $this->get(route('ingredients.index'), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -32,7 +53,7 @@ class IngredientTest extends TestCase
         $response = $this->post(route('ingredients.store'), [
             'name' => 'TestIngredient',
             'slug' => $this->faker->slug(),
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -56,11 +77,11 @@ class IngredientTest extends TestCase
         $this->post(route('ingredients.store'), [
             'name' => 'TestIngredient',
             'slug' => $this->faker->slug(),
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $ingredient = Ingredient::all()->first();
 
-        $response = $this->get(route('ingredients.show', $ingredient->id));
+        $response = $this->get(route('ingredients.show', $ingredient->id), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -81,13 +102,13 @@ class IngredientTest extends TestCase
         $this->post(route('ingredients.store'), [
             'name' => 'TestIngredient',
             'slug' => $this->faker->slug(),
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $ingredient = Ingredient::all()->first();
 
         $response = $this->put(route('ingredients.update', $ingredient->id), [
             'name' => 'This is the updated name',
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -111,11 +132,11 @@ class IngredientTest extends TestCase
         $this->post(route('ingredients.store'), [
             'name' => $this->faker->text(),
             'slug' => $this->faker->slug(),
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $ingredient = Ingredient::all()->first();
 
-        $response = $this->delete(route('ingredients.destroy', $ingredient->id));
+        $response = $this->delete(route('ingredients.destroy', $ingredient->id), [], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 

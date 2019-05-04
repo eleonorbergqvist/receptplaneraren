@@ -10,6 +10,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Response;
 use JWTAuth;
 
 
@@ -53,7 +54,7 @@ class RecipeIngredientTest extends TestCase
     {
         $recipeIngredients = factory(RecipeIngredient::class, 10)->create();
 
-        $response = $this->get(route('recipe-ingredients.index'));
+        $response = $this->get(route('recipe-ingredients.index'), ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -108,17 +109,21 @@ class RecipeIngredientTest extends TestCase
     {
         $recipe = Recipe::all()->first();
 
-        $this->post(route('ingredients.store'), [
+        $ingredientsResponse = $this->post(route('ingredients.store'), [
             'name' => 'TestIngrediens',
             'slug' => 'test-ingrediens',
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response = $this->post(route('recipe-ingredients.store'), [
-            'amount' => '100',
-            'measurement' => '1',
-            'ingredient' => 'TestIngrediens',
+            'ingredients' => [
+                [
+                    'amount' => '100',
+                    'measurement' => '1',
+                    'ingredient' => 'TestIngrediens',
+                ],
+            ],
             'recipe_id' => $recipe->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
@@ -127,65 +132,103 @@ class RecipeIngredientTest extends TestCase
 
     }
 
-    // /** @test */
-    // public function it_will_update_a_recipe_ingredient()
-    // {
-    //     $recipe = Recipe::all()->first();
-
-    //     $response = $this->post(route('recipe-ingredients.store'), [
-    //         'amount' => '100',
-    //         'measurement' => '1',
-    //         'ingredient' => 'Tomat',
-    //         'recipe_id' => $recipe->id,
-    //     ]);
-
-    //     $recipeIngredient = RecipeIngredient::all()->first();
-
-    //     $response = $this->put(route('recipe-ingredients.update', $recipeIngredient->id), [
-    //         'amount' => '200.00',
-
-    //     ]);
-
-    //     $response->assertStatus(200);
-
-    //     $recipeIngredient = $recipeIngredient->fresh();
-
-    //     $this->assertEquals($recipeIngredient->amount, '200.00');
-
-    //     $response->assertJsonStructure([
-    //        'message',
-    //        'recipe-ingredient' => [
-    //             'id',
-    //             'amount',
-    //             'measurement',
-    //             'recipe_id',
-    //             'ingredient_id',
-    //     ]
-    //    ]);
-    // }
-
     /** @test */
-    public function it_will_delete_a_recipe_ingredient()
+    public function it_will_update_a_recipe_ingredient()
     {
         $recipe = Recipe::all()->first();
 
         $response = $this->post(route('recipe-ingredients.store'), [
-            'amount' => '100',
-            'measurement' => '1',
-            'ingredient' => 'Tomat',
+            'ingredients' => [
+                [
+                    'amount' => '100',
+                    'measurement' => '1',
+                    'ingredient' => 'TestIngrediens',
+                ],
+            ],
             'recipe_id' => $recipe->id,
-        ]);
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $recipeIngredient = RecipeIngredient::all()->first();
 
-        $response = $this->delete(route('recipe-ingredients.destroy', $recipeIngredient->id));
+        $response = $this->put(route('recipe-ingredients.updateAllForRecipe'), [
+            'ingredients' => [
+                [
+                    'amount' => '200',
+                    'measurement' => '1',
+                    'ingredient' => [
+                        'name' => 'TestIngrediens',
+                    ],
+                    //ska name vara i egen array el inte??
+                ],
+            ],
+            'recipe_id' => $recipeIngredient->id,
+        ], ['Authorization' => 'Bearer ' . $this->token]);
 
         $response->assertStatus(200);
 
-        $this->assertNull(RecipeIngredient::find($recipeIngredient->id));
+        $recipeIngredient = $recipeIngredient->fresh();
+
+        $this->assertEquals($recipeIngredient->amount, '200.00');
+        // dd($response->getData());
+
+        /*
+        +"message": "Great success! Recipe ingredient updated"
+        +"recipe-ingredients": array:1 [
+          0 => {#1155
+            +"id": 1
+            +"amount": "200"
+            +"measurement": "1"
+            +"created_at": "2019-05-04 07:25:43"
+            +"updated_at": "2019-05-04 07:25:44"
+            +"ingredient_id": 1
+            +"recipe_id": 1
+          }
+        ]
+        */
+
 
         $response->assertJsonStructure([
-            'message'
-        ]);
+           'message',
+           'recipe-ingredients' => [
+               [
+                'id',
+                'amount',
+                'measurement',
+                'recipe_id',
+                'ingredient_id',
+               ],
+            ],
+       ]);
     }
+
+    // /** @test */
+    // public function it_will_delete_a_recipe_ingredient()
+    // {
+    //     $recipe = Recipe::all()->first();
+
+
+
+    //     $response = $this->post(route('recipe-ingredients.store'), [
+    //         'ingredients' => [
+    //             [
+    //                 'amount' => '100',
+    //                 'measurement' => 'dl',
+    //                 'ingredient' => 'tomat'
+    //             ]
+    //         ],
+    //         'recipe_id' => $recipe->id,
+    //     ], ['Authorization' => 'Bearer ' . $this->token]);
+
+    //     $recipeIngredient = RecipeIngredient::all()->first();
+
+    //     $response = $this->delete(route('recipe-ingredients.destroy', $recipeIngredient->id));
+
+    //     $response->assertStatus(200);
+
+    //     $this->assertNull(RecipeIngredient::find($recipeIngredient->id));
+
+    //     $response->assertJsonStructure([
+    //         'message'
+    //     ]);
+    // }
 }

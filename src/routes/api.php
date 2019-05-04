@@ -42,15 +42,13 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     Route::get('/shopping-list/{monday}', 'ShoppingListController@showWeek')->name('shoppingList.showWeek');
 
-
     Route::get('/recipes', 'RecipeController@index')->name('recipes.index');
     Route::get('/recipesAll', 'RecipeController@indexAndTagsAndIngredients')->name('recipes.indexAndTagsAndIngredients');
-
 
     Route::post('/recipes', 'RecipeController@store')->name('recipes.store');
     Route::post('/recipes/image/store', 'RecipeController@storeImage')->name('recipes.storeImage');
     Route::get('/recipes/{slug}', 'RecipeController@show')->name('recipes.show');
-    Route::put('/recipes/{id}', 'RecipeController@update')->name('recipes.update');
+    Route::put('/recipes/{slug}', 'RecipeController@update')->name('recipes.update');
     Route::delete('/recipes/{id}', 'RecipeController@destroy')->name('recipes.destroy');
 
     Route::get('/recipe-tags', 'RecipeTagController@index')->name('recipe-tags.index');
@@ -66,7 +64,7 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     Route::get('/recipe-ingredients', 'RecipeIngredientController@index')->name('recipe-ingredients.index');
     Route::post('/recipe-ingredients', 'RecipeIngredientController@store')->name('recipe-ingredients.store');
-    // Route::put('/recipe-ingredients/{id}', 'RecipeIngredientController@update')->name('recipe-ingredients.update');
+    Route::put('/recipe-ingredients', 'RecipeIngredientController@updateAllForRecipe')->name('recipe-ingredients.updateAllForRecipe');
     Route::delete('/recipe-ingredients/{id}', 'RecipeIngredientController@destroy')->name('recipe-ingredients.destroy');
 });
 

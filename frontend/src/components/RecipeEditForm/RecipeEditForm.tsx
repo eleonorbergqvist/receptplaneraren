@@ -10,10 +10,11 @@ import {
 import * as Yup from "yup";
 import Input from "../Input/Input";
 import IngredientsInput, { IngredientsInputProps } from "../IngredientsInput/IngredientsInput";
-import "./RecipeForm.css";
+import "./RecipeEditForm.css";
 
-export interface RecipeFormProps {
+export interface RecipeEditFormProps {
   onSubmit: any,
+  recipe: iFormValues,
 }
 
 export interface RecipeFormState {
@@ -35,7 +36,7 @@ export interface iIngredient {
   measurement: string;
   ingredient: string;
 }
-
+const BASE_URL: string = 'http://localhost:8000/storage/';
 const emptyIngredient: iIngredient = { 
   amount: 0,
   measurement: "",
@@ -58,15 +59,17 @@ interface InputListProps {
   onChange: any,
 }
 
-class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
+class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
 
-  constructor(props: RecipeFormProps) {
+  constructor(props: RecipeEditFormProps) {
     super(props);
 
+    console.log(props.recipe);
+
     this.state = {
-      title: "",
-      image: "https://bulma.io/images/placeholders/128x128.png",
-      instructions: "",
+      title: props.recipe.title,
+      image: props.recipe.image || "https://bulma.io/images/placeholders/128x128.png",
+      instructions: props.recipe.instructions,
       ingredients: [emptyIngredient],
     }
   }
@@ -112,10 +115,10 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
   render() {
     const onSubmit = this.props.onSubmit;
     let initialValues = {
-      title: "",
-      image: "",
-      instructions: "",
-      ingredients: [emptyIngredient],
+      title: this.state.title,
+      image: this.props.recipe.image || "",
+      instructions: this.props.recipe.instructions || "",
+      ingredients: this.props.recipe.ingredients || [emptyIngredient],
     };
     
     return (
@@ -144,7 +147,7 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
               <div className="columns">
                 <div className="column">
                 <figure className="image is-128x128">
-                  <img id="imagePreview" src={this.state.image} />
+                  <img id="imagePreview" src={BASE_URL+this.state.image} />
                 </figure>
                 </div>
                 <div className="column">
@@ -275,4 +278,4 @@ const InputList = (props: InputListProps) => {
   )
 }
 
-export default RecipeForm;
+export default RecipeEditForm;
