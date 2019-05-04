@@ -105,16 +105,12 @@ class RecipeIngredientController extends Controller
                 $this->ingredient = $ingredient;
             }
 
-            $recipeIngredient = RecipeIngredient::updateOrCreate(
-                [
+            $recipeIngredient = RecipeIngredient::create([
                     'recipe_id' => $request->recipe_id,
                     'ingredient_id' => $this->ingredient->id,
-                ],
-                [
                     'amount' => $ingredientData["amount"],
                     'measurement' => $ingredientData["measurement"],
-                ]
-            );
+            ]);
 
             $recipeIngredient->fresh();
             $recipeIngredients[] = $recipeIngredient;
