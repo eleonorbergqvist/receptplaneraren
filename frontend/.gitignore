@@ -18,6 +18,8 @@
 .env.test.local
 .env.production.local
 
+# Node
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+frontend/node_modules

@@ -7,9 +7,9 @@ const mapDispatch = (dispatch: Dispatch) => ({
   logOut: dispatch.user.logOut
 });
 
-type Props = ReturnType<typeof mapDispatch>;
+type LogOutProps = ReturnType<typeof mapDispatch>;
 
-class LogOut extends Component<Props> {
+class LogOut extends Component<LogOutProps> {
   componentWillMount() {
     this.props.logOut();
   }

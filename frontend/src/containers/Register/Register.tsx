@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
- import { Redirect } from 'react-router';
+import { Redirect } from 'react-router';
 import { connect } from "react-redux";
-import Api from "../../services/Api";
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
-
-import { iRootState, Dispatch } from "../../store"
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
+import Api from "../../services/Api";
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import { iRootState, Dispatch } from "../../store"
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -23,7 +22,6 @@ type connectedProps = ReturnType<typeof mapState> & ReturnType<typeof mapDispatc
 // use `type Props = connectedProps & { ...additionalTypings }
 type Props = connectedProps
 
-
 class Register extends Component<Props> {
    handleSubmit = async (values: any, actions: FormikActions<any>) => {
     const api = Api.create();
@@ -31,8 +29,8 @@ class Register extends Component<Props> {
     actions.setSubmitting(true);
 
     const response: ApiResponse<any> = await api.register({
-      "user_name": values.user_name, 
-      "email": values.email, 
+      "user_name": values.user_name,
+      "email": values.email,
       "password": values.password,
     })
 
@@ -43,10 +41,10 @@ class Register extends Component<Props> {
       actions.setErrors(response.data);
       return;
     }
-    
+
     this.props.setToken(response.data.access_token);
   }
-  
+
   render() {
     if (this.props.user.access_token) {
       return <Redirect to={"/welcome"} />

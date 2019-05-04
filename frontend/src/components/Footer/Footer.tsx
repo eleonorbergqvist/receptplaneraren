@@ -5,7 +5,7 @@ export interface FooterProps {
   copyrightText: string;
 }
 
-export const Footer = (props: FooterProps) => {
+const Footer = (props: FooterProps) => {
   return (
     <React.Fragment>
       <footer className="footer footer">
@@ -16,3 +16,6 @@ export const Footer = (props: FooterProps) => {
     </React.Fragment>
   );
 };
+
+
+export default Footer;

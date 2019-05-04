@@ -62,7 +62,7 @@ class CreateResetPassword extends Component<Props> {
     if (this.props.isLoggedIn) {
       return <Redirect to={"/welcome"} />;
     }
-    
+
     const onSubmit = this.handleSubmit;
     let initialValues = {
       email: "",

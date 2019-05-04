@@ -5,10 +5,9 @@ import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import Api from "../../services/Api";
-import Header from "../../components/Header/Header";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
+import { HeaderLoggedIn } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
-import { Footer } from "../../components/Footer/Footer";
 import RecipeEditForm, { iIngredient } from "../../components/RecipeEditForm/RecipeEditForm";
 import './RecipeEdit.css';
 
@@ -32,6 +31,9 @@ interface RecipeEditState {
   slug: string,
 }
 
+interface SelectedTag {
+  id: number,
+}
 interface iRecipe {
   title: string;
   image: string;
@@ -53,42 +55,14 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
     },
   }
 
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
-      class="header__button--yellow is-active"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Browse Recipes"
-      link={"/recipe/browse"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={3}
-      text="Settings"
-      link={"#"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
-      text="Log Out"
-      link={"/logout"}
-      class="header__button--pink"
-    />
-  ];
-
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
-
     console.log('RecipeEdit.handleSubmit');
     console.log(values);
 
     const api = Api.create();
 
     actions.setSubmitting(true);
-
+    console.log(this.state.selectedTags);
     const response: ApiResponse<any> = await api.recipeUpdate({
       instructions: values.instructions,
       title: values.title,
@@ -153,6 +127,13 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
       return;
     }
 
+    const selectedTagsObjects = recipeResponse.data.recipe.recipe_tags;
+
+    const selectedTags = selectedTagsObjects.map((obj: SelectedTag) => {
+      return obj.id;
+    });
+
+    this.setState({ selectedTags: selectedTags});
 
     let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
       return  {
@@ -195,7 +176,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
 
     return (
       <div className="CreateRecipe">
-        <Header buttons={this.buttons} />
+        <HeaderLoggedIn  />
         <main className="container">
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">

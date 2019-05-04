@@ -9,11 +9,11 @@ import Register from "../Register/Register";
 import ResetPassword from "../ResetPassword/ResetPassword";
 import CreateResetPassword from "../CreateResetPassword/CreateResetPassword";
 import CreateRecipe from "../CreateRecipe/CreateRecipe";
-import "./App.css";
 import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
 import RecipeDetail from "../RecipeDetail/RecipeDetail";
 import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 import RecipeEdit from "../RecipeEdit/RecipeEdit";
+import "./App.css";
 
 class App extends Component {
   render() {

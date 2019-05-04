@@ -86,8 +86,14 @@ class RecipeController extends Controller
     {
         $request->validate([
             'recipe_id' => 'required',
-            // 'image' => 'required|image64:jpeg,jpg,png,gif',
+            'image' => 'nullable',
         ]);
+
+        if (!$request->image) {
+            return response()->json([
+                'message' => 'No new image provided'
+            ]);
+        }
 
         $recipe = Recipe::findOrFail($request->recipe_id);
 
@@ -174,23 +180,24 @@ class RecipeController extends Controller
     public function update(Request $request, $slug)
     {
         $request->validate([
-
-            //Ta birt detta?
             'status' => 'required',
             'instructions' => 'required',
-            'preparation_time' => 'nullable',
             'title' => 'required',
             'image' => 'nullable',
+            'tags' => 'nullable',
             'slug' => 'required',
-            'portions' => 'nullable',
           ]);
 
-          $recipe = Recipe::where('slug', $slug)->firstOrFail();
-          $recipe->update($request->all());
+        // TODO: Maybe find based on id instead of slug
+        $recipe = Recipe::where('slug', $slug)->firstOrFail();
+        $recipe->update($request->all());
+        $recipe->recipeTags()->sync($request->tags);
+        $recipeTags = $recipe->recipeTags()->allRelatedIds()->toArray();;
 
           return response()->json([
               'message' => 'Great success! Recipe updated',
-              'recipe' => $recipe
+              'recipe' => $recipe,
+              'recipeTags' => $recipeTags,
           ]);
     }
 

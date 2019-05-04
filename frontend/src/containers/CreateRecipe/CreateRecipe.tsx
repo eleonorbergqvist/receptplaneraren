@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
-import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
+import { iRootState, Dispatch } from "../../store";
 import Api from "../../services/Api";
-
-import "./CreateRecipe.css";
-import Header from "../../components/Header/Header";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
+import { HeaderLoggedIn } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
-import { Footer } from "../../components/Footer/Footer";
 import RecipeForm from "../../components/RecipeForm/RecipeForm";
+import "./CreateRecipe.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -38,34 +36,6 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
     tags: [],
     selectedTags: [],
   }
-
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
-      class="header__button--yellow is-active"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Browse Recipes"
-      link={"/recipe/browse"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={3}
-      text="Settings"
-      link={"#"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
-      text="Log Out"
-      link={"/logout"}
-      class="header__button--pink"
-    />
-  ];
-
 
   async componentDidMount () {
     const api = Api.create();
@@ -149,7 +119,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
 
     return (
       <div className="CreateRecipe">
-        <Header buttons={this.buttons} />
+        <HeaderLoggedIn />
         <main className="container">
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">

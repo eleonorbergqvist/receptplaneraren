@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
+import { iRootState, Dispatch } from "../../store";
 import Api from "../../services/Api";
-import Header from "../../components/Header/Header";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
-import { Footer } from "../../components/Footer/Footer";
+import { HeaderLoggedIn } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import "./RecipeDetail.css";
 
 const mapState = (state: iRootState) => ({
@@ -65,33 +64,6 @@ class RecipeDetail extends Component<Props> {
      slug: '',
   }
 
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Browse Recipes"
-      link={"/recipe/browse"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={3}
-      text="Settings"
-      link={"#"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
-      text="Log Out"
-      link={"/logout"}
-      class="header__button--pink"
-    />
-  ];
-
   async componentDidMount () {
     // Get recipe with tags by slug/id
     const url = window.location.pathname;
@@ -117,7 +89,7 @@ class RecipeDetail extends Component<Props> {
 
     return (
       <div className="RecipeDetail">
-        <Header buttons={this.buttons} />
+        <HeaderLoggedIn />
         <main className="container content">
           <div className="colums RecipeDetail__Container--Top">
           <button className="button">Delete</button>

@@ -67,7 +67,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
 
     this.state = {
       title: props.recipe.title,
-      image: props.recipe.image || "https://bulma.io/images/placeholders/128x128.png",
+      image: BASE_URL+props.recipe.image || "https://bulma.io/images/placeholders/128x128.png",
       instructions: props.recipe.instructions,
       ingredients: [emptyIngredient],
     }
@@ -146,7 +146,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeFormState> {
               <div className="columns">
                 <div className="column">
                 <figure className="image is-128x128">
-                  <img id="imagePreview" src={BASE_URL+this.state.image} alt="" />
+                  <img id="imagePreview" src={this.state.image} alt="" />
                 </figure>
                 </div>
                 <div className="column">

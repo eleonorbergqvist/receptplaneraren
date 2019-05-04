@@ -21,7 +21,7 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-type Props = connectedProps & RouteComponentProps & iFormValues & ResetPasswordProps;
+type Props = connectedProps & RouteComponentProps & FormValues & ResetPasswordProps;
 
 interface ResetPasswordState {
   reset_token: string;
@@ -33,7 +33,7 @@ interface MatchParams {
   token: string;
 }
 
-interface iFormValues {
+interface FormValues {
   password: string;
   password_confirmation: string;
   general: string;
@@ -80,7 +80,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
     if (this.props.isLoggedIn) {
       return <Redirect to={"/welcome"} />;
     }
-  
+
     console.log(this.state);
 
     const onSubmit = this.handleSubmit;
@@ -105,8 +105,8 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
               initialValues={initialValues}
               validationSchema={validationSchema}
               onSubmit={(
-                values: iFormValues,
-                actions: FormikActions<iFormValues>
+                values: FormValues,
+                actions: FormikActions<FormValues>
               ) => {
                 onSubmit(
                   {
@@ -117,7 +117,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
                   actions
                 );
               }}
-              render={(formikBag: FormikProps<iFormValues>) => (
+              render={(formikBag: FormikProps<FormValues>) => (
                 <Form>
                   {formikBag.errors.general && <p>{formikBag.errors.general}</p>}
                   {formikBag.status && <p>{formikBag.status}</p>}

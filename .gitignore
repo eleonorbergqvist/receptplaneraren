@@ -4,3 +4,5 @@
 /experiment
 /src/public
 /src/vendor
+
+frontend/node_modules

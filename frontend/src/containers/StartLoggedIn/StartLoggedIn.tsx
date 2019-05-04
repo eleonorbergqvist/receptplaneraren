@@ -2,10 +2,9 @@ import React, { Component, FormEvent } from "react";
 import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { iRootState } from "../../store";
-import Header from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+import { HeaderLoggedIn } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { TabNav, RecipeItem, EmptyRecipeItem } from "../../components/Tabs/Tabs";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
 import Api from "../../services/Api";
 import * as moment from 'moment';
 import { ApiResponse } from "apisauce";
@@ -41,33 +40,6 @@ class StartLoggedIn extends Component<Props> {
     isLoggedOut: false,
     shoppingList: [],
   }
-
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Browse Recipes"
-      link={"/recipe/browse"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={3}
-      text="Settings"
-      link={"#"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
-      text="Log Out"
-      link={"/logout"}
-      class="header__button--pink"
-    />
-  ];
 
  componentDidMount () {
     const week = moment.default().isoWeek();
@@ -173,7 +145,7 @@ class StartLoggedIn extends Component<Props> {
 
     return (
       <React.Fragment>
-        <Header buttons={this.buttons} />
+        <HeaderLoggedIn />
         <main className="container">
           <div className="start__Container columns">
             <div className="column is-two-fifths">

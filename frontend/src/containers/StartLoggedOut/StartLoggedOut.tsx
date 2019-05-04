@@ -3,12 +3,11 @@ import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { iRootState, Dispatch } from "../../store";
 import { Link } from "react-router-dom";
-import Header from "../../components/Header/Header";
-import { Footer } from "../../components/Footer/Footer";
+import { HeaderLoggedOut } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { Card } from "../../components/Card/Card";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
-import "./StartLoggedOut.css";
 import Modal from "../../components/Modal/Modal";
+import "./StartLoggedOut.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -38,21 +37,6 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
     modelIsOpen: true,
   }
 
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Sign Up"
-      link={"/register"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Log In"
-      link={"/login"}
-      class="header__button--pink"
-    />
-  ];
-
   handleLoggedOutModalClose = () => {
     this.setState({ modelIsOpen: false });
   }
@@ -67,7 +51,7 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
 
     return (
       <div className="StartLoggedOut">
-        <Header buttons={this.buttons} />
+        <HeaderLoggedOut />
         <main>
           <section className="start__container--img">
             <div className="container">
@@ -102,12 +86,12 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
                 <div className="column">
                   <Card
                     image="/images/hermes-rivera-258743-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat. 
-                    Phasellus sit amet viverra risus, non faucibus ligula. 
-                    Fusce vel aliquet neque. Fusce libero justo, 
-                    hendrerit id mollis vitae, pellentesque in nisi. 
-                    Proin posuere egestas orci eget lobortis. Nunc risus est, 
-                    venenatis lobortis nisl at, sodales egestas mi. 
+                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
+                    Phasellus sit amet viverra risus, non faucibus ligula.
+                    Fusce vel aliquet neque. Fusce libero justo,
+                    hendrerit id mollis vitae, pellentesque in nisi.
+                    Proin posuere egestas orci eget lobortis. Nunc risus est,
+                    venenatis lobortis nisl at, sodales egestas mi.
                     Curabitur efficitur vehicula rhoncus."
                     alt="Placeholder image"
                   />
@@ -116,12 +100,12 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
                 <div className="column">
                   <Card
                     image="/images/keenan-loo-27635-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat. 
-                    Phasellus sit amet viverra risus, non faucibus ligula. 
-                    Fusce vel aliquet neque. Fusce libero justo, 
-                    hendrerit id mollis vitae, pellentesque in nisi. 
-                    Proin posuere egestas orci eget lobortis. Nunc risus est, 
-                    venenatis lobortis nisl at, sodales egestas mi. 
+                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
+                    Phasellus sit amet viverra risus, non faucibus ligula.
+                    Fusce vel aliquet neque. Fusce libero justo,
+                    hendrerit id mollis vitae, pellentesque in nisi.
+                    Proin posuere egestas orci eget lobortis. Nunc risus est,
+                    venenatis lobortis nisl at, sodales egestas mi.
                     Curabitur efficitur vehicula rhoncus."
                     alt="Placeholder image"
                   />
@@ -130,12 +114,12 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
                 <div className="column">
                   <Card
                     image="/images/luisa-schetinger-1164948-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat. 
-                    Phasellus sit amet viverra risus, non faucibus ligula. 
-                    Fusce vel aliquet neque. Fusce libero justo, 
-                    hendrerit id mollis vitae, pellentesque in nisi. 
-                    Proin posuere egestas orci eget lobortis. Nunc risus est, 
-                    venenatis lobortis nisl at, sodales egestas mi. 
+                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
+                    Phasellus sit amet viverra risus, non faucibus ligula.
+                    Fusce vel aliquet neque. Fusce libero justo,
+                    hendrerit id mollis vitae, pellentesque in nisi.
+                    Proin posuere egestas orci eget lobortis. Nunc risus est,
+                    venenatis lobortis nisl at, sodales egestas mi.
                     Curabitur efficitur vehicula rhoncus."
                     alt="Placeholder image"
                   />

@@ -5,9 +5,8 @@ import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import Api from "../../services/Api";
-import Header from "../../components/Header/Header";
-import PrimaryMenuButton from "../../components/PrimaryMenuButton/PrimaryMenuButton";
-import { Footer } from "../../components/Footer/Footer";
+import { HeaderLoggedIn } from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
 import "./BrowseRecipes.css";
 
@@ -94,38 +93,13 @@ class BrowseRecipes extends Component<Props> {
     },
   }
 
-  public buttons = [
-    <PrimaryMenuButton
-      key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={2}
-      text="Browse Recipes"
-      link={"/recipe/browse"}
-      class="header__button--yellow is-active"
-    />,
-    <PrimaryMenuButton
-      key={3}
-      text="Settings"
-      link={"#"}
-      class="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
-      text="Log Out"
-      link={"/logout"}
-      class="header__button--pink"
-    />
-  ];
-
   async componentDidMount () {
-    // Get all recipes with tags (belonging to user?)
+    // TODO: Get all recipes with tags (belonging to user?)
     const api = Api.create();
 
-    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    const response: ApiResponse<any> = await api.recipeTags(
+      this.props.user.access_token
+    );
     this.setState({ tags: response.data })
 
     if (!response.ok) {
@@ -133,24 +107,24 @@ class BrowseRecipes extends Component<Props> {
       return;
     }
 
-    const recipesResponse: ApiResponse<any> = await api.recipesAllInfo(this.props.user.access_token);
+    const recipesResponse: ApiResponse<any> = await api.recipesAllInfo(
+      this.props.user.access_token
+    );
     console.log(recipesResponse);
     this.setState({ recipes: recipesResponse.data.recipes })
 
     if (!response.ok) {
       console.log("RECIPE ERRORRR")
-    return;
+      return;
     }
   }
 
   handleOpenModal = (recipe: iRecipe) => {
-    console.log("Open Modal");
     this.setState({ modalIsOpen: true });
     this.setState({ clickedRecipe: recipe });
   }
 
   handleModalClose = () => {
-    console.log("Close Modal");
     this.setState({ modalIsOpen: false });
 
   }
@@ -177,7 +151,7 @@ class BrowseRecipes extends Component<Props> {
 
     return (
       <div className="BrowseRecipes">
-        <Header buttons={this.buttons} />
+        <HeaderLoggedIn />
         <main className="container">
           <div className="columns">
             <div className="column is-two-fifths">
