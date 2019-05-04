@@ -7,6 +7,7 @@ import { iRootState, Dispatch } from "../../store";
 import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
 import { getEnv } from "../../config";
 import "./RecipeDetail.css";
 
@@ -27,6 +28,7 @@ interface RecipeDetailState {
   recipe: iRecipe,
   slug: string,
   isDeleted: boolean,
+  modalIsOpen: boolean,
 }
 
 export interface iRecipe {
@@ -61,18 +63,16 @@ class RecipeDetail extends Component<Props> {
      },
      slug: '',
      isDeleted: false,
+     modalIsOpen: false,
   }
 
   async componentDidMount () {
     const url = window.location.pathname;
     const slug = url.substr(url.lastIndexOf('/') + 1);
-    this.setState({ slug: slug });
-    console.log(slug);
+    const { api } = this.props;
 
-    const { api } = this.props
     const response: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, slug);
-    console.log(response);
-    this.setState({ recipe: response.data.recipe })
+    this.setState({ recipe: response.data.recipe, slug: slug })
 
     if (!response.ok) {
       console.log("RECIPE ERRORRR")
@@ -90,6 +90,14 @@ class RecipeDetail extends Component<Props> {
       return;
     }
     this.setState({ isDeleted: true });
+  }
+
+  handleOpenModal = () => {
+    this.setState({ modalIsOpen: true });
+  }
+
+  handleModalClose = () => {
+    this.setState({ modalIsOpen: false });
   }
 
   render() {
@@ -146,10 +154,16 @@ class RecipeDetail extends Component<Props> {
             </div>
           </div>
           <div className="colums RecipeDetail__Container--Bottom">
-            <button className="button">Add to week</button>
+            <button onClick={this.handleOpenModal} className="button">Add to week</button>
           </div>
         </main>
         <Footer copyrightText="" />
+        {this.state.modalIsOpen && (
+          <AddDayMealModal
+            text="Add meal to weekly plan"
+            recipe={this.state.recipe}
+            onClose={this.handleModalClose} />
+        )}
       </div>
     );
   }
@@ -159,3 +173,6 @@ export default connect(
   mapState,
   mapDispatch
 )(RecipeDetail);
+
+
+

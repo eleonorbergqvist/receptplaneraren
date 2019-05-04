@@ -19,14 +19,11 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-// to include additional typings
-// use `type Props = connectedProps & { ...additionalTypings }
 type Props = connectedProps & AddDayMealModalProps;
 
 interface AddDayMealModalProps {
   text: string,
   onClose: Function,
-  // onSubmit: Function,
   recipe: iRecipe,
 }
 
@@ -126,7 +123,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
     onClose();
   };
 
-//modal behöver state för att kunna ritas om eftersom hämtar data en gång efter mount
   componentDidMount () {
     const weeksInYear: number = moment.default().isoWeeksInYear();
     let allWeeks: number[] = [];
@@ -134,11 +130,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
       allWeeks = [...allWeeks, i]
     }
     this.setState({ weekList: allWeeks });
-    // this.setState({ currentDay: moment.default().
-    //   isoWeekday(moment.default().isoWeekday()).format('dddd')
-    // })
   }
-// remove touched validation
+// FIXME: remove touched validation
   render() {
     const onSubmit = this.handleSubmit;
 
@@ -147,7 +140,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
       day: this.state.currentDay,
       meal: this.state.currentMeal,
     };
-//lägg in error visning
+// TODO: lägg in error visning
     return (
       <div className={`is-active modal`}>
         <div className="modal-background" />

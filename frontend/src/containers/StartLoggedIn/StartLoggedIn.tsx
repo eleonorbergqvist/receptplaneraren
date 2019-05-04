@@ -18,63 +18,58 @@ type connectedProps = ReturnType<typeof mapState>;
 type Props = connectedProps & { api: iApi }
 
 interface StartLoggedInState {
-  week: number | null,
-  mondayDate: string,
+  mondayDate: any,
   weekmeals: any,
-  selectedTab: any,
+  selectedDayOfWeek: number,
   isLoggedOut: boolean,
   shoppingList: any,
 }
 
-// interface iDay {
-//   day: {breakfast: iRecipe, lunch: iRecipe, dinner: iRecipe}
-// }
-
 class StartLoggedIn extends Component<Props> {
-  // TODO: Rename to WeeklyPlan?
   state: StartLoggedInState = {
-    week: null,
-    mondayDate: '',
+    mondayDate: null,
     weekmeals: [],
-    selectedTab: 0,
+    selectedDayOfWeek: 0,
     isLoggedOut: false,
     shoppingList: [],
   }
 
  componentDidMount () {
-    const week = moment.default().isoWeek();
-    const monday = moment.default().startOf('isoWeek').format('YYYY-MM-DD');
+    const mondayDate = moment.default().startOf('isoWeek');
 
-    this.setState({
-      week: week,
-      mondayDate: monday,
-    }, () => this.getDayMealsData(this.state.mondayDate));
+    this.setState({ mondayDate, }, () => {
+      this.getDayMealsData()
+    });
   }
 
   handleWeekChange = async (e: React.FormEvent, direction:number) => {
     e.preventDefault();
-    let newMondayDate = moment.default(this.state.mondayDate, 'YYYY-MM-DD');;
+    let newMondayDate = this.state.mondayDate;
 
     if (direction === 1) {
-      newMondayDate.add(7, 'days');
+      newMondayDate = newMondayDate.clone().add(7, 'days');
     }
 
     if (direction === -1) {
-      newMondayDate.subtract(7, 'days');
+      newMondayDate = newMondayDate.clone().subtract(7, 'days');
     }
 
-    this.setState({
-      mondayDate: newMondayDate.format('YYYY-MM-DD'),
-      week: newMondayDate.isoWeek()
-    }, () => this.getDayMealsData(this.state.mondayDate));
+    this.setState({ mondayDate: newMondayDate }, () => {
+      this.getDayMealsData()
+    });
 
     // TODO: använda debounce vid många click
-
   }
 
-  getDayMealsData = async (monday: string) => {
+  getDayMealsData = async () => {
     const { api } = this.props
-    const response: ApiResponse<any> = await api.daymealsByDate(this.props.user.access_token, monday);
+    const { mondayDate } = this.state
+
+    let monday = mondayDate.format('YYYY-MM-DD');
+    const response: ApiResponse<any> = await api.daymealsByDate(
+      this.props.user.access_token,
+      monday
+    );
 
     if (response.status === 401) {
       this.setState({
@@ -105,7 +100,10 @@ class StartLoggedIn extends Component<Props> {
 
     const monday = this.state.mondayDate;
     const { api } = this.props
-    const response: ApiResponse<any> = await api.shoppingList(this.props.user.access_token, monday);
+    const response: ApiResponse<any> = await api.shoppingList(
+      this.props.user.access_token,
+      monday,
+    );
 
     if (response.status === 401) {
       this.setState({
@@ -125,7 +123,11 @@ class StartLoggedIn extends Component<Props> {
   }
 
   render() {
-    const { weekmeals } = this.state
+    const { weekmeals, mondayDate } = this.state;
+
+    if (!mondayDate) {
+      return null;
+    }
 
     if (this.state.isLoggedOut) {
       return <Redirect to={"/logout"} />;
@@ -135,14 +137,15 @@ class StartLoggedIn extends Component<Props> {
       return <Redirect to={"/login"} />;
     }
 
-    // console.log(weekmeals);
+    const week = mondayDate.isoWeek()
 
-    // if (!weekmeals.length) {
-    //   return null;
-    // }
+    const dayDate = mondayDate.clone().add(
+      this.state.selectedDayOfWeek, 'days'
+    ).format("YYYY-MM-DD");
 
-    let day = weekmeals[this.state.selectedTab] || [];
-    let daymeals = day[1];
+    const matchingDays = weekmeals.filter((day:any) => day[0] === dayDate);
+    const day = matchingDays.length > 0 ? matchingDays[0] : [];
+    const daymeals = day[1];
 
     return (
       <React.Fragment>
@@ -150,7 +153,7 @@ class StartLoggedIn extends Component<Props> {
         <main className="container">
           <div className="start__Container columns">
             <div className="column is-two-fifths">
-              <h1>Vecka {this.state.week}</h1>
+              <h1>Vecka {week}</h1>
               <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
                 <i className="fas fa-caret-left" />
               </span>
@@ -172,7 +175,6 @@ class StartLoggedIn extends Component<Props> {
               <button className="button" onClick={this.handleShoppingList}>Generate Shoppinglist</button>
               <br />
               {this.state.shoppingList.map((ingredient: any, index: number) => {
-                console.log('test');
                 return <li key={index}>{ingredient.amount}{ingredient.measurement}{ingredient.ingredient.name}</li>
               })}
             </div>
@@ -188,15 +190,15 @@ class StartLoggedIn extends Component<Props> {
                   {label: "Saturday", value: 5},
                   {label: "Sunday", value: 6},
                 ]}
-                selected={this.state.selectedTab}
+                selected={this.state.selectedDayOfWeek}
                 onChange={this.handleTabNavChange}
               />
               <DayMealList
                 meals={daymeals}
-                renderMissingMeal={(mealType:number) => {
+                renderMissingMeal={(mealType: number) => {
                   return <EmptyRecipeItem key={mealType} mealType={mealType} />
                 }}
-                renderMealItem={(meal:any, index:number) => {
+                renderMealItem={(meal: any, index: number) => {
                   return <RecipeItem key={meal.id} data={meal} />
                 }}
               />

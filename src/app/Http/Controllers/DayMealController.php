@@ -105,7 +105,7 @@ class DayMealController extends Controller
         )->orderBy(
             'date'
         )->whereBetween(
-            'date',[$startDate, $endDate]
+            'date', [$startDate, $endDate]
         )->get();
         $daymeals = $daymeals->toArray();
 
