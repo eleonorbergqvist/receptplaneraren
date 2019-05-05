@@ -2,6 +2,8 @@
 
 use Carbon\Carbon;
 use App\User;
+use App\Helpers\SPAConfig;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,9 +34,10 @@ Route::get('/password/reset/{token}', function ($token) {
 
 Route::get('{view}', function () {
     $html = file_get_contents(public_path("index.html"));
-    return insertSPAConfig($html);
+    return SPAConfig::insertSPAConfig($html);
 })->where('view', '.*');
 
+/*
 function insertSPAConfig(string $html): string {
     $spaConfig = getSPAConfig();
     return preg_replace(
@@ -44,7 +47,8 @@ function insertSPAConfig(string $html): string {
 
 function getSPAConfig(): string {
     $config = [
-        'API_URL' => "cat",
+        'API_URL' => "/api/",
     ];
     return '<script id="config">window.config = '.json_encode($config).'</script>';
 }
+*/
