@@ -47,10 +47,10 @@ jobs:
       - image: circleci/php:7.2-node-browsers
       - image: circleci/mysql:5
         environment:
-          MYSQL_DATABASE: mysql
-          MYSQL_USER: mysql
-          MYSQL_PASSWORD: mysql
-          MYSQL_ROOT_PASSWORD: mysql 
+          MYSQL_DATABASE: laravel_test
+          MYSQL_USER: laravel
+          MYSQL_PASSWORD: laravel
+          MYSQL_ROOT_PASSWORD: laravel
     steps:
       - *restore_repo
       - run: sudo apt install -y zlib1g-dev
@@ -67,10 +67,10 @@ jobs:
           key: composer-v1-{{ checksum "src/composer.lock" }}
           paths:
             - src/vendor
-      - run: cd src && php artisan migrate --database=mysql --force
+      #- run: cd src && php artisan migrate --database=mysql --force
       - run: cd src && php artisan jwt:secret && php artisan key:generate
       - run: cd src && php vendor/bin/phpunit
-    
+
 workflows:
   version: 2
   build_and_test:
