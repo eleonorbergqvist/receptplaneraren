@@ -49,6 +49,11 @@ jobs:
           command: |
             cd frontend
             npm test
+            npm run build
+      - save_cache:
+          key: v1-assets-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo/src/public
 
   laravel:
     <<: *defaults
@@ -88,8 +93,10 @@ jobs:
           paths:
             - ~/repo/src
 
+  # /home/circleci/repo/src
   deploy:
-    <<: *defaults
+    # <<: *defaults
+    working_directory: /home/circleci/repo
     docker:
       - image: buildpack-deps:trusty
     steps:
@@ -101,8 +108,8 @@ jobs:
       - run:
           name: Deploy application to Heroku
           command: |
-            #git push https://heroku:$HEROKU_API_KEY@git.heroku.com/receptplaneraren-staging.git master
-            git subtree push --prefix src https://heroku:$HEROKU_API_KEY@git.heroku.com/receptplaneraren-staging.git master
+            git subtree split --prefix dist -b heroku-deploy
+            git subtree push --force --prefix src https://heroku:$HEROKU_API_KEY@git.heroku.com/receptplaneraren-staging.git heroku-deploy:master
 
 workflows:
   version: 2
