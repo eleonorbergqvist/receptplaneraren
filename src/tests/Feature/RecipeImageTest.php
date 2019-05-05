@@ -50,7 +50,6 @@ class RecipeImageTest extends TestCase
         $recipe->fresh();
 
         $image = $this->faker->imageUrl();
-        // $image = public_path('images/testImage.jpg');
         $imageContents = file_get_contents($image);
         $base64Image = base64_encode($imageContents);
         $base64WithAdditionalData = 'data:image/jpeg;'.$base64Image.',SGVsbG8sIFdvcmxkIQ%3D%3D';

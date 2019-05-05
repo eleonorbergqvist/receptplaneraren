@@ -70,6 +70,9 @@ jobs:
             - src/vendor
       - run: cd src && php artisan migrate --database=mysql --force
       - run: cd src && php artisan key:generate
+      - run:
+          name: Create SPA index file required for test suite
+          command: echo "<html><body><div>app</div></body></html>" > src/public/index.html
       - run: cd src && php vendor/bin/phpunit
 
 workflows:
