@@ -67,7 +67,7 @@ jobs:
           key: composer-v1-{{ checksum "src/composer.lock" }}
           paths:
             - src/vendor
-      #- run: cd src && php artisan migrate --database=mysql --force
+      - run: cd src && php artisan migrate --database=mysql --force
       - run: cd src && php artisan jwt:secret && php artisan key:generate
       - run: cd src && php vendor/bin/phpunit
 
