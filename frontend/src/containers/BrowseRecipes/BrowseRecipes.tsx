@@ -22,7 +22,6 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-// to include additional typings
 type Props = connectedProps & { api: iApi }
 
 interface RecipeListItemProps {
@@ -126,21 +125,6 @@ class BrowseRecipes extends Component<Props> {
     this.setState({ modalIsOpen: false });
 
   }
-
-  // handleAddRecipe = async (props: any) => {
-  //   const api = Api.create();
-  //   const response: ApiResponse<any> = await api.daymealUpdate({
-  //     date: props.date,
-  //     meal_type: props.meal_type,
-  //     recipe_id: props.recipe_id,
-  //   }, this.props.user.access_token);;
-
-  //   if (!response.ok) {
-  //       console.log("DAYMEAL ERRORRR")
-  //     return;
-  //   }
-  //   console.log('BrowseRecipe.handleAddRecipe')
-  // }
 
   render() {
     if (!this.props.isLoggedIn) {

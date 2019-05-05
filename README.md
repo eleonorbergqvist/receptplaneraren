@@ -15,8 +15,9 @@ This is a recipe app.
 - `npm install`
 - `npm run build`
 - `cd -`
+- Copy laravel config: `cp src/.env.example src/.env`
 - Run `docker-compose up`
-- Now open [localhost:8000](localhost:8000)
+- Now open [localhost:8000](http://localhost:8000)
 - Done!
 
 ## References

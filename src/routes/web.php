@@ -31,5 +31,20 @@ Route::get('/password/reset/{token}', function ($token) {
 })->name("password.change");
 
 Route::get('{view}', function () {
-    return file_get_contents(public_path("index.html"));
+    $html = file_get_contents(public_path("index.html"));
+    return insertSPAConfig($html);
 })->where('view', '.*');
+
+function insertSPAConfig(string $html): string {
+    $spaConfig = getSPAConfig();
+    return preg_replace(
+        '/<script\ id=\\"config\\"><\/script>/', $spaConfig, $html
+    );
+}
+
+function getSPAConfig(): string {
+    $config = [
+        'API_URL' => "cat",
+    ];
+    return '<script id="config">window.config = '.json_encode($config).'</script>';
+}

@@ -5,5 +5,5 @@ const defaultConfig: any = {
 }
 
 export const getEnv = (name: string) => {
-  return (window as any)[name] || defaultConfig[name];
+  return (window as any).config[name] || defaultConfig[name];
 }
