@@ -47,7 +47,7 @@ jobs:
       - image: circleci/php:7.2-node-browsers
       - image: circleci/mysql:5
         environment:
-          MYSQL_DATABASE: laravel_test
+          MYSQL_DATABASE: laravel
           MYSQL_USER: laravel
           MYSQL_PASSWORD: laravel
           MYSQL_ROOT_PASSWORD: laravel
@@ -57,6 +57,7 @@ jobs:
       - run: sudo composer self-update
       - run: sudo docker-php-ext-install zip pdo_mysql
       - run: cd src && cp .env.circleci .env
+      - run: cd src && cp .env.circleci .env.testing
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
             - composer-v1-{{ checksum "src/composer.lock" }}
@@ -68,7 +69,10 @@ jobs:
           paths:
             - src/vendor
       - run: cd src && php artisan migrate --database=mysql --force
-      - run: cd src && php artisan jwt:secret && php artisan key:generate
+      - run: cd src && php artisan key:generate
+      - run:
+          name: Create SPA index file required for test suite
+          command: mkdir src/public && echo "<html><body><div>app</div></body></html>" > src/public/index.html
       - run: cd src && php vendor/bin/phpunit
 
 workflows:
