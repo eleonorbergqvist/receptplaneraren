@@ -69,7 +69,7 @@ jobs:
           paths:
             - src/vendor
       - run: cd src && php artisan migrate --database=mysql --force
-      - run: cd src && php artisan cache:clear && php artisan config:clear && php artisan jwt:secret && php artisan key:generate
+      - run: cd src && php artisan key:generate
       - run: cd src && php vendor/bin/phpunit
 
 workflows:
