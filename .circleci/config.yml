@@ -83,6 +83,10 @@ jobs:
       #    name: Create SPA index file required for test suite
       #    command: mkdir src/public && echo "<html><body><div>app</div></body></html>" > src/public/index.html
       - run: cd src && php vendor/bin/phpunit
+      - save_cache:
+          key: v1-laravel-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/repo/src
 
   deploy:
     <<: *defaults
@@ -90,6 +94,8 @@ jobs:
       - image: buildpack-deps:trusty
     steps:
       - *restore_repo
+      - restore_cache:
+          key: v1-laravel-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           key: v1-assets-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
       - run:
