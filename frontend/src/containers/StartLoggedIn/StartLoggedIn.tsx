@@ -153,7 +153,7 @@ class StartLoggedIn extends Component<Props> {
         <main className="container">
           <div className="start__Container columns">
             <div className="column is-two-fifths">
-              <h1>Vecka {week}</h1>
+              <h1>NY UPPDATERING Vecka {week}</h1>
               <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
                 <i className="fas fa-caret-left" />
               </span>
