@@ -108,7 +108,7 @@ jobs:
       - run:
           name: Deploy application to Heroku
           command: |
-            git subtree split --prefix dist -b heroku-deploy
+            git subtree split --prefix src -b heroku-deploy
             git subtree push --force --prefix src https://heroku:$HEROKU_API_KEY@git.heroku.com/receptplaneraren-staging.git heroku-deploy:master
 
 workflows:
