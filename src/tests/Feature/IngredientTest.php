@@ -130,7 +130,7 @@ class IngredientTest extends TestCase
     public function it_will_delete_an_ingredient()
     {
         $this->post(route('ingredients.store'), [
-            'name' => $this->faker->text(),
+            'name' => $this->faker->text(50),
             'slug' => $this->faker->slug(),
         ], ['Authorization' => 'Bearer ' . $this->token]);
 

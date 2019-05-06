@@ -52,8 +52,8 @@ class RecipeTest extends TestCase
     public function it_will_create_recipes()
     {
         $response = $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -84,8 +84,8 @@ class RecipeTest extends TestCase
     public function it_will_show_a_recipe()
     {
         $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -113,8 +113,8 @@ class RecipeTest extends TestCase
     public function it_will_update_a_recipe()
     {
         $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -124,8 +124,8 @@ class RecipeTest extends TestCase
 
         $response = $this->put(route('recipes.update', $recipe->slug), [
             'title' => 'This is the updated title',
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'slug' => $this->faker->slug(),
         ], ['Authorization' => 'Bearer ' . $this->token]);
 
@@ -152,8 +152,8 @@ class RecipeTest extends TestCase
     public function it_will_delete_a_recipe()
     {
         $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -178,8 +178,8 @@ class RecipeTest extends TestCase
         $tags = factory(RecipeTag::class, 2)->create();
 
         $response = $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -214,8 +214,8 @@ class RecipeTest extends TestCase
         $tags = factory(RecipeTag::class, 2)->create();
 
         $response = $this->post(route('recipes.store'), [
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,

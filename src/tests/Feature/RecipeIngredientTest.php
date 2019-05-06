@@ -37,8 +37,8 @@ class RecipeIngredientTest extends TestCase
         $this->token = $token;
 
         $recipe = new Recipe([
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->text(100),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,

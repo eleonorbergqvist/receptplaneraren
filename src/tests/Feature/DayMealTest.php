@@ -36,8 +36,8 @@ class DayMealTest extends TestCase
         $this->token = $token;
 
         $recipe = new Recipe([
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,
@@ -138,8 +138,8 @@ class DayMealTest extends TestCase
     public function it_will_update_a_daymeal_entry_that_already_exists()
     {
         $newRecipe = new Recipe([
-            'status' => $this->faker->text(),
-            'instructions' => $this->faker->text(),
+            'status' => $this->faker->word(),
+            'instructions' => $this->faker->text(200),
             'title' => 'New Recipe',
             'slug' => $this->faker->slug(),
             'user_id' => $this->user->id,

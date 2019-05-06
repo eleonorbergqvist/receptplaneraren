@@ -104,7 +104,7 @@ class RecipeTagTest extends TestCase
     public function it_will_delete_a_recipe_tag()
     {
         $this->post(route('recipe-tags.store'), [
-            'name' => $this->faker->text(),
+            'name' => $this->faker->text(100),
             'slug' => $this->faker->slug(),
         ], ['Authorization' => 'Bearer ' . $this->token]);
 
