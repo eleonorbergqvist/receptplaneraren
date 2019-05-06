@@ -1,5 +1,5 @@
 import React from "react";
-import { FormikErrors } from "formik"; 
+import { FormikErrors } from "formik";
 
 export interface InputProps {
   type: string;
