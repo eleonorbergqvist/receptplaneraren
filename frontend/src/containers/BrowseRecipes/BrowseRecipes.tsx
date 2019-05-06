@@ -8,6 +8,7 @@ import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import AddDayMealModal from "../../components/AddDayMealModal/AddDayMealModal";
+import { RecipeTags, iRecipeTag } from "../../components/RecipeTags/RecipeTags";
 import { getEnv } from "../../config";
 import "./BrowseRecipes.css";
 
@@ -35,7 +36,7 @@ interface iRecipe {
   title: string,
   image: string,
   slug: string,
-  tags: number[],
+  recipe_tags: {id: any}[],
   id: number,
 }
 
@@ -43,6 +44,7 @@ interface BrowseRecipesState {
   recipes: iRecipe[],
   tags: any,
   selectedTags: any,
+  filteredRecipes: iRecipe[],
   modalIsOpen: boolean,
   clickedRecipe: iRecipe,
 }
@@ -80,13 +82,14 @@ class BrowseRecipes extends Component<Props> {
     tags: [],
     selectedTags: [],
     recipes: [],
+    filteredRecipes: [],
     modalIsOpen: false,
     clickedRecipe: {
       instructions: '',
       title: '',
       image: '',
       slug: '',
-      tags: [],
+      recipe_tags: [],
       id: 0,
     },
   }
@@ -107,13 +110,40 @@ class BrowseRecipes extends Component<Props> {
     const recipesResponse: ApiResponse<any> = await api.recipesAllInfo(
       this.props.user.access_token
     );
-    console.log(recipesResponse);
-    this.setState({ recipes: recipesResponse.data.recipes })
+    this.setState({
+      recipes: recipesResponse.data.recipes,
+      filteredRecipes: recipesResponse.data.recipes
+    })
 
     if (!response.ok) {
       console.log("RECIPE ERRORRR")
       return;
     }
+  }
+
+  filterListByTag = (filters: []) => {
+    const filteredRecipeList = this.state.recipes.filter((recipe) => {
+      return filters.every(filter =>
+          recipe.recipe_tags.some((obj: {id: number})  => {
+            return obj.id === filter;
+          })
+        )
+      }
+    );
+    return filteredRecipeList;
+  }
+
+  handleToggleTag = (tag: iRecipeTag) => {
+    let { selectedTags } = this.state
+
+    if (selectedTags.includes(tag.id)) {
+      selectedTags = selectedTags.filter((x: any) => x !== tag.id)
+    } else {
+      selectedTags = [tag.id, ...selectedTags]
+    }
+
+    const filteredRecipes = this.filterListByTag(selectedTags);
+    this.setState({ selectedTags, filteredRecipes });
   }
 
   handleOpenModal = (recipe: iRecipe) => {
@@ -123,7 +153,6 @@ class BrowseRecipes extends Component<Props> {
 
   handleModalClose = () => {
     this.setState({ modalIsOpen: false });
-
   }
 
   render() {
@@ -139,6 +168,11 @@ class BrowseRecipes extends Component<Props> {
             <div className="column is-two-fifths">
               Bläddra bland recept.
               Taggar för filtrering.
+              <RecipeTags
+                tags={this.state.tags}
+                selectedTags={this.state.selectedTags}
+                onToggleTag={this.handleToggleTag}
+              />
             </div>
             <div className="column">
               <div className="level">
@@ -159,7 +193,7 @@ class BrowseRecipes extends Component<Props> {
                   </div>
                 </div>
               </div>
-              {this.state.recipes.map((recipe: iRecipe, index: any) => (
+              {this.state.filteredRecipes.map((recipe: iRecipe, index: any) => (
                 <RecipeListItem key={index} recipe={recipe} onOpenModal={this.handleOpenModal} />))}
             </div>
           </div>
@@ -169,7 +203,6 @@ class BrowseRecipes extends Component<Props> {
           <AddDayMealModal
             text="Add meal to weekly plan"
             recipe={this.state.clickedRecipe}
-            // onSubmit={this.handleAddRecipe}
             onClose={this.handleModalClose} />
         )}
       </div>
