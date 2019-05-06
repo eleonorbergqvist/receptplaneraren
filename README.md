@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/eleonorbergqvist/receptplaneraren.svg?style=svg)](https://circleci.com/gh/eleonorbergqvist/receptplaneraren)
+
 # Receptplaneraren
 
 This is a recipe app.
