@@ -163,7 +163,7 @@ class Tabs extends Component<TabProps, TabState> {
 
   render() {
     return (
-      <div className="tabs__dayContainer"> */}
+      <div className="tabs__dayContainer">
         <RecipeItem
           data={this.props.daymealsForWeek}/>
       </div>

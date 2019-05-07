@@ -39,7 +39,7 @@ class RecipeImageTest extends TestCase
     public function it_will_save_image()
     {
         $recipe = new Recipe([
-            'status' => $this->faker->text(100),
+            'status' => $this->faker->word(),
             'instructions' => $this->faker->text(200),
             'title' => 'TestRecept',
             'slug' => $this->faker->slug(),
