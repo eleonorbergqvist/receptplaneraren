@@ -13,8 +13,10 @@ export interface InputProps {
   error: string | FormikErrors<any>;
 }
 
-const Input = (props: InputProps) => (
-  <React.Fragment>
+const Input = (props: InputProps) => {
+  const hasError = Boolean(props.error)
+
+  return (
     <div className="field">
       <div className="control has-icons-left has-icons-right">
         <input
@@ -29,13 +31,16 @@ const Input = (props: InputProps) => (
         <span className="icon is-small is-left">
           <i className={`fas fa-${props.icon}`} />
         </span>
-        <span className="icon is-small is-right">
-          <i className="fas fa-check" />
-        </span>
+
+        {hasError &&
+          <span className="icon is-small is-right">
+            <i className="fas fa-exclamation-circle" />
+          </span>
+        }
       </div>
       {props.error && <p className="help is-danger">{props.error}</p>}
     </div>
-  </React.Fragment>
-);
+  );
+}
 
 export default Input;

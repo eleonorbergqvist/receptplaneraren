@@ -20,6 +20,10 @@
   font-size: 30px;
 }
 
+.login__brand-link {
+  color: inherit;
+}
+
 .login__container--bg {
   background-color: seashell;
 }
