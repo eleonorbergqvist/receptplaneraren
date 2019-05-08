@@ -123,6 +123,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
 
                   <Input
                     name="password"
+                    icon="sheild-alt"
                     className=""
                     type="password"
                     placeholder="Password"
@@ -136,6 +137,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
 
                   <Input
                     name="password_confirmation"
+                    icon="sheild-alt"
                     className=""
                     type="password"
                     placeholder="Confirm password"

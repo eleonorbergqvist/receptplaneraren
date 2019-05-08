@@ -100,6 +100,7 @@ class CreateResetPassword extends Component<Props> {
                   {formikBag.status && <p>{formikBag.status}</p>}
                   <Input
                     name="email"
+                    icon="envelope"
                     className=""
                     type="email"
                     placeholder="Email"

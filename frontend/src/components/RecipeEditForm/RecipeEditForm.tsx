@@ -170,6 +170,7 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState>
               <Input
                 name="title"
                 className=""
+                icon=""
                 type="text"
                 placeholder="Title"
                 value={formikBag.values.title}

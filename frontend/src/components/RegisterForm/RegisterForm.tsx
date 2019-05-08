@@ -79,6 +79,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
             <Form>
               <Input
                 name="user_name"
+                icon="user"
                 className=""
                 type="text"
                 placeholder="User name"
@@ -94,6 +95,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
 
               <Input
                 name="email"
+                icon="envelope"
                 className=""
                 type="email"
                 placeholder="Email"
@@ -107,6 +109,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
 
               <Input
                 name="password"
+                icon="shield-alt"
                 className=""
                 type="password"
                 placeholder="Password"
@@ -122,6 +125,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
 
               <Input
                 name="password_confirmation"
+                icon="shield-alt"
                 className=""
                 type="password"
                 placeholder="Confirm password"

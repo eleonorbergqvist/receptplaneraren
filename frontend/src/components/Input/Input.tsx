@@ -4,6 +4,7 @@ import { FormikErrors } from "formik";
 export interface InputProps {
   type: string;
   className: string;
+  icon: string,
   name: string;
   placeholder: string;
   value: string;
@@ -26,7 +27,7 @@ const Input = (props: InputProps) => (
           onBlur={props.onBlur}
         />
         <span className="icon is-small is-left">
-          <i className="fas fa-envelope" />
+          <i className={`fas fa-${props.icon}`} />
         </span>
         <span className="icon is-small is-right">
           <i className="fas fa-check" />

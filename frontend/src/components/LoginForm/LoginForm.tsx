@@ -69,6 +69,7 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
               <Input
                 name="email"
+                icon="envelope"
                 className=""
                 type="email"
                 placeholder="Email"
@@ -82,6 +83,7 @@ class LoginForm extends Component<LoginFormProps, LoginFormState> {
 
               <Input
                 name="password"
+                icon="shield-alt"
                 className=""
                 type="password"
                 placeholder="Password"

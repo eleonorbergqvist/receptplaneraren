@@ -168,6 +168,7 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
               <label>Title</label>
               <Input
                 name="title"
+                icon=""
                 className=""
                 type="text"
                 placeholder="Title"
