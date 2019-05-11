@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { iRootState, Dispatch } from "../../store";
 import ReactCrop from 'react-image-crop';
 import loadImage from 'blueimp-load-image';
+import { linesToIngredients } from "../../utils/recipeOcr"
 import 'react-image-crop/dist/ReactCrop.css';
 import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
@@ -241,20 +242,17 @@ class CreateRecipeByImage extends Component<Props, CreateRecipeByImageState> {
     console.log(results);
     const formattedResults = results.map((x: any) => x.data.data)
     console.log(formattedResults);
+
+    let ingredients = linesToIngredients(formattedResults[2])
     const recipeData = {
       title: formattedResults[0].join(" "),
       instructions: formattedResults[1].join(" "),
-      ingredients: formattedResults[2].join(" "),
+      ingredients: ingredients,
+      image: this.state.croppedImageImageData,
     }
 
     this.setState({
-      dataToBePassedToRecipe: {
-        title: formattedResults[0].join(" "),
-        instructions: formattedResults[1].join(" "),
-        //ingredients: formattera ingredienser med
-        ingredients: [{'amount': 1, 'measurement': 'kg', 'ingredient': 'Gurka'}, {'amount': 2, 'measurement': 'kg', 'ingredient': 'Banan'}],
-        image: this.state.croppedImageImageData,
-      },
+      dataToBePassedToRecipe: recipeData,
       redirectToEditRecipe: true,
     });
   };
