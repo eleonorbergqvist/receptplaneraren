@@ -17,7 +17,6 @@ class CreateIngredientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug')->unique();
-            // $table->string('ingredient_type');
             $table->timestamps();
           });
     }

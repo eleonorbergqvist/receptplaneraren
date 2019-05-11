@@ -33,7 +33,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
 
   const recipeCreate = (values: any, jwtToken: string | null) =>
     api.post("/recipes", {
-      status: "test", //add buttons in form
+      // status: "test", //add buttons in form
       title: values.title,
       instructions: values.instructions,
       tags: values.tags,
@@ -104,7 +104,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
 
   const recipeUpdate = (values: any, jwtToken: string | null) =>
     api.put(`/recipes/${values.slug}`, {
-      status: 'test',
+      // status: 'test',
       instructions: values.instructions,
       title: values.title,
       tags: values.tags,

@@ -25,7 +25,7 @@ class CreateDayMealsTable extends Migration
                 ->on('users')
                 // ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->unsignedBigInteger('recipe_id')->nullable();
+            $table->unsignedBigInteger('recipe_id');
             $table
                 ->foreign('recipe_id')
                 ->references('id')

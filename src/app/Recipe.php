@@ -9,7 +9,7 @@ class Recipe extends Model
     public $table = 'recipes';
 
     protected $fillable = [
-        'status',
+        // 'status',
         'instructions',
         'title',
         'slug',

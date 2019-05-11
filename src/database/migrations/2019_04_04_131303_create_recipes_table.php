@@ -15,7 +15,7 @@ class CreateRecipesTable extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('status');
+            $table->text('status')->nullable();
             $table->mediumText('instructions');
             $table->string('preparation_time')->nullable();
             $table->string('title');

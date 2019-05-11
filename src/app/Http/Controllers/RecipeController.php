@@ -49,7 +49,7 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'status' => 'required',
+            // 'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
             'tags' => 'nullable',
@@ -58,7 +58,7 @@ class RecipeController extends Controller
         $recipe = new Recipe;
         $slugify = new Slugify();
 
-        $recipe->status = $request->status;
+        // $recipe->status = $request->status;
         $recipe->instructions = $request->instructions;
         $recipe->title = $request->title;
         $recipe->slug = $slugify->slugify($request->title);
@@ -180,7 +180,7 @@ class RecipeController extends Controller
     public function update(Request $request, $slug)
     {
         $request->validate([
-            'status' => 'required',
+            // 'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
             'image' => 'nullable',
