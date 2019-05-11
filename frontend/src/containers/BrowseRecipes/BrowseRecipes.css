@@ -1,6 +1,5 @@
 .RecipeListItem {
-  max-height: 200px;
-  overflow: hidden;
+
 }
 
 .levelHeader {
@@ -20,4 +19,8 @@
 
 .levelHr {
   color:grey;
+}
+
+.level {
+
 }
