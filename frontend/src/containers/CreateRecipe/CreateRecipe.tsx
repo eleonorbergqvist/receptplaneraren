@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { Redirect, withRouter, RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
+import { compose } from 'redux';
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import { iRootState, Dispatch } from "../../store";
@@ -22,14 +23,18 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-type Props = connectedProps & { api: iApi }
+type Props = connectedProps & { api: iApi } & RouteComponentProps
 
 interface CreateRecipeState {
-  tags: any[];
-  selectedTags: Number[];
+  tags: any[],
+  selectedTags: Number[],
 }
 
+interface CreateRecipeProps {
+  location?: any,
+}
 class CreateRecipe extends Component<Props, CreateRecipeState> {
+
   state: CreateRecipeState = {
     tags: [],
     selectedTags: [],
@@ -38,12 +43,15 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   async componentDidMount () {
     const { api } = this.props
     const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+
     this.setState({ tags: response.data })
 
     if (!response.ok) {
-        console.log("TAG ERRORRR")
+      console.log("TAG ERRORRR")
       return;
     }
+
+    console.log(this.props.location.state);
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
@@ -114,6 +122,11 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       return <Redirect to={"/"} />;
     }
 
+    let location = this.props.location
+    location = location || {state: {}}
+
+    let recipeDefault = location.state || {}
+
     return (
       <div className="CreateRecipe">
         <HeaderLoggedIn />
@@ -128,7 +141,13 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
               />
             </div>
             <div className="CreateRecipe__Container--Right column">
-              <RecipeForm onSubmit={this.handleSubmit} />
+              <RecipeForm
+                onSubmit={this.handleSubmit}
+                title={recipeDefault.title}
+                instructions={recipeDefault.instructions}
+                ingredients={recipeDefault.ingredients}
+                image= {recipeDefault.image}
+              />
             </div>
           </div>
         </main>
@@ -138,7 +157,11 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
+export default
+compose(
+  connect(
+    mapState,
+    mapDispatch
+  ),
+  withRouter,
 )(CreateRecipe);

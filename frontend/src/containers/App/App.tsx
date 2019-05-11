@@ -16,6 +16,7 @@ import RecipeDetail from "../RecipeDetail/RecipeDetail";
 import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 import RecipeEdit from "../RecipeEdit/RecipeEdit";
 import "./App.css";
+import CreateRecipeByImage from "../CreateRecipeByImage/CreateRecipeByImage";
 
 const withApi = (Component: any) => {
   const api = Api.create(getEnv("API_URL"));
@@ -34,6 +35,7 @@ class App extends Component {
             <Route path="/login" component={withApi(LogIn)} />
             <Route path="/logout" component={LogOut} />
             <Route path="/recipe/create" component={withApi(CreateRecipe)} />
+            <Route path="/recipe/image/create" component={withApi(CreateRecipeByImage)} />
             <Route path="/recipe/browse" component={withApi(BrowseRecipes)} />
             <Route path="/recipe/detail/:slug" component={withApi(RecipeDetail)} />
             <Route path="/recipe/edit/:slug" component={withApi(RecipeEdit)} />

@@ -34,8 +34,8 @@ const create = (baseURL = "http://localhost:8000/api/") => {
   const recipeCreate = (values: any, jwtToken: string | null) =>
     api.post("/recipes", {
       status: "test", //add buttons in form
-      instructions: values.instructions,
       title: values.title,
+      instructions: values.instructions,
       tags: values.tags,
     }, {
       headers: {
@@ -65,7 +65,6 @@ const create = (baseURL = "http://localhost:8000/api/") => {
       }
     }
   );
-
 
   const recipeTags = (jwtToken: string | null) =>
     // api.setHeader('Authorization', `Bearer ${jwtToken}`);
@@ -134,22 +133,34 @@ const create = (baseURL = "http://localhost:8000/api/") => {
   );
 
   const daymealUpdate = (values: any, jwtToken: string | null) =>
-  api.put("/daymeals-update", {
-    date: values.date,
-    meal_type: values.meal_type,
-    recipe_id: values.recipe_id,
-  }, {
-    headers: {
-      Authorization: `Bearer ${jwtToken}`
+    api.put("/daymeals-update", {
+      date: values.date,
+      meal_type: values.meal_type,
+      recipe_id: values.recipe_id,
+    }, {
+      headers: {
+        Authorization: `Bearer ${jwtToken}`
+      }
     }
-  }
-);
+  );
 
   const shoppingList = (jwtToken: string | null, monday: string) =>
     api.get(`/shopping-list/${monday}`, {}, {
       headers: {
         Authorization: `Bearer ${jwtToken}`
       }
+    }
+  );
+
+  // OCR Microservice
+  const ocrApi = apisauce.create({
+    baseURL: "http://localhost:5000",
+    timeout: 30000,
+  });
+
+  const scanRecipe = (document: string) =>
+    ocrApi.post("/image-text/?format=lines", {
+      document,
     }
   );
 
@@ -170,6 +181,7 @@ const create = (baseURL = "http://localhost:8000/api/") => {
     daymealsByDate,
     daymealUpdate,
     shoppingList,
+    scanRecipe,
   };
 };
 

@@ -14,6 +14,10 @@ import "./RecipeForm.css";
 
 export interface RecipeFormProps {
   onSubmit: Function,
+  title?: string,
+  instructions?: string,
+  ingredients?: iIngredient[],
+  image?: string,
 }
 
 export interface RecipeFormState {
@@ -53,15 +57,14 @@ interface InputListProps {
 }
 
 class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
-
   constructor(props: RecipeFormProps) {
     super(props);
 
     this.state = {
-      title: "",
-      image: "https://bulma.io/images/placeholders/128x128.png",
-      instructions: "",
-      ingredients: [emptyIngredient],
+      title: this.props.title || "",
+      image: this.props.image || "https://bulma.io/images/placeholders/128x128.png",
+      instructions: this.props.instructions || "",
+      ingredients: this.props.ingredients || [emptyIngredient],
     }
   }
 
@@ -106,10 +109,10 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
   render() {
     const onSubmit = this.props.onSubmit;
     let initialValues = {
-      title: "",
-      image: "",
-      instructions: "",
-      ingredients: [emptyIngredient],
+      title: this.state.title,
+      image: this.state.image,
+      instructions: this.state.instructions,
+      ingredients: this.state.ingredients,
     };
 
     return (
