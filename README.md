@@ -13,6 +13,7 @@ This is a recipe app built in Laravel and React.
 - Component preview using storybook
 - Frontend tests with Jest
 - Based on my [laravel-docker-scaffold](https://github.com/eleonorbergqvist/laravel-docker-scaffold) boilerplate
+- Error tracking with Sentry
 
 ## Installing
 - `cd frontend`

@@ -9,7 +9,7 @@ import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Message from "../../components/Message/Message";
 import TabNav from "../../components/TabNav/TabNav";
-import RecipeItem, { EmptyRecipeItem } from "../../components/RecipeItem/RecipeItem";
+import RecipeItem, { RecipeItemEmpty } from "../../components/RecipeItem/RecipeItem";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -215,7 +215,7 @@ class StartLoggedIn extends Component<Props> {
               <DayMealList
                 meals={daymeals}
                 renderMissingMeal={(mealType: number) => {
-                  return <EmptyRecipeItem key={mealType} mealType={mealType} />
+                  return <RecipeItemEmpty key={mealType} mealType={mealType} />
                 }}
                 renderMealItem={(meal: any, index: number) => {
                   return <RecipeItem key={meal.id} data={meal} />

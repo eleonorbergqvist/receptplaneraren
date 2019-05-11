@@ -88,10 +88,10 @@ const RecipeItem = (props: RecipeItemProps) => {
   )
 };
 
-interface EmptyRecipeItemProps {
+interface RecipeItemEmptyProps {
   mealType: number,
 }
-const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
+const RecipeItemEmpty = (props: RecipeItemEmptyProps) => {
   const { mealType } = props;
   const typeLabel = dayMealToLabel(mealType);
 
@@ -113,5 +113,5 @@ const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
 
 export default RecipeItem;
 export {
-  EmptyRecipeItem,
+  RecipeItemEmpty,
 }

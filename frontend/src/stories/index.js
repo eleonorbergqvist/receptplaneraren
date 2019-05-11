@@ -20,7 +20,7 @@ import RecipeForm from '../components/RecipeForm/RecipeForm'
 import { RecipeTags } from '../components/RecipeTags/RecipeTags'
 import RegisterForm from '../components/RegisterForm/RegisterForm'
 import Select from '../components/Select/Select'
-import { TabNav } from '../components/Tabs/Tabs'
+import TabNav from '../components/TabNav/TabNav'
 
 storiesOf('AddDayMealModal', module)
   .add('default', () => (
