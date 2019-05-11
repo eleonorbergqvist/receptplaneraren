@@ -9,7 +9,7 @@ This is a recipe app built in Laravel and React.
 - A Docker based development environment (with `php artisan serve`)
 - JWT based authentication
 - Continious integration with Circle CI
-- Frontend built using Create-React-App with Typescript, React, Axios and Redux/Rematch
+- Frontend built using Create-React-App with Typescript, React, Formik, Axios and Redux/Rematch
 - Component preview using storybook
 - Frontend tests with Jest
 - Based on my [laravel-docker-scaffold](https://github.com/eleonorbergqvist/laravel-docker-scaffold) boilerplate
@@ -33,6 +33,11 @@ This is a recipe app built in Laravel and React.
 ## Storybook
 - cd frontend
 - npm run storybook
+
+## Api Documentation
+
+- Docs can be found [here](./src/public/docs/index.html)
+- How to generate new docs: `php artisan apidoc:generate`
 
 ## License
 MIT
