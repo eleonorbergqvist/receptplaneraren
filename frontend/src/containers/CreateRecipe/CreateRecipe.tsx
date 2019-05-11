@@ -18,7 +18,6 @@ const mapState = (state: iRootState) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
-
 });
 
 type connectedProps = ReturnType<typeof mapState> &
@@ -28,16 +27,17 @@ type Props = connectedProps & { api: iApi } & RouteComponentProps
 interface CreateRecipeState {
   tags: any[],
   selectedTags: Number[],
+  redirectToRecipeSlug: string
 }
 
 interface CreateRecipeProps {
   location?: any,
 }
 class CreateRecipe extends Component<Props, CreateRecipeState> {
-
   state: CreateRecipeState = {
     tags: [],
     selectedTags: [],
+    redirectToRecipeSlug: '',
   }
 
   async componentDidMount () {
@@ -55,10 +55,6 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
-
-    console.log('CreateRecipe.handleSubmit');
-    console.log(values);
-
     const { api } = this.props
 
     actions.setSubmitting(true);
@@ -69,39 +65,32 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       tags: this.state.selectedTags,
     }, this.props.user.access_token);
 
-    actions.setSubmitting(false);
 
     if (!response.ok) {
-      actions.setErrors({
-        general: "Fel, kunde inte spara recept"
-      });
+      actions.setSubmitting(false);
+      actions.setErrors({ general: "Error, cannot save recipe" });
       return;
     }
 
-    //
-
-    actions.setSubmitting(true);
-
-    const recipe_id = response.data.recipe.id;
+    const recipeSlug = response.data.recipe.slug;
+    const recipeId = response.data.recipe.id;
 
     await api.recipeIngredientCreate({
       ingredients: values.ingredients,
-      recipe_id: recipe_id,
+      recipe_id: recipeId,
     }, this.props.user.access_token);
 
-    const imageResponse: ApiResponse<any> = await api.recipeImage({
-      image: values.image,
-      recipe_id: recipe_id,
-    }, this.props.user.access_token);
-
-    actions.setSubmitting(false);
-
-    if (!imageResponse.ok) {
-      actions.setErrors({
-        general: "Fel, kunde inte spara bild"
-      });
-      return;
+    const hasUploadedImage = values.image.includes("data:image")
+    if (hasUploadedImage) {
+      await api.recipeImage({
+        image: values.image,
+        recipe_id: recipeId,
+      }, this.props.user.access_token);
     }
+
+    this.setState({
+      redirectToRecipeSlug: recipeSlug,
+    })
   };
 
   handleToggleTag = (tag: iRecipeTag) => {
@@ -120,6 +109,10 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   render() {
     if (!this.props.isLoggedIn) {
       return <Redirect to={"/"} />;
+    }
+
+    if (this.state.redirectToRecipeSlug) {
+      return <Redirect to={`/recipe/detail/${this.state.redirectToRecipeSlug}`} />;
     }
 
     let location = this.props.location
