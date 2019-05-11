@@ -89,7 +89,7 @@ class CreateRecipeByImage extends Component<Props, CreateRecipeByImageState> {
       file,
       (canvas: any) => {
         const dataURL = canvas.toDataURL("image/jpeg");
-        const [data] = getDataAndMimeFromDataURL(dataURL);
+        // const [data] = getDataAndMimeFromDataURL(dataURL);
 
         this.setState({
           originalImageData: dataURL,
