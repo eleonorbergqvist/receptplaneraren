@@ -46,12 +46,12 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       this.props.user.access_token
     );
 
-    this.setState({ tags: response.data })
-
     if (!response.ok) {
       console.log("TAG ERRORRR")
       return;
     }
+
+    this.setState({ tags: response.data })
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {

@@ -19,9 +19,10 @@ export const RecipeTags = (props: RecipeTagProps) => {
     props.onToggleTag(tag);
   }
 
+  const tags = props.tags || [];
   return (
     <div className="RecipeTags">
-      {props.tags.map(tag => {
+      {tags.map(tag => {
         const isSelected = props.selectedTags.includes(tag.id);
 
         return (
