@@ -51,7 +51,7 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "https://receptplaneraren-staginga.herokuapp.com",
+  "proxy": "https://receptplaneraren-staging.herokuapp.com",
   "devDependencies": {
     "@storybook/react": "^5.0.11",
     "@storybook/addon-actions": "^5.0.11",

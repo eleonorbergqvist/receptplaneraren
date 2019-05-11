@@ -44,6 +44,10 @@ class Register extends Component<Props> {
         errors = { general: "Service not available, please try again" }
       }
 
+      if(!errors) {
+        errors = { general: "Service not available, please try again" }
+      }
+
       actions.setErrors(errors);
       return;
     }

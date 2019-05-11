@@ -162,7 +162,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
               <div className="field">
                 <p className="control">
                   <button
-                    className="button"
+                    className={`button ${formikBag.isSubmitting ? "is-loading": ""}`}
                     type="submit"
                     disabled={!formikBag.isValid}
                   >
