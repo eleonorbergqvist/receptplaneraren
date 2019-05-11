@@ -11,17 +11,17 @@ import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import "./CreateRecipeByImage.css";
 
-const getDataAndMimeFromDataURL = (dataUrl: string):string[] => {
-  const re = /data:(\w*\/\w*);base64,(.*)/g;
-  const resizedResult: string[] | null = re.exec(dataUrl);
-  if (!resizedResult) {
-    return []
-  }
-  const data = resizedResult[2];
-  const mimeType = resizedResult[1];
+// const getDataAndMimeFromDataURL = (dataUrl: string):string[] => {
+//   const re = /data:(\w*\/\w*);base64,(.*)/g;
+//   const resizedResult: string[] | null = re.exec(dataUrl);
+//   if (!resizedResult) {
+//     return []
+//   }
+//   const data = resizedResult[2];
+//   const mimeType = resizedResult[1];
 
-  return [data, mimeType];
-};
+//   return [data, mimeType];
+// };
 
 const mapState = (state: iRootState) => ({
   user: state.user,
