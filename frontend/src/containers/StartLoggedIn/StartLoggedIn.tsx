@@ -104,7 +104,9 @@ class StartLoggedIn extends Component<Props> {
   handleShoppingList = async (e: FormEvent) => {
     e.preventDefault();
 
-    const monday = this.state.mondayDate;
+    const monday = this.state.mondayDate.format('YYYY-MM-DD');
+    console.log('Frontend monday');
+    console.log(monday);
     const { api } = this.props
     const response: ApiResponse<any> = await api.shoppingList(
       this.props.user.access_token,

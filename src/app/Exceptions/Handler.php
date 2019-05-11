@@ -32,11 +32,6 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    // public function report(Exception $exception)
-    // {
-    //     parent::report($exception);
-    // }
-
     public function report(Exception $exception)
     {
         if (app()->bound('sentry') && $this->shouldReport($exception)){
