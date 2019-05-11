@@ -1,5 +1,5 @@
 .CreateRecipe{
-  
+
 }
 
 .CreateRecipe__Container {
@@ -13,6 +13,5 @@
 
 .CreateRecipe__Container--Right {
   padding: 50px 100px 50px 100px;
-  margin-left: 50px;
-  background-color: blue;
+  /*margin-left: 50px;*/
 }
