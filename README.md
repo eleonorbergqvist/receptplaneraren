@@ -36,7 +36,7 @@ This is a recipe app built in Laravel and React.
 
 ## Api Documentation
 
-- Docs can be found [here](./src/public/docs/index.html)
+- Docs can be found [here](https://receptplaneraren-staging.herokuapp.com/docs/index.html)
 - How to generate new docs: `php artisan apidoc:generate`
 
 ## License
