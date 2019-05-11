@@ -2,18 +2,19 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PrimaryMenuButton from "../PrimaryMenuButton/PrimaryMenuButton";
+import PrimaryMenuDropdown from "../PrimaryMenuDropdown/PrimaryMenuDropdown";
 import "./Header.css";
 
 export interface HeaderProps {
-  buttons: JSX.Element[];
+  buttons: JSX.Element[],
 }
 export interface HeaderState {
-  burgerIsActive: boolean;
+  burgerIsActive: boolean,
 }
 
 class Header extends Component<HeaderProps, HeaderState> {
   state = {
-    burgerIsActive: false
+    burgerIsActive: false,
   }
 
   handleToggleMenuClick = () => {
@@ -79,11 +80,14 @@ export const HeaderLoggedOut = (props:any) => {
 
 export const HeaderLoggedIn = (props:any) => {
   const buttons = [
-    <PrimaryMenuButton
+    <PrimaryMenuDropdown
       key={1}
-      text="Create Recipe"
-      link={"/recipe/create"}
       className="header__button--yellow"
+      label="Create bobby"
+      items={[
+        {label: "Create manually", to: "/recipe/create"},
+        {label: "Create with image", to: "/recipe/image/create"}
+      ]}
     />,
     <PrimaryMenuButton
       key={2}
