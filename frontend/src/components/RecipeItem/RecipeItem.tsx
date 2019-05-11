@@ -1,14 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import { getEnv } from "../../config";
-import "./Tabs.css";
-
-interface TabProps {
-  daymealsForWeek: any,
-}
-
-interface TabState {
-  activeTab: number,
-}
 
 export interface RecipeItemProps {
   data: {
@@ -24,20 +15,20 @@ export interface RecipeItemProps {
   },
 }
 
-export const dayMealToLabel = (mealType:number) => {
+const dayMealToLabel = (mealType:number) => {
   switch (mealType) {
     case 0:
-      return "BREAKFAST";
+      return "Breakfast";
     case 1:
-      return "LUNCH";
+      return "Lunch";
     case 2:
-      return "DINNER";
+      return "Dinner";
     default:
-      return "UNSPECIFIED";
+      return "Unspecified";
   }
 }
 
-export const RecipeItem = (props: RecipeItemProps) => {
+const RecipeItem = (props: RecipeItemProps) => {
   const {
     recipe,
     meal_type: mealType,
@@ -100,7 +91,7 @@ export const RecipeItem = (props: RecipeItemProps) => {
 interface EmptyRecipeItemProps {
   mealType: number,
 }
-export const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
+const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
   const { mealType } = props;
   const typeLabel = dayMealToLabel(mealType);
 
@@ -120,55 +111,7 @@ export const EmptyRecipeItem = (props: EmptyRecipeItemProps) => {
   )
 };
 
-interface TabNavProps {
-  items: any,
-  onChange: any,
-  selected: any,
+export default RecipeItem;
+export {
+  EmptyRecipeItem,
 }
-
-interface TabNavState {
-  activeTab: number,
-}
-
-export class TabNav extends Component<TabNavProps, TabNavState> {
-  render() {
-    const { items, onChange, selected } = this.props;
-
-    return (
-      <div className="tabs">
-        {items.map((item:any) => {
-          let className = `tabs__tabNav--${item.value}`;
-
-          if (item.value === selected) {
-            className = `${className} tabs__tabNav--selected`;
-          }
-
-          return (
-            <button
-              className={className}
-              key={item.value}
-              onClick={e => onChange(item)}
-            >{item.label}</button>
-          )
-        })}
-      </div>
-    )
-  }
-}
-
-class Tabs extends Component<TabProps, TabState> {
-  state = {
-    activeTab: 0,
-  }
-
-  render() {
-    return (
-      <div className="tabs__dayContainer">
-        <RecipeItem
-          data={this.props.daymealsForWeek}/>
-      </div>
-    )
-  }
-}
-
-export default Tabs;

@@ -12,6 +12,7 @@ import IngredientsInput from '../components/IngredientsInput/IngredientsInput'
 import Input from '../components/Input/Input'
 import InputList from '../components/InputList/InputList'
 import LoginForm from '../components/LoginForm/LoginForm'
+import Message from '../components/Message/Message'
 import Modal from '../components/Modal/Modal'
 import PrimaryMenuButton from '../components/PrimaryMenuButton/PrimaryMenuButton'
 import RecipeEditForm from '../components/RecipeEditForm/RecipeEditForm'
@@ -84,6 +85,11 @@ storiesOf('InputList', module)
 storiesOf('LoginForm', module)
   .add('default', () => (
     <LoginForm onSubmit={action('on submit')} />
+  ))
+
+storiesOf('Message', module)
+  .add('default', () => (
+    <Message title="My title" text="Oh hi" type="error" onClose={action('on submit')} />
   ))
 
 storiesOf('Modal', module)

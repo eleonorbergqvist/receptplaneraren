@@ -222,7 +222,6 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
                   </button>
                 </p>
               </div>
-              <button className="button" disabled>Preview</button>
             </Form>
           )}
         />

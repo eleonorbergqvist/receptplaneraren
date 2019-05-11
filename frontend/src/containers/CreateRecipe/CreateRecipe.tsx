@@ -42,7 +42,9 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
 
   async componentDidMount () {
     const { api } = this.props
-    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    const response: ApiResponse<any> = await api.recipeTags(
+      this.props.user.access_token
+    );
 
     this.setState({ tags: response.data })
 
@@ -50,8 +52,6 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
       console.log("TAG ERRORRR")
       return;
     }
-
-    console.log(this.props.location.state);
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {

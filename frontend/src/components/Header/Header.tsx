@@ -57,8 +57,8 @@ class Header extends Component<HeaderProps, HeaderState> {
     )
   }
 }
-/* eslint jsx-a11y/anchor-is-valid: 0 */
 
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 export const HeaderLoggedOut = (props:any) => {
   const buttons = [
     <PrimaryMenuButton
@@ -83,7 +83,7 @@ export const HeaderLoggedIn = (props:any) => {
     <PrimaryMenuDropdown
       key={1}
       className="header__button--yellow"
-      label="Create bobby"
+      label="Create recipe"
       items={[
         {label: "Create manually", to: "/recipe/create"},
         {label: "Create with image", to: "/recipe/image/create"}

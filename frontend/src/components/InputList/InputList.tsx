@@ -14,6 +14,7 @@ export const emptyIngredient: iIngredient = {
   ingredient: "",
 }
 
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 const InputList = (props: InputListProps) => {
   const handleChange = (index: number, item: any) => {
     const items = [
@@ -59,11 +60,12 @@ const InputList = (props: InputListProps) => {
 
       <div className="field">
         <p className="control">
-          <button
-            className="button" onClick={handleAddItem}
-          >
-            Add row +
-          </button>
+          <a className="button" href="#" onClick={handleAddItem}>
+            <span className="icon">
+              <i className="fas fa-plus"></i>
+            </span>
+            <span>Add row</span>
+          </a>
         </p>
       </div>
     </div>

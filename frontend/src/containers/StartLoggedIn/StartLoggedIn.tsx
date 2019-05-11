@@ -7,7 +7,9 @@ import { iRootState } from "../../store";
 import { iApi } from "../../services/Api";
 import { HeaderLoggedIn } from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { TabNav, RecipeItem, EmptyRecipeItem } from "../../components/Tabs/Tabs";
+import Message from "../../components/Message/Message";
+import TabNav from "../../components/TabNav/TabNav";
+import RecipeItem, { EmptyRecipeItem } from "../../components/RecipeItem/RecipeItem";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -23,6 +25,7 @@ interface StartLoggedInState {
   selectedDayOfWeek: number,
   isLoggedOut: boolean,
   shoppingList: any,
+  error: string,
 }
 
 class StartLoggedIn extends Component<Props> {
@@ -32,6 +35,7 @@ class StartLoggedIn extends Component<Props> {
     selectedDayOfWeek: 0,
     isLoggedOut: false,
     shoppingList: [],
+    error: "",
   }
 
  componentDidMount () {
@@ -87,11 +91,13 @@ class StartLoggedIn extends Component<Props> {
     })
   }
 
-  handleTabNavChange = (item:any) => {
-    console.log(item);
+  handleCloseErrorMessage = () => {
+    this.setState({ error: '' });
+  }
 
+  handleTabNavChange = (item: any) => {
     this.setState( {
-      selectedTab: item.value,
+      selectedDayOfWeek: item.value,
     });
   }
 
@@ -113,10 +119,12 @@ class StartLoggedIn extends Component<Props> {
     }
 
     if (!response.ok) {
-      throw Error("SHOPPINGLIST ERROR");
+      this.setState({
+        error: "Error generating shoppinglist"
+      })
+      return;
     }
 
-    console.log(response.data.shoppinglist);
     this.setState({
       shoppingList: response.data.shoppinglist
     })
@@ -148,12 +156,21 @@ class StartLoggedIn extends Component<Props> {
     const daymeals = day[1];
 
     return (
-      <React.Fragment>
+      <div className="start-logged-in">
         <HeaderLoggedIn />
         <main className="container">
           <div className="start__Container columns">
             <div className="column is-two-fifths">
-              <h1>NY UPPDATERING Vecka {week}</h1>
+              {this.state.error &&
+                <Message
+                  type="danger"
+                  title="Error"
+                  text={this.state.error}
+                  onClose={this.handleCloseErrorMessage}
+                />
+              }
+
+              <h1>Week {week}</h1>
               <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
                 <i className="fas fa-caret-left" />
               </span>
@@ -206,7 +223,7 @@ class StartLoggedIn extends Component<Props> {
           </div>
         </main>
         <Footer copyrightText="Testtesttest" />
-      </React.Fragment>
+      </div>
     );
   }
 }

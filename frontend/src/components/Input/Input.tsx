@@ -1,5 +1,6 @@
 import React from "react";
 import { FormikErrors } from "formik";
+import classNames from 'classnames';
 
 export interface InputProps {
   type: string;
@@ -16,9 +17,18 @@ export interface InputProps {
 const Input = (props: InputProps) => {
   const hasError = Boolean(props.error)
 
+
+
   return (
     <div className="field">
-      <div className="control has-icons-left has-icons-right">
+      <div
+        className={
+          classNames('control', {
+            'has-icons-left': props.icon,
+            'has-icons-right': true
+          })
+        }
+      >
         <input
           className={`${props.className} input`}
           type={props.type}
@@ -28,9 +38,11 @@ const Input = (props: InputProps) => {
           onChange={props.onChange}
           onBlur={props.onBlur}
         />
-        <span className="icon is-small is-left">
-          <i className={`fas fa-${props.icon}`} />
-        </span>
+        {props.icon &&
+          <span className="icon is-small is-left">
+            <i className={`fas fa-${props.icon}`} />
+          </span>
+        }
 
         {hasError &&
           <span className="icon is-small is-right">
