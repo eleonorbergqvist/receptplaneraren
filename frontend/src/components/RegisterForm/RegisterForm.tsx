@@ -25,6 +25,7 @@ interface iFormValues {
   password: string;
   password_confirmation: string;
   consent: boolean;
+  general: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -56,6 +57,7 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
       password: "",
       password_confirmation: "",
       consent: false,
+      general: "",
     };
     return (
       <div className="RegisterForm">
@@ -77,6 +79,8 @@ class RegisterForm extends Component<RegisterFormProps, RegisterFormState> {
           }}
           render={(formikBag: FormikProps<iFormValues>) => (
             <Form>
+              {formikBag.errors.general && <p>{formikBag.errors.general}</p>}
+
               <Input
                 name="user_name"
                 icon="user"

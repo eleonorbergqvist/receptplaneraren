@@ -1,7 +1,7 @@
 import apisauce from "apisauce";
 
 
-const create = (baseURL = "http://localhost:8000/api/") => {
+const create = (baseURL = "http://localhost:3000/api/") => {
   const api = apisauce.create({
     baseURL,
     timeout: 10000,

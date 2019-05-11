@@ -35,8 +35,16 @@ class Register extends Component<Props> {
     actions.setSubmitting(false);
 
     if (!response.ok) {
-      // TODO: Add support for general errors (such as 401 etc)
-      actions.setErrors(response.data);
+      let errors = response.data
+      if (response.status === 404) {
+        errors = { general: "Service not available, please try again" }
+      }
+
+      if (response.status === 500) {
+        errors = { general: "Service not available, please try again" }
+      }
+
+      actions.setErrors(errors);
       return;
     }
 

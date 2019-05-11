@@ -38,7 +38,7 @@ class LogIn extends Component<LogInProps> {
 
     if (!response.ok) {
       actions.setErrors({
-        general: "Ogiltigt användarnamn/lösenord"
+        general: "Incorrect username/password"
       });
       return;
     }
