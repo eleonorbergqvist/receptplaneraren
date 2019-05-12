@@ -29,6 +29,7 @@ interface RecipeEditState {
   selectedTags: Number[],
   recipe: iRecipe,
   slug: string,
+  isLoading: boolean,
 }
 
 interface SelectedTag {
@@ -53,6 +54,61 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
       instructions: '',
       ingredients: [],
     },
+    isLoading: false,
+  }
+
+  async componentDidMount () {
+    console.log(isEmpty(this.state.recipe));
+    console.log(this.state.recipe)
+    const { api } = this.props
+
+    this.setState({ isLoading: true });
+
+    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
+    this.setState({ tags: response.data })
+
+    if (!response.ok) {
+      console.log("TAG ERRORRR")
+      return;
+    }
+
+    // Hämta receptdata
+    const recipeResponse: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, this.state.slug);
+    if (!recipeResponse.ok) {
+      console.log("RECIPE ERRORRR")
+      return;
+    }
+
+    const selectedTagsObjects = recipeResponse.data.recipe.recipe_tags;
+
+    const selectedTags = selectedTagsObjects.map((obj: SelectedTag) => {
+      return obj.id;
+    });
+
+    this.setState({ selectedTags: selectedTags});
+
+    let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
+      return  {
+        amount: ingredients.amount,
+        measurement: ingredients.measurement,
+        ingredient: ingredients.ingredient.name }
+    });
+
+
+    const formattedRecipe: iRecipe = {
+      title: recipeResponse.data.recipe.title,
+      image: recipeResponse.data.recipe.image,
+      instructions: recipeResponse.data.recipe.instructions,
+      ingredients: ingredients,
+    };
+    this.setState({ recipe: formattedRecipe }, () => {
+      console.log(isEmpty(this.state.recipe));
+    });
+
+    console.log(this.state.recipe);
+
+
+    this.setState({ isLoading: false });
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
@@ -107,54 +163,6 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
   };
 
 
-  async componentDidMount () {
-    console.log(isEmpty(this.state.recipe));
-    console.log(this.state.recipe)
-    const { api } = this.props
-
-    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
-    this.setState({ tags: response.data })
-
-    if (!response.ok) {
-        console.log("TAG ERRORRR")
-      return;
-    }
-
-    // Hämta receptdata
-    const recipeResponse: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, this.state.slug);
-    if (!recipeResponse.ok) {
-      console.log("RECIPE ERRORRR")
-      return;
-    }
-
-    const selectedTagsObjects = recipeResponse.data.recipe.recipe_tags;
-
-    const selectedTags = selectedTagsObjects.map((obj: SelectedTag) => {
-      return obj.id;
-    });
-
-    this.setState({ selectedTags: selectedTags});
-
-    let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
-      return  {
-        amount: ingredients.amount,
-        measurement: ingredients.measurement,
-        ingredient: ingredients.ingredient.name }
-    });
-
-
-    const formattedRecipe: iRecipe = {
-      title: recipeResponse.data.recipe.title,
-      image: recipeResponse.data.recipe.image,
-      instructions: recipeResponse.data.recipe.instructions,
-      ingredients: ingredients,
-    };
-    this.setState({ recipe: formattedRecipe }, () => {
-      console.log(isEmpty(this.state.recipe));
-    });
-    console.log(this.state.recipe);
-
-  }
 
   handleToggleTag = (tag: iRecipeTag) => {
     let { selectedTags } = this.state
@@ -180,7 +188,8 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
         <main className="container">
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">
-              Edit Recipe
+              <h5 className="title is-5">Edit Recipe</h5>
+              {this.state.isLoading && <div className="loader"></div>}
               <RecipeTags
                 tags={this.state.tags}
                 selectedTags={this.state.selectedTags}
@@ -194,7 +203,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
             </div>
           </div>
         </main>
-        <Footer copyrightText="" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
       </div>
     );
   }

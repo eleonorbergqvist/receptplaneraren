@@ -224,7 +224,7 @@ class StartLoggedIn extends Component<Props> {
             </div>
           </div>
         </main>
-        <Footer copyrightText="Testtesttest" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
       </div>
     );
   }

@@ -157,7 +157,7 @@ class RecipeDetail extends Component<Props> {
             <button onClick={this.handleOpenModal} className="button">Add to week</button>
           </div>
         </main>
-        <Footer copyrightText="" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
         {this.state.modalIsOpen && (
           <AddDayMealModal
             text="Add meal to weekly plan"

@@ -126,7 +126,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
         <main className="container">
           <div className="CreateRecipe__Container columns">
             <div className="CreateRecipe__Container--Left column is-two-fifths">
-              Create Recipe and tabs
+              <h5 className="title is-5">Create Recipe</h5>
               <RecipeTags
                 tags={this.state.tags}
                 selectedTags={this.state.selectedTags}
@@ -144,7 +144,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
             </div>
           </div>
         </main>
-        <Footer copyrightText="" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
       </div>
     );
   }

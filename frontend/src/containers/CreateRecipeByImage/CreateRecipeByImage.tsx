@@ -102,7 +102,7 @@ class CreateRecipeByImage extends Component<Props, CreateRecipeByImageState> {
             />
           </div>
         </main>
-        <Footer copyrightText="" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
       </div>
     );
   }

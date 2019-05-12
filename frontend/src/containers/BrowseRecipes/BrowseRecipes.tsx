@@ -47,6 +47,7 @@ interface BrowseRecipesState {
   filteredRecipes: iRecipe[],
   modalIsOpen: boolean,
   clickedRecipe: iRecipe,
+  isLoading: boolean,
 }
 
 const RecipeListItem = (props: RecipeListItemProps) => {
@@ -92,10 +93,13 @@ class BrowseRecipes extends Component<Props> {
       recipe_tags: [],
       id: 0,
     },
+    isLoading: false,
   }
 
   async componentDidMount () {
     // TODO: Get all recipes with tags (belonging to user?)
+    this.setState({ isLoading: true })
+
     const { api } = this.props
     const response: ApiResponse<any> = await api.recipeTags(
       this.props.user.access_token
@@ -103,7 +107,8 @@ class BrowseRecipes extends Component<Props> {
     this.setState({ tags: response.data })
 
     if (!response.ok) {
-        console.log("TAG ERRORRR")
+      this.setState({ isLoading: false })
+      console.log("TAG ERRORRR")
       return;
     }
 
@@ -116,9 +121,12 @@ class BrowseRecipes extends Component<Props> {
     })
 
     if (!response.ok) {
+      this.setState({ isLoading: false })
       console.log("RECIPE ERRORRR")
       return;
     }
+
+    this.setState({ isLoading: false })
   }
 
   filterListByTag = (filters: []) => {
@@ -166,7 +174,9 @@ class BrowseRecipes extends Component<Props> {
         <main className="container">
           <div className="columns">
             <div className="column is-two-fifths">
-              Bläddra bland recept.
+              <h5 className="title is-5">Browse recipes</h5>
+              {this.state.isLoading && <div className="loader"></div>}
+
               Taggar för filtrering.
               <RecipeTags
                 tags={this.state.tags}
@@ -198,7 +208,7 @@ class BrowseRecipes extends Component<Props> {
             </div>
           </div>
         </main>
-        <Footer copyrightText="" />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
         {this.state.modalIsOpen && (
           <AddDayMealModal
             text="Add meal to weekly plan"

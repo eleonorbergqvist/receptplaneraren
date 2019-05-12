@@ -128,7 +128,7 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
             </div>
           </section>
         </main>
-        <Footer copyrightText="Copyright 2019. Informational text." />
+        <Footer copyrightText="Copyright 2019. Receptplaneraren" />
 
         {(locationState.showLogOutModal && this.state.modelIsOpen) && (
           <Modal text="You have been logged out." onClose={this.handleLoggedOutModalClose} />
