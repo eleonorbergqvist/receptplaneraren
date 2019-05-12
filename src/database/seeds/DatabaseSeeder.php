@@ -14,7 +14,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UserSeeder::class);
         // $this->call(RecipeSeeder::class);
         // $this->call(RecipeIngredientSeeder::class);
-        $this->call(DayMealSeeder::class);
-        $this->call(RecipeRecipeTagSeeder::class);
+        // $this->call(DayMealSeeder::class);
+        // $this->call(RecipeRecipeTagSeeder::class);
+        $this->call(RecipeTagSeeder::class);
     }
 }
