@@ -1,1 +1,13 @@
+.RecipeByImageForm__StickyNav {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100% !important;
+  background-color: #00d1b2;
+  padding: 32px;
+}
 
+
+.RecipeByImageForm__StickyNavButton {
+  float: right;
+}
