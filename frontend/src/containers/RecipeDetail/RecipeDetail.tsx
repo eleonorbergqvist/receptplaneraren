@@ -17,7 +17,6 @@ const mapState = (state: iRootState) => ({
 });
 
 const mapDispatch = (dispatch: Dispatch) => ({
-
 });
 
 type connectedProps = ReturnType<typeof mapState> &

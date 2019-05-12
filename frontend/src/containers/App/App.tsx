@@ -15,8 +15,9 @@ import BrowseRecipes from "../BrowseRecipes/BrowseRecipes";
 import RecipeDetail from "../RecipeDetail/RecipeDetail";
 import TermsAndConditions from "../TermsAndConditions/TermsAndConditions";
 import RecipeEdit from "../RecipeEdit/RecipeEdit";
-import "./App.css";
 import CreateRecipeByImage from "../CreateRecipeByImage/CreateRecipeByImage";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import "./App.css";
 
 const withApi = (Component: any) => {
   const api = Api.create(getEnv("API_URL"), getEnv("OCR_SCANNER_URL"));
@@ -30,18 +31,19 @@ class App extends Component {
        <BrowserRouter>
           <Switch>
             <Route exact path="/" component={StartLoggedOut} />
-            <Route path="/welcome" component={withApi(StartLoggedIn)} />
             <Route path="/register" component={withApi(Register)} />
             <Route path="/login" component={withApi(LogIn)} />
             <Route path="/logout" component={LogOut} />
-            <Route path="/recipe/create" component={withApi(CreateRecipe)} />
-            <Route path="/recipe/image/create" component={withApi(CreateRecipeByImage)} />
-            <Route path="/recipe/browse" component={withApi(BrowseRecipes)} />
-            <Route path="/recipe/detail/:slug" component={withApi(RecipeDetail)} />
-            <Route path="/recipe/edit/:slug" component={withApi(RecipeEdit)} />
             <Route path="/password/create" component={withApi(CreateResetPassword)} />
             <Route path="/password/reset/:token" component={withApi(ResetPassword)} />
             <Route path="/terms-and-conditions" component={TermsAndConditions} />
+
+            <PrivateRoute path="/welcome" component={withApi(StartLoggedIn)} />
+            <PrivateRoute path="/recipe/create" component={withApi(CreateRecipe)} />
+            <PrivateRoute path="/recipe/image/create" component={withApi(CreateRecipeByImage)} />
+            <PrivateRoute path="/recipe/browse" component={withApi(BrowseRecipes)} />
+            <PrivateRoute path="/recipe/detail/:slug" component={withApi(RecipeDetail)} />
+            <PrivateRoute path="/recipe/edit/:slug" component={withApi(RecipeEdit)} />
           </Switch>
         </BrowserRouter>
       </div>

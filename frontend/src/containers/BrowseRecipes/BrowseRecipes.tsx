@@ -171,7 +171,7 @@ class BrowseRecipes extends Component<Props> {
     return (
       <div className="BrowseRecipes">
         <HeaderLoggedIn />
-        <main className="container">
+        <main className="container BrowseRecipes__Container">
           <div className="columns">
             <div className="column is-two-fifths">
               <h5 className="title is-5">Browse recipes</h5>

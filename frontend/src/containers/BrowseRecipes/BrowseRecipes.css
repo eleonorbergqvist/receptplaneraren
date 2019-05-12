@@ -1,5 +1,6 @@
-.RecipeListItem {
-
+.BrowseRecipes__Container {
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .levelHeader {
@@ -22,5 +23,4 @@
 }
 
 .level {
-
 }
