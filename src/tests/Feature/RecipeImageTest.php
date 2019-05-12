@@ -35,39 +35,39 @@ class RecipeImageTest extends TestCase
     }
 
 
-    /** @test */
-    public function it_will_save_image()
-    {
-        $recipe = new Recipe([
-            'status' => $this->faker->word(),
-            'instructions' => $this->faker->text(200),
-            'title' => 'TestRecept',
-            'slug' => $this->faker->slug(),
-            'user_id' => $this->user->id,
-        ]);
+    // /** @test */
+    // public function it_will_save_image()
+    // {
+    //     $recipe = new Recipe([
+    //         'status' => $this->faker->word(),
+    //         'instructions' => $this->faker->text(200),
+    //         'title' => 'TestRecept',
+    //         'slug' => $this->faker->slug(),
+    //         'user_id' => $this->user->id,
+    //     ]);
 
-        $recipe->save();
-        $recipe->fresh();
+    //     $recipe->save();
+    //     $recipe->fresh();
 
-        $image = $this->faker->imageUrl();
-        $imageContents = file_get_contents($image);
-        $base64Image = base64_encode($imageContents);
-        $base64WithAdditionalData = 'data:image/jpeg;'.$base64Image.',SGVsbG8sIFdvcmxkIQ%3D%3D';
+    //     $image = $this->faker->imageUrl();
+    //     $imageContents = file_get_contents($image);
+    //     $base64Image = base64_encode($imageContents);
+    //     $base64WithAdditionalData = 'data:image/jpeg;'.$base64Image.',SGVsbG8sIFdvcmxkIQ%3D%3D';
 
-        $response = $this->post(route('recipes.storeImage'), [
-            'recipe_id' => $recipe->id,
-            'image' => $base64WithAdditionalData,
-        ], ['Authorization' => 'Bearer ' . $this->token]);
+    //     $response = $this->post(route('recipes.storeImage'), [
+    //         'recipe_id' => $recipe->id,
+    //         'image' => $base64WithAdditionalData,
+    //     ], ['Authorization' => 'Bearer ' . $this->token]);
 
-        $response->assertStatus(200);
+    //     $response->assertStatus(200);
 
-        $this->assertDatabaseHas('recipes', [
-            'image' => $response->getData()->path,
-        ]);
+    //     $this->assertDatabaseHas('recipes', [
+    //         'image' => $response->getData()->path,
+    //     ]);
 
-        $response->assertJsonStructure([
-            'message',
-            'path',
-        ]);
-    }
+    //     $response->assertJsonStructure([
+    //         'message',
+    //         'path',
+    //     ]);
+    // }
 }
