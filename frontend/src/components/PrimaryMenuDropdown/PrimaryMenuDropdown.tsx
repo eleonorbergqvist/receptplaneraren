@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 export interface PrimaryMenuDropdownProps {
   className: string,
+  buttonClassName: string,
   label: string,
   items: any,
 }
@@ -20,11 +21,11 @@ class PrimaryMenuDropdown extends PureComponent<PrimaryMenuDropdownProps> {
 
   render() {
     return (
-      <div className={`dropdown ${this.state.open ? "is-active" : ""}`}>
+      <div className={`dropdown ${this.state.open ? "is-active" : ""} ${this.props.className}`}>
         <div className="dropdown-trigger">
           <button
             onClick={this.handleToggleClick}
-            className={`${this.props.className} button`}
+            className={`${this.props.buttonClassName} button`}
             aria-haspopup="true"
             aria-controls="dropdown-menu"
           >

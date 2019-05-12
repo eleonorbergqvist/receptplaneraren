@@ -7,6 +7,10 @@
     font-weight: 400;
 }
 
+.header__dropdown-button {
+  margin-right: 8px;
+}
+
 .header__button--pink {
     color: white;
     background-color: #ff667f;
@@ -34,5 +38,5 @@
 
     .header__button--pink {
         display: block;
-    } 
+    }
 }
