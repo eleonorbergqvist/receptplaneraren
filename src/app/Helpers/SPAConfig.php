@@ -14,6 +14,7 @@ class SPAConfig {
         $config = [
             'API_URL' => "/api/",
             'OCR_SCANNER_URL' => env('OCR_SCANNER_URL'),
+            'IMAGE_PREFIX' => env('IMAGE_PREFIX'),
         ];
         return '<script id="config">window.config = '.json_encode($config).'</script>';
     }
