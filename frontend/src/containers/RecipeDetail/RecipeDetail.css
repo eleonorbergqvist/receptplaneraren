@@ -34,3 +34,24 @@
 .RecipeDetail__Button--Default {
   margin-right: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .RecipeDetail__Container--Top {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+  .RecipeDetail__Container--Bottom {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  .RecipeDetail__Container--Side {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+
+  .RecipeDetail__Container--Main {
+    padding-right: 2rem;
+    padding-left: 2rem;
+  }
+}
