@@ -15,3 +15,12 @@
   padding: 50px 100px 50px 100px;
   /*margin-left: 50px;*/
 }
+
+@media screen and (max-width: 768px) {
+  .CreateRecipe__Container--Right {
+    padding: 2rem;
+  }
+  .CreateRecipe__Container--Left {
+    padding: 2rem;
+  }
+}

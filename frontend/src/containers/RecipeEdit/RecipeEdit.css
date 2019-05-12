@@ -1,0 +1,22 @@
+.RecipeEdit__Container {
+
+}
+
+.RecipeEdit__Container--Left {
+
+}
+
+.RecipeEdit__Container--Right {
+
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .RecipeEdit__Container--Right {
+    padding: 2rem;
+  }
+  .RecipeEdit__Container--Left {
+    padding: 2rem;
+  }
+}

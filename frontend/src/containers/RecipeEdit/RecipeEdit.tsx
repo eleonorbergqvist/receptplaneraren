@@ -183,11 +183,11 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
     }
 
     return (
-      <div className="CreateRecipe">
+      <div className="RecipeEdit">
         <HeaderLoggedIn  />
         <main className="container">
-          <div className="CreateRecipe__Container columns">
-            <div className="CreateRecipe__Container--Left column is-two-fifths">
+          <div className="RecipeEdit__Container columns">
+            <div className="RecipeEdit__Container--Left column is-two-fifths">
               <h5 className="title is-5">Edit Recipe</h5>
               {this.state.isLoading && <div className="loader"></div>}
               <RecipeTags
@@ -196,7 +196,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
                 onToggleTag={this.handleToggleTag}
               />
             </div>
-            <div className="CreateRecipe__Container--Right column">
+            <div className="RecipeEdit__Container--Right column">
               {this.state.recipe && !isEmpty(this.state.recipe) &&
                 <RecipeEditForm recipe={this.state.recipe} onSubmit={this.handleSubmit} />
               }
