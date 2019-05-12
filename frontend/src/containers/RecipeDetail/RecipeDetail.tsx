@@ -113,9 +113,9 @@ class RecipeDetail extends Component<Props> {
         <HeaderLoggedIn />
         <main className="container content">
           <div className="colums RecipeDetail__Container--Top">
-          <button onClick={this.handleDeleteRecipe} className="button">Delete</button>
+          <button onClick={this.handleDeleteRecipe} className="RecipeDetail__Button--Default button is-light">Delete</button>
           <Link to={`/recipe/edit/${this.state.slug}`} >
-            <button className="button">Edit</button>
+            <button className="button is-light">Edit</button>
           </Link>
           </div>
           <div className="columns">
@@ -123,7 +123,7 @@ class RecipeDetail extends Component<Props> {
               <h1>{this.state.recipe.title}</h1>
 
               {this.state.recipe.recipe_tags.map((recipeTag: iRecipeTag, index: any) => (
-                  <button className="button" key={index}>
+                  <button className="button is-light" key={index}>
                     {recipeTag.name}
                   </button>
                 ))}
@@ -153,7 +153,7 @@ class RecipeDetail extends Component<Props> {
             </div>
           </div>
           <div className="colums RecipeDetail__Container--Bottom">
-            <button onClick={this.handleOpenModal} className="button">Add to week</button>
+            <button onClick={this.handleOpenModal} className="button is-dark">Add to week</button>
           </div>
         </main>
         <Footer copyrightText="Copyright 2019. Receptplaneraren" />
