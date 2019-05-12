@@ -1,9 +1,10 @@
-const getCroppedImg = (image: any, crop: any, fileName: string) => {
-  const canvas = document.createElement("canvas");
+const getCroppedImg = (image: any, crop: any) => {
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
-  canvas.width = crop.width;
-  canvas.height = crop.height;
+
+  const canvas = document.createElement("canvas");
+  canvas.width = crop.width * scaleX;
+  canvas.height = crop.height * scaleY;
   const ctx = canvas.getContext("2d");
 
   ctx!.drawImage(
@@ -14,11 +15,11 @@ const getCroppedImg = (image: any, crop: any, fileName: string) => {
     crop.height * scaleY,
     0,
     0,
-    crop.width,
-    crop.height
+    crop.width * scaleX,
+    crop.height * scaleY,
   );
 
-  const base64Image = canvas.toDataURL('image/jpeg');
+  const base64Image = canvas.toDataURL('image/jpeg', 1.0);
   return base64Image;
 }
 

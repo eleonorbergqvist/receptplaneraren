@@ -56,8 +56,6 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
   imageRef: any;
 
   handleSelectFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files)
-
     if (!e.target.files || e.target.files.length === 0) {
       return;
     }
@@ -68,16 +66,14 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
     loadImage(
       file,
       (canvas: any) => {
-        console.log(canvas);
-
-        const dataURL = canvas.toDataURL("image/jpeg");
+        const dataURL = canvas.toDataURL("image/jpeg", 1.0);
 
         this.setState({
           originalImageData: dataURL,
           currentCrop: 0,
         });
       },
-      { maxWidth: 1400, orientation: true, contain: true }
+      { maxWidth: 1400, orientation: true }
     );
   }
 
@@ -98,7 +94,7 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
 
   getImageDataFromCrop = (crop: any) => {
     const croppedImageData = getCroppedImg(
-      this.imageRef, crop, "newFile.jpeg"
+      this.imageRef, crop,
     );
     return croppedImageData
   }
