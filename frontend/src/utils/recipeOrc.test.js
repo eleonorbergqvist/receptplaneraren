@@ -98,3 +98,26 @@ it("makes sure measurement are lowercased", () => {
     {amount: 1, measurement: "dl", ingredient: "olive oil"},
   ]);
 });
+
+
+it("makes sure measurements gets formatted", () => {
+  const ingredients = linesToIngredients([
+    "1 ounce can white beans",
+    "3 tablespoons mellow white miso paste",
+    "2 teaspoons granulated onion",
+    "12 teaspoon cayenne pepper (optional)",
+    "6 ounces soba noodles or spaghetti noodles of choice",
+    "2 cups frozen organic edamame",
+    "½ cup chopped fresh cilantro (about 2 handfuls)",
+  ])
+
+  expect(ingredients).toEqual([
+    {amount: 1, measurement: "oz", ingredient: "can white beans"},
+    {amount: 3, measurement: "tbs", ingredient: "mellow white miso paste"},
+    {amount: 2, measurement: "tbsp", ingredient: "granulated onion"},
+    {amount: 12, measurement: "tbsp", ingredient: "cayenne pepper (optional)"},
+    {amount: 6, measurement: "oz", ingredient: "soba noodles or spaghetti noodles of choice"},
+    {amount: 2, measurement: "cup", ingredient: "frozen organic edamame"},
+    {amount: 0.5, measurement: "cup", ingredient: "chopped fresh cilantro (about 2 handfuls)"},
+  ]);
+});

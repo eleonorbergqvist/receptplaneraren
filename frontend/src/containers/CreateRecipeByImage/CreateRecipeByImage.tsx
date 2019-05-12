@@ -51,7 +51,8 @@ class CreateRecipeByImage extends Component<Props, CreateRecipeByImageState> {
     const results = await Promise.all(promises);
 
     console.log(results);
-    const formattedResults = results.map((x: any) => x.data.data)
+    let formattedResults = results.map((x: any) => x.data || {})
+    formattedResults = formattedResults.map((x: any) => x.data || [])
     console.log(formattedResults);
 
     let ingredients = linesToIngredients(formattedResults[2])

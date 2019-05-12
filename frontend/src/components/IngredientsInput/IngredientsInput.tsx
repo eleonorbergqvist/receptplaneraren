@@ -17,18 +17,24 @@ export interface IngredientsInputProps {
 const MEASUREMENT_LIST: {label: String, type: Number}[] = [
   {label: 'ml', type: 0},
   {label: 'l', type: 0},
+  {label: 'dl', type: 0},
   {label: 'tbs', type: 0},
+  {label: 'tbsp', type: 0},
   {label: 'fl-oz', type: 0},
   {label: 'cup', type: 0},
   {label: 'pnt', type: 0},
   {label: 'qt', type: 0},
   {label: 'gal', type: 0},
+  {label: 'pint', type: 0},
   {label: 'mg', type: 1},
   {label: 'g', type: 1},
   {label: 'kg', type: 1},
   {label: 'oz', type: 1},
   {label: 'lb', type: 1},
   {label: 'piece', type: 2},
+  {label: 'large', type: 2},
+  {label: 'small', type: 2},
+  {label: 'medium', type: 2},
 ];
 
 const IngredientsInput = (props: IngredientsInputProps) => {
