@@ -110,12 +110,13 @@ class RecipeController extends Controller
         if(in_array($fileType, [ 'jpeg', 'png', 'gif' ])) {
             // Set a unique name to the file and save
             $file_name = 'images/' . uniqid() . '.' . $fileType;
-            Storage::disk('local')->put('public/'.$file_name, $imageData);
+            // Storage::disk('local')->put('public/'.$file_name, $imageData);
+            Storage::disk('s3')->put($file_name, $imageData);
             $recipe->image = $file_name;
             $recipe->save();
 
             return response()->json([
-                'message' => 'Successfully stored recipe image!',
+                'message' => 'Successfully stored recipe image AAAAA!',
                 'path' => $file_name,
             ]);
         }
