@@ -1,7 +1,7 @@
 import apisauce from "apisauce";
 
 
-const create = (baseURL = "http://localhost:3000/api/") => {
+const create = (baseURL = "http://localhost:3000/api/", ocrURL = "http://localhost:5000") => {
   const api = apisauce.create({
     baseURL,
     timeout: 10000,
@@ -154,7 +154,7 @@ const create = (baseURL = "http://localhost:3000/api/") => {
 
   // OCR Microservice
   const ocrApi = apisauce.create({
-    baseURL: "http://localhost:5000",
+    baseURL: ocrURL,
     timeout: 30000,
   });
 

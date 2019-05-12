@@ -13,6 +13,7 @@ class SPAConfig {
     private static function getSPAConfig(): string {
         $config = [
             'API_URL' => "/api/",
+            'OCR_SCANNER_URL' => env('OCR_SCANNER_URL'),
         ];
         return '<script id="config">window.config = '.json_encode($config).'</script>';
     }

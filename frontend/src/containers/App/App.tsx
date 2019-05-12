@@ -19,7 +19,7 @@ import "./App.css";
 import CreateRecipeByImage from "../CreateRecipeByImage/CreateRecipeByImage";
 
 const withApi = (Component: any) => {
-  const api = Api.create(getEnv("API_URL"));
+  const api = Api.create(getEnv("API_URL"), getEnv("OCR_SCANNER_URL"));
   return (props:any) => <Component api={api} {...props} />
 }
 
