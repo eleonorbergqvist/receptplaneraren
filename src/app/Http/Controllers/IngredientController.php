@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class IngredientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of RecipeIngredients.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,7 +20,7 @@ class IngredientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created RecipeIngredient in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -41,9 +41,9 @@ class IngredientController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a RecipeIngredient resource.
      *
-     * @param  \App\RecipeIngredient  $recipeIngredient
+     * @param  \App\RecipeIngredient  $recipeIngredient->id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -55,10 +55,10 @@ class IngredientController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update RecipeIngredient resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecipeIngredient  $recipeIngredient
+     * @param  \App\RecipeIngredient  $recipeIngredient->id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -73,9 +73,9 @@ class IngredientController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove RecipeIngredient resource from storage.
      *
-     * @param  \App\RecipeIngredient  $recipeIngredient
+     * @param  \App\RecipeIngredient  $recipeIngredient->id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

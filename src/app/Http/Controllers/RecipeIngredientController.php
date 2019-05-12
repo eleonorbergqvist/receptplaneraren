@@ -7,12 +7,10 @@ use App\Ingredient;
 use Illuminate\Http\Request;
 use Cocur\Slugify\Slugify;
 
-
-
 class RecipeIngredientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the RecipeIngredient.
      *
      * @return \Illuminate\Http\Response
      */
@@ -24,7 +22,7 @@ class RecipeIngredientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store many newly created RecipeIngredients in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -70,10 +68,9 @@ class RecipeIngredientController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified RecipeIngredient in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecipeTag  $recipeTag
      * @return \Illuminate\Http\Response
      */
     public function updateAllForRecipe(Request $request)
@@ -123,9 +120,9 @@ class RecipeIngredientController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified RecipeIngredient from storage.
      *
-     * @param  \App\RecipeTag  $recipeTag
+     * @param  \App\RecipeTag  $recipeTag->id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

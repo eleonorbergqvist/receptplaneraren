@@ -7,58 +7,88 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-  public function index()
-  {
-      $users = User::all();
+    /**
+     * Display a listing of the Users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $users = User::all();
 
-      return response()->json($users);
-  }
+        return response()->json($users);
+    }
 
-  public function store(Request $request)
-  {
-      $request->validate([
-          'email' => 'required',
-          'password' => 'required',
-          'user_name' => 'required'
-      ]);
+    /**
+     * Store a newly created User in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+            'user_name' => 'required'
+        ]);
 
-      $user = User::create($request->all());
+        $user = User::create($request->all());
 
-      return response()->json([
-          'message' => 'Great success! New user created',
-          'user' => $user
-      ]);
-  }
+        return response()->json([
+            'message' => 'Great success! New user created',
+            'user' => $user
+        ]);
+    }
 
-  public function show(User $user)
-  {
-    return response()->json([
-      'user' => $user
-    ]);
-  }
+    /**
+     * Display the specified User.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return response()->json([
+        'user' => $user
+        ]);
+    }
 
-  public function update(Request $request, User $user)
-  {
-      $request->validate([
-        'email' => 'nullable',
-        'password' => 'nullable',
-        'user_name' => 'nullable'
-      ]);
+    /**
+     * Update the specified User in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'email' => 'nullable',
+            'password' => 'nullable',
+            'user_name' => 'nullable'
+        ]);
 
-      $user->update($request->all());
+        $user->update($request->all());
 
-      return response()->json([
-          'message' => 'Great success! User updated',
-          'user' => $user
-      ]);
-  }
+        return response()->json([
+            'message' => 'Great success! User updated',
+            'user' => $user
+        ]);
+    }
 
-  public function destroy(User $user)
-  {
-      $user->delete();
+    /**
+     * Remove the specified User from storage.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $user->delete();
 
-      return response()->json([
-          'message' => 'Successfully deleted user!'
-      ]);
-  }
+        return response()->json([
+            'message' => 'Successfully deleted user!'
+        ]);
+    }
 }

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\DayMeal;
 use App\RecipeIngredient;
 use Carbon\CarbonImmutable;
-use Illuminate\Http\Request;
-use Tymon\JWTAuth\JWTAuth;
-use Auth;
 
 class ShoppingListController extends Controller
 {
     /**
      * Get shoppinglist for a given week.
      *
+     * @param  [string]  $monday (YYYY-MM-DD)
      * @return \Illuminate\Http\Response
      */
     public function showWeek($monday)
@@ -24,7 +21,6 @@ class ShoppingListController extends Controller
         $this->startDate = $carbonMonday->startOfWeek(CarbonImmutable::MONDAY)->format('Y-m-d');
         $this->endDate = $carbonMonday->endOfWeek(CarbonImmutable::SUNDAY)->format('Y-m-d');
 
-        // get recipeingredients and ingredients for daymeals recipes between 2 dates
         $ingredients = RecipeIngredient::with('ingredient')->whereHas('recipe.daymeals', function($q) {
             $q->whereBetween('date',[$this->startDate, $this->endDate]);})->get();
 

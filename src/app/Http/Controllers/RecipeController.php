@@ -5,17 +5,13 @@ namespace App\Http\Controllers;
 use App\Recipe;
 use Illuminate\Http\Request;
 use Cocur\Slugify\Slugify;
-use JWTAuth;
 use Auth;
-use App\RecipeTag;
-use finfo;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Http\File;
 
 class RecipeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Recipes.
      *
      * @return \Illuminate\Http\Response
      */
@@ -25,8 +21,8 @@ class RecipeController extends Controller
         return response()->json($recipes);
     }
 
-        /**
-     * Display a listing of the resource.
+    /**
+     * Display a listing of the Recipes with related info.
      *
      * @return \Illuminate\Http\Response
      */
@@ -41,7 +37,7 @@ class RecipeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created Recipe with tags in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -49,7 +45,6 @@ class RecipeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            // 'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
             'tags' => 'nullable',
@@ -58,7 +53,6 @@ class RecipeController extends Controller
         $recipe = new Recipe;
         $slugify = new Slugify();
 
-        // $recipe->status = $request->status;
         $recipe->instructions = $request->instructions;
         $recipe->title = $request->title;
         $recipe->slug = $slugify->slugify($request->title);
@@ -77,9 +71,9 @@ class RecipeController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Recipe from storage.
      *
-     * @param  \App\Recipe  $recipe
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function storeImage(Request $request)
@@ -117,19 +111,15 @@ class RecipeController extends Controller
             // Set a unique name to the file and save
             $file_name = 'images/' . uniqid() . '.' . $fileType;
             Storage::disk('local')->put('public/'.$file_name, $imageData);
-            // $path = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix();
-
             $recipe->image = $file_name;
             $recipe->save();
 
             return response()->json([
                 'message' => 'Successfully stored recipe image!',
-                // 'path' => $path.$file_name,
                 'path' => $file_name,
             ]);
         }
         else {
-            // echo 'Error : Only JPEG, PNG & GIF allowed';
             return response()->json([
                 'message' => 'Error : Only JPEG, PNG & GIF allowed'
             ]);
@@ -137,20 +127,11 @@ class RecipeController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Recipe.
      *
-     * @param  \App\Recipe  $recipe
+     * @param  \App\Recipe  $recipe->slug
      * @return \Illuminate\Http\Response
      */
-    // public function show($id)
-    // {
-    //     $recipe = Recipe::findOrFail($id);
-
-    //     return response()->json([
-    //         'recipe' => $recipe
-    //     ]);
-    // }
-
     public function show($slug)
     {
         $recipe = Recipe::where('slug', $slug)->first()->load(["recipeTags", "recipeIngredients.ingredient"]);
@@ -160,27 +141,15 @@ class RecipeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Recipe  $recipe
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Recipe $recipe)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Update the specified Recipe in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Recipe  $recipe
+     * @param  \App\Recipe  $recipe->slug
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $slug)
     {
         $request->validate([
-            // 'status' => 'required',
             'instructions' => 'required',
             'title' => 'required',
             'image' => 'nullable',
@@ -188,7 +157,6 @@ class RecipeController extends Controller
             'slug' => 'required',
           ]);
 
-        // TODO: Maybe find based on id instead of slug
         $recipe = Recipe::where('slug', $slug)->firstOrFail();
         $recipe->update($request->all());
         $recipe->recipeTags()->sync($request->tags);
@@ -202,17 +170,15 @@ class RecipeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified Recipe from storage.
      *
-     * @param  \App\Recipe  $recipe
+     * @param  \App\Recipe  $recipe->id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         $recipe = Recipe::findOrFail($id);
         $recipe->delete();
-
-        //kolla så allt relaterad tas bort
 
         return response()->json([
             'message' => 'Successfully deleted recipe!'

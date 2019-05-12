@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class RecipeTagController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the RecipeTags.
      *
      * @return \Illuminate\Http\Response
      */
@@ -20,7 +20,7 @@ class RecipeTagController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created RecipeTag in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -41,10 +41,10 @@ class RecipeTagController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified RecipeTag in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RecipeTag  $recipeTag
+     * @param  \App\RecipeTag  $recipeTag->id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -59,9 +59,9 @@ class RecipeTagController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified RecipeTag from storage.
      *
-     * @param  \App\RecipeTag  $recipeTag
+     * @param  \App\RecipeTag  $recipeTag->id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
