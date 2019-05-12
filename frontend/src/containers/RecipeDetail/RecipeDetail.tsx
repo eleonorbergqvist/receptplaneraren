@@ -123,7 +123,7 @@ class RecipeDetail extends Component<Props> {
               <h1>{this.state.recipe.title}</h1>
 
               {this.state.recipe.recipe_tags.map((recipeTag: iRecipeTag, index: any) => (
-                  <button className="button is-light" key={index}>
+                  <button className="RecipeDetail__Button--Default button is-light" key={index}>
                     {recipeTag.name}
                   </button>
                 ))}
