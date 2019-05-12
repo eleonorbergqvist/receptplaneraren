@@ -67,7 +67,8 @@ const IngredientsInput = (props: IngredientsInputProps) => {
       </div>
       <div className="control">
         <div className="IngredientsInput__Measure select">
-          <select name="measurement" value={props.measurement || undefined} className="IngredientsInput__Select" onChange={handleChange}>
+          <select name="measurement" value={props.measurement || ""} className="IngredientsInput__Select" onChange={handleChange}>
+            <option value="" disabled hidden>Choose</option>
             {MEASUREMENT_LIST.map((x, index) =>
               <option key={index}>{x.label}</option>
             )}
