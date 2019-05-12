@@ -14,6 +14,8 @@ This is a recipe app built in Laravel and React.
 - Frontend tests with Jest
 - Based on my [laravel-docker-scaffold](https://github.com/eleonorbergqvist/laravel-docker-scaffold) boilerplate
 - Error tracking with Sentry
+- File storage using AWS S3
+- A OCR reading service using my [serverless-ocr-scanner](https://github.com/eleonorbergqvist/serverless-ocr-scanner)
 
 ## Installing
 - `cd frontend`

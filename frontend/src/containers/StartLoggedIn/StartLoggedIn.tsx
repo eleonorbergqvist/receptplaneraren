@@ -26,6 +26,7 @@ interface StartLoggedInState {
   isLoggedOut: boolean,
   shoppingList: any,
   error: string,
+  isLoadingShoppingList: boolean,
 }
 
 class StartLoggedIn extends Component<Props> {
@@ -36,6 +37,7 @@ class StartLoggedIn extends Component<Props> {
     isLoggedOut: false,
     shoppingList: [],
     error: "",
+    isLoadingShoppingList: false,
   }
 
  componentDidMount () {
@@ -104,6 +106,8 @@ class StartLoggedIn extends Component<Props> {
   handleShoppingList = async (e: FormEvent) => {
     e.preventDefault();
 
+    this.setState({ isLoadingShoppingList: true });
+
     const monday = this.state.mondayDate.format('YYYY-MM-DD');
     console.log('Frontend monday');
     console.log(monday);
@@ -113,17 +117,15 @@ class StartLoggedIn extends Component<Props> {
       monday,
     );
 
+    this.setState({ isLoadingShoppingList: false });
+
     if (response.status === 401) {
-      this.setState({
-        isLoggedOut: true,
-      })
+      this.setState({ isLoggedOut: true })
       return;
     }
 
     if (!response.ok) {
-      this.setState({
-        error: "Error generating shoppinglist"
-      })
+      this.setState({ error: "Error generating shoppinglist" })
       return;
     }
 
@@ -191,11 +193,14 @@ class StartLoggedIn extends Component<Props> {
                 bibendum a nunc. Quisque quam magna, sollicitudin egestas orci
                 a, congue aliquam nibh.
               </p>
-              <button className="button" onClick={this.handleShoppingList}>Generate Shoppinglist</button>
-              <br />
-              {this.state.shoppingList.map((ingredient: any, index: number) => {
-                return <li key={index}>{ingredient.amount}{ingredient.measurement}{ingredient.ingredient.name}</li>
-              })}
+              <button
+                className={`button ${this.state.isLoadingShoppingList ? "is-loading" : ""}`}
+                onClick={this.handleShoppingList}
+              >Generate Shoppinglist</button>
+
+              {this.state.shoppingList && this.state.shoppingList.length > 0 &&
+                <ShoppingList items={this.state.shoppingList} />
+              }
             </div>
             <div className="column">
 
@@ -260,5 +265,34 @@ const DayMealList = (props: DayMealListProps) => {
         return items.map((item:any) => props.renderMealItem(item))
       })};
     </div>
+  )
+}
+
+interface ShoppingListProps {
+  items: any,
+}
+
+const ShoppingList = (props: ShoppingListProps) => {
+  return (
+    <table className="table">
+      <thead>
+        <tr>
+          <th><abbr title="Amount">Amount</abbr></th>
+          <th>Measurement</th>
+          <th><abbr title="Ingredient">Ingredient</abbr></th>
+        </tr>
+      </thead>
+      <tfoot>
+        {props.items.map((ingredient: any, index: number) => {
+          return (
+            <tr key={index}>
+              <td>{ingredient.amount}</td>
+              <td>{ingredient.measurement}</td>
+              <td>{ingredient.ingredient.name}</td>
+            </tr>
+          )
+        })}
+      </tfoot>
+    </table>
   )
 }
