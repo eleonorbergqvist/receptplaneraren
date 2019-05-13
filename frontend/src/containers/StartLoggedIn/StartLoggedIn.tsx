@@ -1,6 +1,7 @@
 import React, { Component, FormEvent } from "react";
-import { Redirect } from "react-router";
+import { Redirect, withRouter, RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
+import { compose } from 'redux';
 import * as moment from 'moment';
 import { ApiResponse } from "apisauce";
 import { iRootState } from "../../store";
@@ -20,7 +21,7 @@ const mapState = (state: iRootState) => ({
 });
 
 type connectedProps = ReturnType<typeof mapState>;
-type Props = connectedProps & { api: iApi }
+type Props = connectedProps & { api: iApi } & RouteComponentProps
 
 interface StartLoggedInState {
   mondayDate: any,
@@ -74,16 +75,14 @@ class StartLoggedIn extends Component<Props> {
     const { api } = this.props
     const { mondayDate } = this.state
 
-    let monday = mondayDate.format('YYYY-MM-DD');
+    const monday = mondayDate.format('YYYY-MM-DD');
     const response: ApiResponse<any> = await api.daymealsByDate(
       this.props.user.access_token,
-      monday
+      monday,
     );
 
     if (response.status === 401) {
-      this.setState({
-        isLoggedOut: true,
-      })
+      this.setState({ isLoggedOut: true })
       return;
     }
 
@@ -91,9 +90,7 @@ class StartLoggedIn extends Component<Props> {
       return;
     }
 
-    this.setState({
-      weekmeals: response.data.daymeals,
-    })
+    this.setState({ weekmeals: response.data.daymeals })
   }
 
   handleCloseErrorMessage = () => {
@@ -138,7 +135,13 @@ class StartLoggedIn extends Component<Props> {
   }
 
   handleEmptyRecipeItemClick = (mealType:number) => {
-    console.log("WOO");
+    const { history } = this.props
+    const { mondayDate } = this.state;
+    const dayDate = mondayDate.clone().add(
+      this.state.selectedDayOfWeek, 'days'
+    ).format("YYYY-MM-DD");
+
+    history.push(`/recipe/browse?date=${dayDate}`)
   }
 
   render() {
@@ -157,7 +160,6 @@ class StartLoggedIn extends Component<Props> {
     }
 
     const week = mondayDate.isoWeek()
-
     const dayDate = mondayDate.clone().add(
       this.state.selectedDayOfWeek, 'days'
     ).format("YYYY-MM-DD");
@@ -250,5 +252,4 @@ class StartLoggedIn extends Component<Props> {
 
 export default connect(
   mapState,
-  null
 )(StartLoggedIn);
