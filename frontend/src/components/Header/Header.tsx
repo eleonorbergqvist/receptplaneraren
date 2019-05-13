@@ -94,14 +94,14 @@ export const HeaderLoggedIn = (props:any) => {
       link={"/recipe/browse"}
       className="header__button--yellow"
     />,
+    // <PrimaryMenuButton
+    //   key={3}
+    //   text="Settings"
+    //   link={"#"}
+    //   className="header__button--yellow"
+    // />,
     <PrimaryMenuButton
       key={3}
-      text="Settings"
-      link={"#"}
-      className="header__button--yellow"
-    />,
-    <PrimaryMenuButton
-      key={4}
       text="Log Out"
       link={"/logout"}
       className="header__button--pink"
