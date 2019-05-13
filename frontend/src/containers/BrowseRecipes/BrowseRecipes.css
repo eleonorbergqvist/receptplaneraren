@@ -18,6 +18,17 @@
   .BrowseRecipes__Container--Left {
     padding: 2rem;
   }
+  .column.is-one-fifth {
+    flex: none;
+    width: 100%;
+  }
+  .image.is-square {
+    padding: 0;
+  }
+  .RecipeListItem__Container {
+    flex-direction: column-reverse;
+    display: flex;
+  }
 }
 
 .RecipeListItem__LevelHeader {
@@ -39,6 +50,9 @@
   color:grey;
 }
 
+.RecipeListItem__ImageContainer {
+
+}
 .RecipeListItem__Image {
   margin-top: 0.5rem;
 }

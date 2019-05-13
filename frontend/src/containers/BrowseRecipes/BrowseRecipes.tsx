@@ -57,7 +57,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
 
   return (
     <React.Fragment>
-      <div className="columns">
+      <div className="RecipeListItem__Container columns">
         <div className="column">
             <div className="RecipeListItem content">
                 <h2 className="RecipeListItem__LevelHeader">{props.recipe.title}</h2>
