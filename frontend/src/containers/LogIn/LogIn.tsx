@@ -52,22 +52,22 @@ class LogIn extends Component<LogInProps> {
     }
 
     return (
-      <div className="login columns">
-        <div className="login__container--img column">
-          <div className="login__container--left">
-            <h2 className="login__brand">
-							<Link to="/" className="login__brand-link">Receptplaneraren</Link>
+      <div className="LogIn columns">
+        <div className="LogIn__Container--Img column">
+          <div className="LogIn__Container--Left">
+            <h2 className="LogIn__Brand LogIn__Brand">
+							<Link to="/" className="LogIn__BrandLink LogIn__BrandLink--WhiteBg">Receptplaneraren</Link>
 						</h2>
           </div>
         </div>
-        <div className="login__container--bg column">
-          <div className="login__container--right">
-            <h2 className="login__title">Log In</h2>
-            <p className="login__info--small">
+        <div className="LogIn__Container--Bg column">
+          <div className="LogIn__Container--Right">
+            <h2 className="LogIn__Title">Log In</h2>
+            <p className="LogIn__Info--Small">
               Don't have an account? <Link to={`/register`}>Sign up</Link>.
             </p>
             <LoginForm onSubmit={this.handleSubmit} />
-            <p className="login__info--small">Forgot password? <Link to={`/password/create`}>Click here.</Link></p>
+            <p className="LogIn__Info--Small">Forgot password? <Link to={`/password/create`}>Click here.</Link></p>
           </div>
         </div>
       </div>

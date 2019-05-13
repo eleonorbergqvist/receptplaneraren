@@ -25,7 +25,7 @@ interface StartLoggedInState {
   selectedDayOfWeek: number,
   isLoggedOut: boolean,
   shoppingList: any,
-  error: string,
+  shoppingListError: string,
   isLoadingShoppingList: boolean,
 }
 
@@ -36,7 +36,7 @@ class StartLoggedIn extends Component<Props> {
     selectedDayOfWeek: 0,
     isLoggedOut: false,
     shoppingList: [],
-    error: "",
+    shoppingListError: "",
     isLoadingShoppingList: false,
   }
 
@@ -85,7 +85,7 @@ class StartLoggedIn extends Component<Props> {
     }
 
     if (!response.ok) {
-      throw Error("DAYMEAL ERROR");
+      return;
     }
 
     this.setState({
@@ -94,7 +94,7 @@ class StartLoggedIn extends Component<Props> {
   }
 
   handleCloseErrorMessage = () => {
-    this.setState({ error: '' });
+    this.setState({ shoppingListError: '' });
   }
 
   handleTabNavChange = (item: any) => {
@@ -125,7 +125,7 @@ class StartLoggedIn extends Component<Props> {
     }
 
     if (!response.ok) {
-      this.setState({ error: "Error generating shoppinglist" })
+      this.setState({ shoppingListError: "Error generating shoppinglist" })
       return;
     }
 
@@ -165,11 +165,11 @@ class StartLoggedIn extends Component<Props> {
         <main className="container">
           <div className="start__Container columns">
             <div className="column is-two-fifths">
-              {this.state.error &&
+              {this.state.shoppingListError &&
                 <Message
                   type="danger"
                   title="Error"
-                  text={this.state.error}
+                  text={this.state.shoppingListError}
                   onClose={this.handleCloseErrorMessage}
                 />
               }

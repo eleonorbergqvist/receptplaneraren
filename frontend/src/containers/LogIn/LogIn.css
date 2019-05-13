@@ -1,18 +1,17 @@
-.login {
+.LogIn {
   height: 100vh;
 }
 
-.login__container--img {
+.LogIn__Container--Img {
   background-image: url("/Images/brooke-lark-254998-unsplash.jpg");
   background-size: cover;
+}
+
+.LogIn__Container--Left {
 
 }
 
-.login__container--left {
-
-}
-
-.login__brand {
+.LogIn__Brand {
   padding-top: 50px;
   padding-left: 50px;
   color: #ff6e00;
@@ -20,15 +19,20 @@
   font-size: 30px;
 }
 
-.login__brand-link {
+.LogIn__BrandLink {
   color: inherit;
+  padding: 15px;
 }
 
-.login__container--bg {
+.LogIn__BrandLink--WhiteBg {
+  background-color: #FFF;
+}
+
+.LogIn__Container--Bg {
   background-color: seashell;
 }
 
-.login__container--right {
+.LogIn__Container--Right {
   background-color: white;
   margin-top: 50px;
   margin-right: 25px;
@@ -38,14 +42,14 @@
 
 }
 
-.login__title {
+.LogIn__Title {
   color: pink;
   font-weight: 600;
   font-size: 20px;
   padding-bottom: 15px;
 }
 
-.login__info--small {
+.LogIn__Info--Small {
   font-size: 10px;
   color: gray;
   padding: 5px;
