@@ -140,18 +140,18 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
               {/* {formikBag.errors.general && <p>{formikBag.errors.general}</p>} */}
               <div className="columns">
                 <div className="column">
-                <figure className="image is-128x128">
-                  <img id="imagePreview" src={this.state.image} alt="" />
+                <figure className="RecipeForm__Image--Preview image is-5by4">
+                  <img id="imagePreview" src={this.state.image} alt="Preview" />
                 </figure>
-                </div>
-                <div className="column">
-                  <div className="file is-boxed">
+
+                {/* <div className="column"> */}
+                  <div className="file is-fullwidth">
                     <label className="file-label">
-                      <input className="file-input" type="file" name="resume"
+                      <input className="RecipeForm__FileInput file-input" type="file" name="resume"
                         onChange={this.handleInputFileChange}
                         accept='image/*'
                       />
-                      <span className="file-cta">
+                      <span className="RecipeForm__FileInputSpan file-cta">
                         <span className="file-icon">
                           <i className="fas fa-upload"></i>
                         </span>
@@ -161,10 +161,11 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
                       </span>
                     </label>
                   </div>
-                </div>
+                {/* </div> */}
                 {formikBag.errors.image
                   && <p className="help is-danger">{formikBag.errors.image}</p>
                 }
+                </div>
               </div>
 
 
@@ -214,7 +215,7 @@ class RecipeForm extends Component<RecipeFormProps, RecipeFormState> {
               <div className="field">
                 <p className="control">
                   <button
-                    className={`button ${formikBag.isSubmitting ? "is-loading": ""}`}
+                    className={`RecipeForm__Button--Create button is-dark ${formikBag.isSubmitting ? "is-loading": ""}`}
                     type="submit"
                     // disabled={!formikBag.isValid}
                   >

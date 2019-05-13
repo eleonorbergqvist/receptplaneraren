@@ -1,8 +1,4 @@
-.selected {
-  background-color: deeppink;
-
-}
-
-.not-selected {
-  background-color: seashell;
+.RecipeTags__Tag {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }

@@ -27,7 +27,7 @@ export const RecipeTags = (props: RecipeTagProps) => {
 
         return (
           <button
-            className={isSelected ? "button selected" : "button not-selected"}
+            className={isSelected ? "RecipeTags__Tag button is-danger" : "RecipeTags__Tag button is-light"}
             onClick={e => handleOnClick(e, tag)}
             key={tag.id
           }>{tag.name}</button>

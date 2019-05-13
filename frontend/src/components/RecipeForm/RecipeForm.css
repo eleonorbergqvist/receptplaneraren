@@ -1,5 +1,19 @@
-/* .RecipeForm__Button--Add {
+.RecipeForm__Button--Create {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-} */
+}
+
+.RecipeForm__Image--Preview {
+  display: block;
+}
+
+.RecipeForm__FileInput {
+  display: block;
+  width: 100%;
+}
+
+.RecipeForm__FileInputSpan {
+  width: 100%;
+}
+
 
