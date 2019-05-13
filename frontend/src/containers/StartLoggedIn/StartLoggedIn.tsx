@@ -10,6 +10,7 @@ import Footer from "../../components/Footer/Footer";
 import Message from "../../components/Message/Message";
 import TabNav from "../../components/TabNav/TabNav";
 import RecipeItem, { RecipeItemEmpty } from "../../components/RecipeItem/RecipeItem";
+import "./StartLoggedIn.css"
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -160,10 +161,10 @@ class StartLoggedIn extends Component<Props> {
     const daymeals = day[1];
 
     return (
-      <div className="start-logged-in">
+      <div className="StartLoggedIn">
         <HeaderLoggedIn />
-        <main className="container">
-          <div className="start__Container columns">
+        <main className="StartLoggedIn__Main container">
+          <div className="StartLoggedIn__Container columns">
             <div className="column is-two-fifths">
               {this.state.shoppingListError &&
                 <Message
@@ -174,36 +175,36 @@ class StartLoggedIn extends Component<Props> {
                 />
               }
 
-              <h1>Week {week}</h1>
-              <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
-                <i className="fas fa-caret-left" />
-              </span>
-              <span id="right" className="icon" onClick={e => this.handleWeekChange(e, 1)}>
-                <i className="fas fa-caret-right" />
-              </span>
-              <p>
-                Aenean iaculis gravida diam, et tincidunt diam elementum
-                pulvinar. Curabitur dignissim tortor at blandit iaculis.
-                Phasellus consequat velit quis leo pharetra, et ultricies turpis
-                aliquet. Fusce pulvinar, leo faucibus facilisis ullamcorper,
-                ligula mi interdum quam, vitae accumsan leo augue sed neque.
-                Etiam sit amet ante malesuada, luctus est at, finibus nunc. Nam
-                feugiat feugiat nulla ut blandit. Morbi eget porttitor mauris,
-                sed lobortis justo. Sed eget metus at risus laoreet consectetur
-                bibendum a nunc. Quisque quam magna, sollicitudin egestas orci
-                a, congue aliquam nibh.
-              </p>
-              <button
-                className={`button ${this.state.isLoadingShoppingList ? "is-loading" : ""}`}
-                onClick={this.handleShoppingList}
-              >Generate Shoppinglist</button>
+              <div className="StartLoggedIn__ShoppingList">
+                <nav className="level">
+                  <div className="level-left">
+                    <div className="level-item">
+                      <h5 className="title is-5">Week {week}</h5>
+                    </div>
+                    <div className="level-item">
+                      <span id="left" className="icon" onClick={e => this.handleWeekChange(e, -1)}>
+                        <i className="fas fa-caret-left" />
+                      </span>
+                      <span id="right" className="icon" onClick={e => this.handleWeekChange(e, 1)}>
+                        <i className="fas fa-caret-right" />
+                      </span>
+                    </div>
+                  </div>
+                </nav>
 
-              {this.state.shoppingList && this.state.shoppingList.length > 0 &&
-                <ShoppingList items={this.state.shoppingList} />
-              }
+                <p className="StartLoggedIn__ShoppingListIntro">Based on your weekly schedule we can automatically create a shopping list for you, just hit the button below to get started</p>
+
+                <button
+                  className={`button ${this.state.isLoadingShoppingList ? "is-loading" : ""}`}
+                  onClick={this.handleShoppingList}
+                >Generate Shoppinglist</button>
+
+                {this.state.shoppingList && this.state.shoppingList.length > 0 &&
+                  <ShoppingList items={this.state.shoppingList} />
+                }
+              </div>
             </div>
             <div className="column">
-
               <TabNav
                 items={[
                   {label: "Monday", value: 0},

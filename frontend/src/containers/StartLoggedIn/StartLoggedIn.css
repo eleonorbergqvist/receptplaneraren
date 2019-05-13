@@ -1,8 +1,14 @@
-.start__Container {
+.StartLoggedIn {
+}
+
+.StartLoggedIn__Main {
+  margin-top: 15px;
+}
+
+.StartLoggedIn__Container {
   margin-bottom: 3rem;
 }
 
-.iconColor {
-    color: magenta;
-    background-color: yellowgreen;
+.StartLoggedIn__ShoppingListIntro {
+  margin-bottom: 10px;
 }
