@@ -12,8 +12,9 @@ import {
   Form,
 } from "formik";
 import { iRootState } from "../../store";
-import Input from "../../components/Input/Input";
 import { iApi } from "../../services/Api";
+import Input from "../../components/Input/Input";
+import "./ResetPassword.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -91,15 +92,17 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
     };
 
     return (
-      <div className="login columns">
-        <div className="login__container--img column">
-          <div className="login__container--left">
-            <h2 className="login__brand">Receptplaneraren</h2>
+      <div className="ResetPassword columns">
+        <div className="ResetPassword__Container--Img column">
+          <div className="ResetPassword__Container--Left">
+            <h2 className="LogIn__Brand">
+							<Link to="/" className="LogIn__BrandLink LogIn__BrandLink--WhiteBg">Receptplaneraren</Link>
+						</h2>
           </div>
         </div>
-        <div className="login__container--bg column">
-          <div className="login__container--right">
-            <h2 className="login__title">Reset Password</h2>
+        <div className="ResetPassword__Container--Bg column">
+          <div className="ResetPassword__Container--Right">
+            <h2 className="ResetPassword__Title">Reset Password</h2>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -109,8 +112,6 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
               ) => {
                 onSubmit(
                   {
-                    // email: this.state.email,
-                    // reset_token: this.state.reset_token,
                     password: values.password
                   },
                   actions
@@ -123,7 +124,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
 
                   <Input
                     name="password"
-                    icon="sheild-alt"
+                    icon="shield-alt"
                     className=""
                     type="password"
                     placeholder="Password"
@@ -137,7 +138,7 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
 
                   <Input
                     name="password_confirmation"
-                    icon="sheild-alt"
+                    icon="shield-alt"
                     className=""
                     type="password"
                     placeholder="Confirm password"
@@ -165,8 +166,8 @@ class ResetPassword extends Component<Props, ResetPasswordState> {
                 </Form>
               )}
             />
-            <p className="login__info--small"><Link to={`/login`}>Log in.</Link></p>
-            <p className="login__info--small"><Link to={`/register`}>Sign up.</Link></p>
+            <p className="ResetPassword__Info--Small"><Link to={`/login`}>Log in.</Link></p>
+            <p className="ResetPassword__Info--Small"><Link to={`/register`}>Sign up.</Link></p>
           </div>
         </div>
       </div>

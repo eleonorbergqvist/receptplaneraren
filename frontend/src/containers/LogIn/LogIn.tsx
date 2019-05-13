@@ -54,7 +54,7 @@ class LogIn extends Component<LogInProps> {
       <div className="LogIn columns">
         <div className="LogIn__Container--Img column">
           <div className="LogIn__Container--Left">
-            <h2 className="LogIn__Brand LogIn__Brand">
+            <h2 className="LogIn__Brand">
 							<Link to="/" className="LogIn__BrandLink LogIn__BrandLink--WhiteBg">Receptplaneraren</Link>
 						</h2>
           </div>
