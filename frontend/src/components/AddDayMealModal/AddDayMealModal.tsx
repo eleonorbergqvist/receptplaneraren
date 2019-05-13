@@ -25,6 +25,7 @@ interface AddDayMealModalProps {
   text: string,
   onClose: Function,
   recipe: iRecipe,
+  initialDate: string,
 }
 
 interface iRecipe {
@@ -56,13 +57,39 @@ const validationSchema = Yup.object().shape({
 });
 
 class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
-  state = {
-    weekList: [],
-    dayList: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-    currentWeek: moment.default().isoWeek(),
-    currentDay: moment.default().isoWeekday(moment.default().isoWeekday()).format('dddd'),
-    mealList: ['Breakfast', 'Lunch', 'Dinner'],
-    currentMeal: 'Breakfast',
+  constructor(props: Props) {
+    super(props);
+
+    let currentWeek = moment.default().isoWeek()
+    let currentDay = moment.default()
+      .isoWeekday(
+        moment.default().isoWeekday()
+      ).format('dddd')
+
+    if (this.props.initialDate) {
+      currentWeek = moment.default(this.props.initialDate).isoWeek()
+      currentDay = moment.default(this.props.initialDate)
+        .isoWeekday(
+          moment.default(this.props.initialDate).isoWeekday()
+        ).format('dddd')
+    }
+
+    this.state = {
+      weekList: [],
+      dayList: [
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+        'Sunday'
+      ],
+      currentWeek,
+      currentDay,
+      mealList: ['Breakfast', 'Lunch', 'Dinner'],
+      currentMeal: 'Breakfast',
+    }
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
@@ -74,44 +101,44 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
 
     // FIXME: fixa så isoweckor används... UTC???
     // const isoWeek = moment.default().isoWeek();
-    const date = moment.default().day(values.day).week(values.week).format('YYYY-MM-DD HH:mm:ss');
-    let meal_type;
+    const date = moment.default().day(values.day)
+      .week(values.week)
+      .format('YYYY-MM-DD HH:mm:ss');
+    let mealType;
 
     switch (values.meal) {
       case 'Breakfast':
-        meal_type = 0;
+        mealType = 0;
         break;
 
       case 'Lunch':
-        meal_type = 1;
+        mealType = 1;
         break;
 
       case 'Dinner':
-        meal_type = 2;
+        mealType = 2;
         break;
 
       default:
-        meal_type= 0;
+        mealType = 0;
         break;
     }
-    const recipe_id = this.props.recipe.id;
+    const recipeId = this.props.recipe.id;
     console.log(date);
-    console.log(meal_type);
-    console.log(recipe_id);
+    console.log(mealType);
+    console.log(recipeId);
 
     const response: ApiResponse<any> = await api.daymealUpdate({
       date: date,
-      meal_type: meal_type,
-      recipe_id : recipe_id,
+      meal_type: mealType,
+      recipe_id : recipeId,
     }, this.props.user.access_token);
 
 
     actions.setSubmitting(false);
 
     if (!response.ok) {
-      actions.setErrors({
-        general: "Could not save day meal"
-      });
+      actions.setErrors({ general: "Could not save day meal" });
       return;
     }
 
@@ -131,7 +158,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
     }
     this.setState({ weekList: allWeeks });
   }
-// FIXME: remove touched validation
+
+  // FIXME: remove touched validation
   render() {
     const onSubmit = this.handleSubmit;
 
@@ -140,7 +168,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
       day: this.state.currentDay,
       meal: this.state.currentMeal,
     };
-// TODO: lägg in error visning
+
+    // TODO: lägg in error visning
     return (
       <div className={`is-active modal`}>
         <div className="modal-background" />
@@ -167,7 +196,9 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
               render={(formikBag: FormikProps<iFormValues>) => (
                 <Form>
                   <h1>{this.props.text}</h1>
-                  <Select name="week" options={this.state.weekList}
+                  <Select
+                    name="week"
+                    options={this.state.weekList.map(x => String(x))}
                     value={formikBag.values.week}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}

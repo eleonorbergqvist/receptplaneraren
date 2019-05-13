@@ -167,7 +167,9 @@ class RecipeDetail extends Component<Props> {
           <AddDayMealModal
             text="Add meal to weekly plan"
             recipe={this.state.recipe}
-            onClose={this.handleModalClose} />
+            onClose={this.handleModalClose}
+            initialDate={""}
+          />
         )}
       </div>
     );

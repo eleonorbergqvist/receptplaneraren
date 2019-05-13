@@ -22,6 +22,7 @@
     "formik": "^1.5.1",
     "moment": "^2.24.0",
     "prettier": "^1.16.4",
+    "query-string": "^6.5.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-image-crop": "^7.0.2",

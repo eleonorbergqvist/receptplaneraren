@@ -1,7 +1,6 @@
 import React, { Component, FormEvent } from "react";
-import { Redirect, withRouter, RouteComponentProps } from "react-router";
+import { Redirect, RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
-import { compose } from 'redux';
 import * as moment from 'moment';
 import { ApiResponse } from "apisauce";
 import { iRootState } from "../../store";

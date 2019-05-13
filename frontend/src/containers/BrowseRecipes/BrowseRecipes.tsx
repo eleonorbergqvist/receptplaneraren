@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { Redirect, RouteComponentProps } from "react-router";
+import queryString from "query-string";
 import { Link } from "react-router-dom";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
@@ -23,7 +24,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-type Props = connectedProps & { api: iApi }
+type Props = connectedProps & { api: iApi } & RouteComponentProps
 
 interface RecipeListItemProps {
   key: number,
@@ -48,6 +49,7 @@ interface BrowseRecipesState {
   modalIsOpen: boolean,
   clickedRecipe: iRecipe,
   isLoading: boolean,
+  initialModalDate: string,
 }
 
 const RecipeListItem = (props: RecipeListItemProps) => {
@@ -98,10 +100,16 @@ class BrowseRecipes extends Component<Props> {
       id: 0,
     },
     isLoading: false,
+    initialModalDate: '',
   }
 
   async componentDidMount () {
     this.setState({ isLoading: true })
+
+    const queryParams = queryString.parse(this.props.location.search)
+    if (queryParams.date) {
+      this.setState({ initialModalDate: queryParams.date })
+    }
 
     const { api } = this.props
     const response: ApiResponse<any> = await api.recipeTags(
@@ -222,7 +230,9 @@ class BrowseRecipes extends Component<Props> {
           <AddDayMealModal
             text="Add meal to weekly plan"
             recipe={this.state.clickedRecipe}
-            onClose={this.handleModalClose} />
+            onClose={this.handleModalClose}
+            initialDate={this.state.initialModalDate}
+          />
         )}
       </div>
     );

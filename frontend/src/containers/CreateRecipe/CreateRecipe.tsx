@@ -150,11 +150,12 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
   }
 }
 
-export default
-compose(
-  connect(
-    mapState,
-    mapDispatch
-  ),
-  withRouter,
-)(CreateRecipe);
+export default (
+  compose(
+    connect(
+      mapState,
+      mapDispatch
+    ),
+    withRouter,
+  )(CreateRecipe)
+)
