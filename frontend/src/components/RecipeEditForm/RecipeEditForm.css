@@ -1,0 +1,17 @@
+.RecipeEditForm__Button {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.RecipeEditForm__Image {
+  display: block;
+}
+
+.RecipeEditForm__FileInput {
+  display: block;
+  width: 100%;
+}
+
+.RecipeEditForm__FileInputSpan {
+  width: 100%;
+}

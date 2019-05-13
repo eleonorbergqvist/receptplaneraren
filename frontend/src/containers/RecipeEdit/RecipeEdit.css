@@ -1,5 +1,6 @@
 .RecipeEdit__Container {
-
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .RecipeEdit__Container--Left {
@@ -7,10 +8,8 @@
 }
 
 .RecipeEdit__Container--Right {
-
+  padding: 50px 100px 50px 100px;
 }
-
-
 
 @media screen and (max-width: 768px) {
   .RecipeEdit__Container--Right {

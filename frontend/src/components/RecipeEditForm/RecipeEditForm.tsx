@@ -138,18 +138,18 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState>
               {/* {formikBag.errors.general && <p>{formikBag.errors.general}</p>} */}
               <div className="columns">
                 <div className="column">
-                <figure className="image is-128x128">
-                  <img id="imagePreview" src={this.state.image} alt="" />
-                </figure>
-                </div>
-                <div className="column">
-                  <div className="file is-boxed">
+                { this.state.image &&
+                <figure className="RecipeEditForm__Image image is-5by4">
+                  <img id="imagePreview" src={this.state.image} alt="Preview" />
+                </figure> }
+
+                  <div className="file is-fullwidth">
                     <label className="file-label">
-                      <input className="file-input" type="file" name="resume"
+                      <input className="RecipeEditForm__FileInput file-input" type="file" name="resume"
                         onChange={this.handleInputFileChange}
                         accept='image/*'
                       />
-                      <span className="file-cta">
+                      <span className="RecipeEditForm__FileInputSpan file-cta">
                         <span className="file-icon">
                           <i className="fas fa-upload"></i>
                         </span>
@@ -212,15 +212,14 @@ class RecipeEditForm extends Component<RecipeEditFormProps, RecipeEditFormState>
               <div className="field">
                 <p className="control">
                   <button
-                    className={`button ${formikBag.isSubmitting ? "is-loading": ""}`}
+                    className={`RecipeEditForm__Button button is-dark ${formikBag.isSubmitting ? "is-loading": ""}`}
                     type="submit"
                     // disabled={!formikBag.isValid}
                   >
-                    Create
+                    Update
                   </button>
                 </p>
               </div>
-              <button className="button" disabled>Preview</button>
             </Form>
           )}
         />
