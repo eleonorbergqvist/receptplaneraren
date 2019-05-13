@@ -25,7 +25,7 @@ class Header extends Component<HeaderProps, HeaderState> {
     return (
       <nav className="header navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
-          <a href="/" className="header__title navbar-item">Receptplaneraren</a>
+          <Link to="/" className="header__title navbar-item">Receptplaneraren</Link>
           <a
             role="button"
             href="#"
@@ -43,9 +43,7 @@ class Header extends Component<HeaderProps, HeaderState> {
 
         <div id="navbarBasicExample" className={"navbar-menu " + (this.state.burgerIsActive ? 'is-active' : '')}>
           <div className="navbar-start">
-            <Link className="navbar-item" to="/">
-              Home
-            </Link>
+            <Link className="navbar-item" to="/">Home</Link>
           </div>
           <div className="navbar-end">
             <div className="navbar-item">

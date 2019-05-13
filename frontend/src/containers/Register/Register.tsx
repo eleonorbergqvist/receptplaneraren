@@ -5,8 +5,9 @@ import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import { FormikActions } from "formik";
 import { iApi } from "../../services/Api";
-import RegisterForm from "../../components/RegisterForm/RegisterForm";
 import { iRootState, Dispatch } from "../../store"
+import RegisterForm from "../../components/RegisterForm/RegisterForm";
+import "./Register.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -61,19 +62,19 @@ class Register extends Component<Props> {
     }
 
     return (
-      <div className="login columns">
-        <div className="login__container--img column">
-          <div className="login__container--left">
-            <h2 className="login__brand">
-							<Link to="/" className="login__brand-link">Receptplaneraren</Link>
+      <div className="Register columns">
+        <div className="Register__Container--img column">
+          <div className="Register__Container--Left">
+            <h2 className="Register__Brand">
+							<Link to="/" className="Register__BrandLink Register__BrandLink--WhiteBg">Receptplaneraren</Link>
             </h2>
           </div>
         </div>
-        <div className="login__container--bg column">
-          <div className="login__container--right">
-            <h2 className="login__title">Sign Up</h2>
+        <div className="Register__Container--Bg column">
+          <div className="Register__Container--Right">
+            <h2 className="Register__Title">Sign Up</h2>
             <RegisterForm onSubmit={this.handleSubmit} />
-            <p className="login__info--small">Already have an account? <Link to={`/login`}>Log in.</Link>.</p>
+            <p className="Register__Info--Small">Already have an account? <Link to={`/login`}>Log in.</Link>.</p>
           </div>
         </div>
       </div>

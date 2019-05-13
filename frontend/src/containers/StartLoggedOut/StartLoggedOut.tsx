@@ -53,22 +53,21 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
       <div className="StartLoggedOut">
         <HeaderLoggedOut />
         <main>
-          <section className="start__container--img">
+          <section className="StartLoggedOut__Container--Img">
             <div className="container">
               <div className="columns">
                 <div className="column is-two-fifths">
-                  <div className="start__card--main card">
-                    <div className="start__card--text card-content">
-                      <h2 className="start__card--title">
-                        Planera dina matvanor
+                  <div className="StartLoggedOut__Card--Main card">
+                    <div className="StartLoggedOut__Card--Text card-content">
+                      <h2 className="StartLoggedOut__Card--Title">
+                        Plan your eating habits
                       </h2>
-                      <div className="start__card--description">
-                        Ät det du vill när du vill, gör din vardag enkel med
-                        Receptplaneraren.
+                      <div className="StartLoggedOut__Card--Description">
+                        Eat what you want, whenever you want, make your everyday life simple with the recipe planner
                       </div>
                       <Link to={`/welcome`}>
-                        <button className="start__card--button button">
-                          Gå med nu
+                        <button className="StartLoggedOut__Card--Button button">
+                          Join in
                         </button>
                       </Link>
                     </div>
@@ -80,19 +79,13 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
             </div>
           </section>
 
-          <section className="start__container--bg">
+          <section className="StartLoggedOut__Container--Bg">
             <div className="container">
               <div className="columns">
                 <div className="column">
                   <Card
                     image="/images/hermes-rivera-258743-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
-                    Phasellus sit amet viverra risus, non faucibus ligula.
-                    Fusce vel aliquet neque. Fusce libero justo,
-                    hendrerit id mollis vitae, pellentesque in nisi.
-                    Proin posuere egestas orci eget lobortis. Nunc risus est,
-                    venenatis lobortis nisl at, sodales egestas mi.
-                    Curabitur efficitur vehicula rhoncus."
+                    content="Build your own meal schedule"
                     alt="Placeholder image"
                   />
                 </div>
@@ -100,13 +93,7 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
                 <div className="column">
                   <Card
                     image="/images/keenan-loo-27635-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
-                    Phasellus sit amet viverra risus, non faucibus ligula.
-                    Fusce vel aliquet neque. Fusce libero justo,
-                    hendrerit id mollis vitae, pellentesque in nisi.
-                    Proin posuere egestas orci eget lobortis. Nunc risus est,
-                    venenatis lobortis nisl at, sodales egestas mi.
-                    Curabitur efficitur vehicula rhoncus."
+                    content="A easy way to digitialize your recipes"
                     alt="Placeholder image"
                   />
                 </div>
@@ -114,13 +101,7 @@ class StartLoggedOut extends Component<Props, StartLoggedOutState> {
                 <div className="column">
                   <Card
                     image="/images/luisa-schetinger-1164948-unsplash.jpg"
-                    content="Nulla condimentum orci dignissim ante volutpat feugiat.
-                    Phasellus sit amet viverra risus, non faucibus ligula.
-                    Fusce vel aliquet neque. Fusce libero justo,
-                    hendrerit id mollis vitae, pellentesque in nisi.
-                    Proin posuere egestas orci eget lobortis. Nunc risus est,
-                    venenatis lobortis nisl at, sodales egestas mi.
-                    Curabitur efficitur vehicula rhoncus."
+                    content="Automatic shopping list"
                     alt="Placeholder image"
                   />
                 </div>

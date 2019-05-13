@@ -1,51 +1,48 @@
-.start__logged--out {
-    
+.StartLoggedOut {
 }
 
-.start__container--img {
-    background-image: url("/Images/brooke-lark-254998-unsplash.jpg");
-    background-size: cover;
-    min-height: 500px;
+.StartLoggedOut__Container--Img {
+  background-image: url("/Images/brooke-lark-254998-unsplash.jpg");
+  background-size: cover;
+  min-height: 500px;
 }
 
-.start__container--bg {
-    background-color: #ff6e00;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+.StartLoggedOut__Container--Bg {
+  background-color: #ff6e00;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
 }
 
-.start__card--main {
-    margin-top: 150px;
-    margin-bottom: 100px;
-    background-color: #ff667f;
+.StartLoggedOut__Card--Main {
+  margin-top: 150px;
+  margin-bottom: 100px;
+  background-color: #ff667f;
 }
 
-.start__card--text {
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.StartLoggedOut__Card--Text {
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.start__card--title {
-    color: seashell;
-    font-size: 20px;
+.StartLoggedOut__Card--Title {
+  color: seashell;
+  font-size: 20px;
 }
 
-.start__card--description {
-    color: seashell;
-    text-align: left;
-    padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+.StartLoggedOut__Card--Description {
+  color: seashell;
+  text-align: left;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-.start__card--button {
-    margin-top: 30px;
-    color: white;
-    background-color: #ffca44;
-    border-style: none;
+.StartLoggedOut__Card--Button {
+  margin-top: 30px;
+  color: white;
+  background-color: #ffca44;
+  border-style: none;
 }
-
-/*footer__text--blue*/

@@ -13,6 +13,7 @@ import {
 import Input from "../../components/Input/Input";
 import * as Yup from "yup";
 import { iApi } from "../../services/Api";
+import "./CreateResetPassword.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -72,14 +73,16 @@ class CreateResetPassword extends Component<Props> {
 
     return (
       <div className="login columns">
-        <div className="login__container--img column">
-          <div className="login__container--left">
-            <h2 className="login__brand">Receptplaneraren</h2>
+        <div className="CreateResetPassword__Container--Img column">
+          <div className="CreateResetPassword__Container--left">
+            <h2 className="CreateResetPassword__Brand CreateResetPassword__Brand">
+							<Link to="/" className="CreateResetPassword__BrandLink CreateResetPassword__BrandLink--WhiteBg">Receptplaneraren</Link>
+						</h2>
           </div>
         </div>
-        <div className="login__container--bg column">
-          <div className="login__container--right">
-            <h2 className="login__title">Create password reset</h2>
+        <div className="CreateResetPassword__Container--Bg column">
+          <div className="CreateResetPassword__Container--Right">
+            <h2 className="CreateResetPassword__title">Create password reset</h2>
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -126,8 +129,8 @@ class CreateResetPassword extends Component<Props> {
                 </Form>
               )}
             />
-            <p className="login__info--small"><Link to={`/login`}>Log in.</Link></p>
-            <p className="login__info--small"><Link to={`/register`}>Sign up.</Link></p>
+            <p className="CreateResetPassword__Info--Small"><Link to={`/login`}>Log in.</Link></p>
+            <p className="CreateResetPassword__Info--Small"><Link to={`/register`}>Sign up.</Link></p>
           </div>
         </div>
       </div>
