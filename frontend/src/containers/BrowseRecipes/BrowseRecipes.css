@@ -3,24 +3,42 @@
   margin-bottom: 50px;
 }
 
-.levelHeader {
+.BrowseRecipes__Container--Right {
+
+}
+
+.BrowseRecipes__Container--Left {
+
+}
+
+@media screen and (max-width: 768px) {
+  .BrowseRecipes__Container--Right {
+    padding: 2rem;
+  }
+  .BrowseRecipes__Container--Left {
+    padding: 2rem;
+  }
+}
+
+.RecipeListItem__LevelHeader {
   display: block;
 }
 
-.levelContent {
+.RecipeListItem__LevelContent {
   display: block;
   padding-right: 1rem;
   max-width: 500px;
 }
 
-.levelLink {
+.RecipeListItem__LevelLink {
   display: inline-block;
   padding-right: 2rem;
 }
 
-.levelHr {
+.RecipeListItem__LevelHr {
   color:grey;
 }
 
-.level {
+.RecipeListItem__Image {
+  margin-top: 0.5rem;
 }

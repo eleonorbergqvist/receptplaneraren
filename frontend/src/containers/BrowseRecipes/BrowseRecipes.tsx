@@ -56,25 +56,29 @@ const RecipeListItem = (props: RecipeListItemProps) => {
   }
 
   return (
-    <div className="level">
-      <div className="level-left">
-        <div className="RecipeListItem content">
-            <h2 className="levelHeader">{props.recipe.title}</h2>
-            <p className="levelContent">{props.recipe.instructions}</p>
-            <Link className="levelLink" to={`/recipe/detail/${props.recipe.slug}`}>Read more</Link>
-            <button className="levelLink" onClick={handleClick}>Add to week</button>
-        </div>
-      </div>
+    <React.Fragment>
+      <div className="columns">
+        <div className="column">
+            <div className="RecipeListItem content">
+                <h2 className="RecipeListItem__LevelHeader">{props.recipe.title}</h2>
+                <p className="RecipeListItem__LevelContent">{props.recipe.instructions}</p>
+                <Link className="RecipeListItem__LevelLink" to={`/recipe/detail/${props.recipe.slug}`}>Read more</Link>
+                <button className="RecipeListItem__LevelLink button is-dark is-outlined is-small" onClick={handleClick}>Add to week</button>
+            </div>
 
-      <div className="level-right">
-        <figure className="level-item image is-128x128">
-          <img
-            alt=""
-            src={getEnv('IMAGE_PREFIX')+props.recipe.image || getEnv('FALLBACK_IMAGE')} />
-        </figure>
+        </div>
+
+        <div className="column is-one-fifth">
+          <figure className="RecipeListItem__Image image is-128x128 is-square">
+            <img
+              alt="Preview"
+              src={getEnv('IMAGE_PREFIX')+props.recipe.image || getEnv('FALLBACK_IMAGE')} />
+          </figure>
+        </div>
+
       </div>
-      <hr className="levelHr"/>
-    </div>
+      <hr className="RecipeListItem__LevelHr"/>
+    </React.Fragment>
   )
 }
 
@@ -97,7 +101,6 @@ class BrowseRecipes extends Component<Props> {
   }
 
   async componentDidMount () {
-    // TODO: Get all recipes with tags (belonging to user?)
     this.setState({ isLoading: true })
 
     const { api } = this.props
@@ -171,9 +174,9 @@ class BrowseRecipes extends Component<Props> {
     return (
       <div className="BrowseRecipes">
         <HeaderLoggedIn />
-        <main className="container BrowseRecipes__Container">
+        <main className="BrowseRecipes__Container container">
           <div className="columns">
-            <div className="column is-two-fifths">
+            <div className="BrowseRecipes__Container--Left column is-one-third">
               <h5 className="title is-5">Browse recipes</h5>
               {this.state.isLoading && <div className="loader"></div>}
 
@@ -190,7 +193,7 @@ class BrowseRecipes extends Component<Props> {
                   <p>No tags was found</p>
               }
             </div>
-            <div className="column">
+            <div className="BrowseRecipes__Container--Right column">
               <div className="level">
                 <div className="level-left">
                 </div>
@@ -198,10 +201,10 @@ class BrowseRecipes extends Component<Props> {
                   <div className="level-item">
                     <div className="field has-addons">
                       <p className="control">
-                        <input className="input" type="text" placeholder="Find a post" />
+                        <input disabled className="input" type="text" placeholder="Find a post" />
                       </p>
                       <p className="control">
-                        <button className="button">
+                        <button disabled className="button">
                           Search
                         </button>
                       </p>
