@@ -59,10 +59,10 @@ class RecipeDetail extends Component<Props> {
       id: 0,
       recipe_tags: [],
       recipe_ingredients: [],
-     },
-     slug: '',
-     isDeleted: false,
-     modalIsOpen: false,
+    },
+    slug: '',
+    isDeleted: false,
+    modalIsOpen: false,
   }
 
   async componentDidMount () {
@@ -70,7 +70,10 @@ class RecipeDetail extends Component<Props> {
     const slug = url.substr(url.lastIndexOf('/') + 1);
     const { api } = this.props;
 
-    const response: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, slug);
+    const response: ApiResponse<any> = await api.recipeBySlug(
+      this.props.user.access_token,
+      slug,
+    );
     this.setState({ recipe: response.data.recipe, slug: slug })
 
     if (!response.ok) {
@@ -81,13 +84,16 @@ class RecipeDetail extends Component<Props> {
 
   handleDeleteRecipe = async (e: FormEvent) => {
     e.preventDefault();
+
     const { api } = this.props;
     const recipeId = this.state.recipe.id;
     const response: ApiResponse<any> = await api.recipeDelete(recipeId, this.props.user.access_token);
+
     if (!response.ok) {
       console.log("DELETE ERRORRR")
       return;
     }
+
     this.setState({ isDeleted: true });
   }
 

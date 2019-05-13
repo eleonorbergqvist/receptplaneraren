@@ -1,0 +1,7 @@
+.RecipeItem {
+  padding: 0 10px 0 10px;
+}
+
+.RecipeItem__EmptyDescription {
+  text-align: center;
+}

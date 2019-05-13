@@ -10,6 +10,8 @@ import Footer from "../../components/Footer/Footer";
 import Message from "../../components/Message/Message";
 import TabNav from "../../components/TabNav/TabNav";
 import RecipeItem, { RecipeItemEmpty } from "../../components/RecipeItem/RecipeItem";
+import ShoppingList from "../../components/ShoppingList/ShoppingList";
+import DayMealList from "../../components/DayMealList/DayMealList";
 import "./StartLoggedIn.css"
 
 const mapState = (state: iRootState) => ({
@@ -135,6 +137,10 @@ class StartLoggedIn extends Component<Props> {
     })
   }
 
+  handleEmptyRecipeItemClick = (mealType:number) => {
+    console.log("WOO");
+  }
+
   render() {
     const { weekmeals, mondayDate } = this.state;
 
@@ -221,7 +227,13 @@ class StartLoggedIn extends Component<Props> {
               <DayMealList
                 meals={daymeals}
                 renderMissingMeal={(mealType: number) => {
-                  return <RecipeItemEmpty key={mealType} mealType={mealType} />
+                  return (
+                    <RecipeItemEmpty
+                      key={mealType}
+                      mealType={mealType}
+                      onClick={this.handleEmptyRecipeItemClick}
+                    />
+                  )
                 }}
                 renderMealItem={(meal: any, index: number) => {
                   return <RecipeItem key={meal.id} data={meal} />
@@ -240,60 +252,3 @@ export default connect(
   mapState,
   null
 )(StartLoggedIn);
-
-interface DayMealListProps {
-  meals: any,
-  renderMealItem: any,
-  renderMissingMeal: any,
-}
-
-const DayMealList = (props: DayMealListProps) => {
-  const meals = props.meals || [];
-
-  const mealsByType = meals.reduce((acc:any, daymeal:any) => {
-    let mealsByType = acc[daymeal.meal_type] || [];
-    mealsByType = [...mealsByType, daymeal];
-    acc[daymeal.meal_type]= mealsByType;
-    return acc;
-  }, new Array(3).fill(
-    []
-  ))
-
-  return (
-    <div className="daymeallist">
-      {mealsByType.map((items:any, mealType:number) => {
-        if (!items.length) return props.renderMissingMeal(mealType)
-        return items.map((item:any) => props.renderMealItem(item))
-      })};
-    </div>
-  )
-}
-
-interface ShoppingListProps {
-  items: any,
-}
-
-const ShoppingList = (props: ShoppingListProps) => {
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          <th><abbr title="Amount">Amount</abbr></th>
-          <th>Measurement</th>
-          <th><abbr title="Ingredient">Ingredient</abbr></th>
-        </tr>
-      </thead>
-      <tfoot>
-        {props.items.map((ingredient: any, index: number) => {
-          return (
-            <tr key={index}>
-              <td>{ingredient.amount}</td>
-              <td>{ingredient.measurement}</td>
-              <td>{ingredient.ingredient.name}</td>
-            </tr>
-          )
-        })}
-      </tfoot>
-    </table>
-  )
-}

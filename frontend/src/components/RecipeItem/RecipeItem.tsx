@@ -1,5 +1,6 @@
 import React from "react";
 import { getEnv } from "../../config";
+import "./RecipeItem.css"
 
 export interface RecipeItemProps {
   data: {
@@ -90,21 +91,30 @@ const RecipeItem = (props: RecipeItemProps) => {
 
 interface RecipeItemEmptyProps {
   mealType: number,
+  onClick: Function,
 }
 const RecipeItemEmpty = (props: RecipeItemEmptyProps) => {
   const { mealType } = props;
   const typeLabel = dayMealToLabel(mealType);
 
+  const handleOnClick = (_e:any) => {
+    props.onClick(mealType);
+  }
+
   return (
-    <div className="recipeitem">
-      <div className="content tabs__mealContainer columns">
+    <div className="RecipeItem">
+      <div className="columns">
           <div className="column">
-            <h3>{typeLabel}</h3>
+            <h3 className="title is-4">{typeLabel}</h3>
+          </div>
+          <div className="RecipeItem__EmptyDescription column">
+            Currently empty
           </div>
           <div className="column">
-          </div>
-          <div className="column">
-            <button disabled className="button">Browse new</button>
+            <button
+              onClick={handleOnClick}
+              className="button is-pulled-right"
+            >Add meal</button>
           </div>
         </div>
     </div>
