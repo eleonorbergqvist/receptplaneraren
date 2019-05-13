@@ -83,7 +83,7 @@ export const HeaderLoggedIn = (props:any) => {
     <PrimaryMenuDropdown
       key={1}
       className="header__dropdown"
-      buttonClassName="header__dropdown-button header__button--yellow"
+      buttonClassName="header__dropdown--button header__button--yellow"
       label="Create recipe"
       items={[
         {label: "Create manually", to: "/recipe/create"},

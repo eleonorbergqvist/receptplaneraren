@@ -1,6 +1,7 @@
 import React, { FormEvent } from "react";
 import IngredientsInput from '../IngredientsInput/IngredientsInput';
 import { iIngredient } from '../RecipeEditForm/RecipeEditForm';
+import "./InputList.css";
 // TODO: Add render prop
 
 interface InputListProps {
@@ -60,11 +61,10 @@ const InputList = (props: InputListProps) => {
 
       <div className="field">
         <p className="control">
-          <a className="button" href="#" onClick={handleAddItem}>
+          <a className="InputList__Button--Add button is-dark" href="#" onClick={handleAddItem}>
             <span className="icon">
               <i className="fas fa-plus"></i>
             </span>
-            <span>Add row</span>
           </a>
         </p>
       </div>

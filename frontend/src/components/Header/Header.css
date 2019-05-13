@@ -7,8 +7,8 @@
     font-weight: 400;
 }
 
-.header__dropdown-button {
-  margin-right: 8px;
+.header__dropdown--button {
+  margin-right: 0.5rem;
 }
 
 .header__button--pink {
@@ -34,9 +34,22 @@
 
     .header__button--yellow {
         display: block;
+        width: 100%;
+    }
+
+    .dropdown-menu {
+      position: relative;
     }
 
     .header__button--pink {
         display: block;
     }
+
+    .header__dropdown {
+      width: 100%;
+      display: block;
+    }
+
+
+
 }

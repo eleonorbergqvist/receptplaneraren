@@ -1,5 +1,4 @@
 import React from "react";
-// import * as uz from 'unitz-ts';
 import "./IngredientsInput.css";
 
 export interface IngredientsInputProps {
@@ -11,10 +10,8 @@ export interface IngredientsInputProps {
   onDelete: Function,
 }
 
-// uz.Classes.addDefaults();
-
 // TODO: volume = 0, mass = 1, piece = 2
-const MEASUREMENT_LIST: {label: String, type: Number}[] = [
+const MEASUREMENT_LIST: {label: string, type: number}[] = [
   {label: 'ml', type: 0},
   {label: 'l', type: 0},
   {label: 'dl', type: 0},
@@ -89,7 +86,9 @@ const IngredientsInput = (props: IngredientsInputProps) => {
 
       <div className="control">
         <button onClick={handleDelete} className="button is-danger">
-          Delete
+          <span className="icon">
+            <i className="fas fa-trash-alt"></i>
+          </span>
         </button>
       </div>
 
