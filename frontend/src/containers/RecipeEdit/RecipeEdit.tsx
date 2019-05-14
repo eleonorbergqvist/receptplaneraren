@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router";
+import { Redirect, RouteComponentProps } from "react-router";
 import { iRootState, Dispatch } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
@@ -22,7 +22,7 @@ const mapDispatch = (dispatch: Dispatch) => ({
 
 type connectedProps = ReturnType<typeof mapState> &
   ReturnType<typeof mapDispatch>;
-type Props = connectedProps & { api: iApi }
+type Props = connectedProps & { api: iApi } & RouteComponentProps
 
 interface RecipeEditState {
   tags: any[],
@@ -30,12 +30,16 @@ interface RecipeEditState {
   recipe: iRecipe,
   slug: string,
   isLoading: boolean,
+  isLoaded: boolean,
+  error: string,
 }
 
 interface SelectedTag {
   id: number,
 }
 interface iRecipe {
+  slug: string;
+  id: number;
   title: string;
   image: string;
   instructions: string;
@@ -49,120 +53,111 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
     tags: [],
     selectedTags: [],
     recipe: {
+      slug: '',
+      id: 0,
       title: '',
       image: '',
       instructions: '',
       ingredients: [],
     },
     isLoading: false,
+    isLoaded: false,
+    error: '',
   }
 
   async componentDidMount () {
-    console.log(isEmpty(this.state.recipe));
-    console.log(this.state.recipe)
     const { api } = this.props
 
     this.setState({ isLoading: true });
 
-    const response: ApiResponse<any> = await api.recipeTags(this.props.user.access_token);
-    this.setState({ tags: response.data })
+    const promises = [
+      api.recipeTags(this.props.user.access_token),
+			api.recipeBySlug(this.props.user.access_token, this.state.slug),
+    ];
 
-    if (!response.ok) {
-      console.log("TAG ERRORRR")
-      return;
-    }
+    const results = await Promise.all(promises);
+    const tagsResponse: ApiResponse<any> = results[0];
+    const recipeResponse: ApiResponse<any> = results[1];
 
-    // Hämta receptdata
-    const recipeResponse: ApiResponse<any> = await api.recipeBySlug(this.props.user.access_token, this.state.slug);
-    if (!recipeResponse.ok) {
-      console.log("RECIPE ERRORRR")
+    if (!tagsResponse.ok || !recipeResponse.ok) {
+      this.setState({ isLoading: false, error: "Error loading recipe"});
       return;
     }
 
     const selectedTagsObjects = recipeResponse.data.recipe.recipe_tags;
+    const selectedTags = selectedTagsObjects.map((obj: SelectedTag) => obj.id)
+    const ingredients = recipeResponse.data.recipe.recipe_ingredients
 
-    const selectedTags = selectedTagsObjects.map((obj: SelectedTag) => {
-      return obj.id;
-    });
-
-    this.setState({ selectedTags: selectedTags});
-
-    let ingredients: iIngredient[] = recipeResponse.data.recipe.recipe_ingredients.map((ingredients: any) => {
-      return  {
-        amount: ingredients.amount,
-        measurement: ingredients.measurement,
-        ingredient: ingredients.ingredient.name }
-    });
-
+    const formattedIngredients: iIngredient[] = ingredients.map((ingredient: any) => ({
+      amount: ingredient.amount,
+      measurement: ingredient.measurement,
+      ingredient: ingredient.ingredient.name,
+    }));
 
     const formattedRecipe: iRecipe = {
+      id: recipeResponse.data.recipe.id,
+      slug: recipeResponse.data.recipe.slug,
       title: recipeResponse.data.recipe.title,
       image: recipeResponse.data.recipe.image,
       instructions: recipeResponse.data.recipe.instructions,
-      ingredients: ingredients,
+      ingredients: formattedIngredients,
     };
-    this.setState({ recipe: formattedRecipe }, () => {
-      console.log(isEmpty(this.state.recipe));
-    });
 
-    console.log(this.state.recipe);
+    console.log("WOOO");
+    console.log(formattedRecipe);
 
-
-    this.setState({ isLoading: false });
+    this.setState({
+      tags: tagsResponse.data,
+      selectedTags: selectedTags,
+      recipe: formattedRecipe,
+      isLoading: false,
+      isLoaded: true,
+    })
   }
 
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
-    console.log('RecipeEdit.handleSubmit');
-    console.log(values);
-
     const { api } = this.props
 
     actions.setSubmitting(true);
-    console.log(this.state.selectedTags);
-    const response: ApiResponse<any> = await api.recipeUpdate({
-      instructions: values.instructions,
-      title: values.title,
-      tags: this.state.selectedTags,
-      slug: this.state.slug,
-    }, this.props.user.access_token);
 
-    actions.setSubmitting(false);
+    const recipeId = this.state.recipe.id;
+    const promises = [
+      api.recipeUpdate(
+        {
+          instructions: values.instructions,
+          title: values.title,
+          tags: this.state.selectedTags,
+          slug: this.state.slug,
+        }, this.props.user.access_token
+      ),
+      api.recipeIngredientUpdate(
+        {
+          ingredients: values.ingredients,
+          recipe_id: recipeId,
+        }, this.props.user.access_token
+      ),
+      api.recipeIngredientUpdate(
+        {
+          ingredients: values.ingredients,
+          recipe_id: recipeId,
+        }, this.props.user.access_token
+      )
+    ]
 
-    if (!response.ok) {
+    const results = await Promise.all(promises);
+    const response: ApiResponse<any> = results[0]
+    const imageResponse: ApiResponse<any> = results[2];
+
+    if (!response.ok || !imageResponse.ok) {
+      actions.setSubmitting(false);
       actions.setErrors({
-        general: "Fel, kunde inte updatera recept"
+        general: "Error, cannot update recipe"
       });
       return;
     }
 
-    //
-
-    actions.setSubmitting(true);
-
-    const recipe_id = response.data.recipe.id;
-
-    await api.recipeIngredientUpdate({
-      ingredients: values.ingredients,
-      recipe_id: recipe_id,
-    }, this.props.user.access_token);
-
-    const imageResponse: ApiResponse<any> = await api.recipeImage({
-
-      image: values.image,
-      recipe_id: recipe_id,
-    }, this.props.user.access_token);
-
-    actions.setSubmitting(false);
-
-    if (!imageResponse.ok) {
-      actions.setErrors({
-        general: "Fel, kunde inte spara bild"
-      });
-      return;
-    }
+    this.props.history.push(`/recipe/detail/${this.state.recipe.slug}`)
   };
-
-
 
   handleToggleTag = (tag: iRecipeTag) => {
     let { selectedTags } = this.state
@@ -190,15 +185,22 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
             <div className="RecipeEdit__Container--Left column is-two-fifths">
               <h5 className="title is-5">Edit Recipe</h5>
               {this.state.isLoading && <div className="loader"></div>}
-              <RecipeTags
-                tags={this.state.tags}
-                selectedTags={this.state.selectedTags}
-                onToggleTag={this.handleToggleTag}
-              />
+              {this.state.error && <p>{this.state.error}</p>}
+
+              {!this.state.isLoading &&
+                <RecipeTags
+                  tags={this.state.tags}
+                  selectedTags={this.state.selectedTags}
+                  onToggleTag={this.handleToggleTag}
+                />
+              }
             </div>
             <div className="RecipeEdit__Container--Right column">
-              {this.state.recipe && !isEmpty(this.state.recipe) &&
-                <RecipeEditForm recipe={this.state.recipe} onSubmit={this.handleSubmit} />
+              {this.state.recipe && this.state.isLoaded &&
+                <RecipeEditForm
+                  recipe={this.state.recipe}
+                  onSubmit={this.handleSubmit}
+                />
               }
             </div>
           </div>
@@ -208,8 +210,6 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
     );
   }
 }
-
-const isEmpty  = (obj:Object) => Object.values(obj).every(x => (x === null || x === '' || x.length === 0));
 
 export default connect(
   mapState,
