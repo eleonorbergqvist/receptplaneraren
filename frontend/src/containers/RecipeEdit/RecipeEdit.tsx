@@ -136,11 +136,12 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
           recipe_id: recipeId,
         }, this.props.user.access_token
       ),
-      api.recipeIngredientUpdate(
+      api.recipeImage(
         {
-          ingredients: values.ingredients,
+          image: values.image,
           recipe_id: recipeId,
-        }, this.props.user.access_token
+        },
+        this.props.user.access_token
       )
     ]
 
