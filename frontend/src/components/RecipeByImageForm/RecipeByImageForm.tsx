@@ -94,7 +94,7 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
 
   getImageDataFromCrop = (crop: any) => {
     const croppedImageData = getCroppedImg(
-      this.imageRef, crop,
+      this.imageRef, crop, 0.5
     );
     return croppedImageData
   }
@@ -160,7 +160,7 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
                   </span>
                 </span>
                 <span className="file-name">
-                  Screen Shot 2017-07-29 at 15.54.25.png
+                  A image in jpg format
                 </span>
               </label>
             </div>

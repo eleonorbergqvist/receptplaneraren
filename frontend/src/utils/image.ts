@@ -1,4 +1,4 @@
-const getCroppedImg = (image: any, crop: any) => {
+const getCroppedImg = (image: any, crop: any, quality: number) => {
   const scaleX = image.naturalWidth / image.width;
   const scaleY = image.naturalHeight / image.height;
 
@@ -19,7 +19,7 @@ const getCroppedImg = (image: any, crop: any) => {
     crop.height * scaleY,
   );
 
-  const base64Image = canvas.toDataURL('image/jpeg', 1.0);
+  const base64Image = canvas.toDataURL('image/jpeg', quality);
   return base64Image;
 }
 
