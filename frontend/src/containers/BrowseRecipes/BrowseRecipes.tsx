@@ -190,13 +190,15 @@ class BrowseRecipes extends Component<Props> {
               <h5 className="title is-5">Browse recipes</h5>
               {this.state.isLoading && <div className="loader"></div>}
 
-              <h6 className="title is-6">Tags for filtering</h6>
               {!this.state.isLoading && this.state.tags && this.state.tags.length > 0 &&
-                <RecipeTags
-                  tags={this.state.tags}
-                  selectedTags={this.state.selectedTags}
-                  onToggleTag={this.handleToggleTag}
-                />
+                <>
+                  <h6 className="title is-6">Tags for filtering</h6>
+                  <RecipeTags
+                    tags={this.state.tags}
+                    selectedTags={this.state.selectedTags}
+                    onToggleTag={this.handleToggleTag}
+                  />
+                </>
               }
 
               {!this.state.isLoading && this.state.tags && this.state.tags.length === 0 &&
