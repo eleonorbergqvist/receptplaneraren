@@ -6,6 +6,10 @@
   font-weight: normal !important;
 }
 
+.RecipeItem__Card {
+  box-shadow: none;
+}
+
 .RecipeItem__FooterTags {
   font-size: 0.5rem;
 }

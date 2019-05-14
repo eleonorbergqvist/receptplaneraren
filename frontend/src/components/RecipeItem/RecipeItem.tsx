@@ -70,7 +70,7 @@ const RecipeItem = (props: RecipeItemProps) => {
           </p>
         </div>
         <div className="column">
-          <div className="card">
+          <div className="RecipeItem__Card card">
             <div className="card-image">
               <img
                 src={getEnv('IMAGE_PREFIX')+recipe.image || getEnv('FALLBACK_IMAGE')}

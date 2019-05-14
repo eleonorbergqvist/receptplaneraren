@@ -55,4 +55,5 @@
 }
 .RecipeListItem__Image {
   margin-top: 0.5rem;
+  max-width: 128px;
 }

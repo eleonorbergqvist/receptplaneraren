@@ -73,7 +73,7 @@ const RecipeListItem = (props: RecipeListItemProps) => {
         </div>
 
         <div className="column is-one-fifth">
-          <figure className="RecipeListItem__Image image is-128x128 is-square">
+          <figure className="RecipeListItem__Image">
             <img
               alt="Preview"
               src={getEnv('IMAGE_PREFIX')+props.recipe.image || getEnv('FALLBACK_IMAGE')} />
