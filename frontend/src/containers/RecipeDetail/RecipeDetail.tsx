@@ -118,25 +118,25 @@ class RecipeDetail extends Component<Props> {
       <div className="RecipeDetail">
         <HeaderLoggedIn />
         <main className="container content">
-          <div className="colums RecipeDetail__Container--Top">
-          <button onClick={this.handleDeleteRecipe} className="RecipeDetail__Button--Default button is-light">Delete</button>
+          <div className="colums RecipeDetail__ContainerTop">
+          <button onClick={this.handleDeleteRecipe} className="RecipeDetail__ButtonDefault button is-dark is-outlined">Delete</button>
           <Link to={`/recipe/edit/${this.state.slug}`} >
-            <button className="button is-light">Edit</button>
+            <button className="button is-dark is-outlined">Edit</button>
           </Link>
           </div>
           <div className="columns">
-            <div className="column is-one-third RecipeDetail__Container--Side">
+            <div className="column is-one-third RecipeDetail__ContainerSide">
               <h1>{this.state.recipe.title}</h1>
 
               {this.state.recipe.recipe_tags.map((recipeTag: iRecipeTag, index: any) => (
-                  <button className="RecipeDetail__Button--Default button is-light" key={index}>
+                  <button className="RecipeDetail__ButtonDefault button is-light" key={index}>
                     {recipeTag.name}
                   </button>
                 ))}
             </div>
-            <div className="column RecipeDetail__Container--Main">
-              <div className="columns">
-                <div className="column RecipeDetail__Container--Ingredients">
+            <div className="column RecipeDetail__ContainerMain">
+              <div className="RecipeDetail_ContainerMainFlex columns">
+                <div className="column RecipeDetail__ContainerIngredients">
                   <h2>Ingredients</h2>
                   <ul>
                     {this.state.recipe.recipe_ingredients.map((recipeIngredient: iRecipeIngredient, index: any) => (
@@ -146,9 +146,9 @@ class RecipeDetail extends Component<Props> {
                     ))}
                   </ul>
                 </div>
-                <div className="column RecipeDetail__Container--Image">
+                <div className="RecipeDetail__ContainerImage column">
                   <img
-                    className="image is-1by1 RecipeDetail__Image"
+                    className="RecipeDetail__Image image is-1by1"
                     src={getEnv('IMAGE_PREFIX')+this.state.recipe.image || getEnv('FALLBACK_IMAGE')}
                     alt=""
                   />
@@ -158,8 +158,8 @@ class RecipeDetail extends Component<Props> {
               <p>{this.state.recipe.instructions}</p>
             </div>
           </div>
-          <div className="colums RecipeDetail__Container--Bottom">
-            <button onClick={this.handleOpenModal} className="button is-dark">Add to week</button>
+          <div className="RecipeDetail__ContainerBottom colums">
+            <button onClick={this.handleOpenModal} className="RecipeDetail__ButtonAdd button">Add to week</button>
           </div>
         </main>
         <Footer copyrightText="Copyright 2019. Receptplaneraren" />

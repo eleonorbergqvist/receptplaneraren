@@ -2,27 +2,30 @@
 
 }
 
-.RecipeDetail__Container--Top {
+.RecipeDetail__ContainerTop {
   margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
-.RecipeDetail__Container--Bottom {
+.RecipeDetail__ContainerBottom {
 }
 
-.RecipeDetail__Container--Side {
+.RecipeDetail__ContainerSide {
 }
 
-.RecipeDetail__Container--Main {
+.RecipeDetail__ContainerMain {
 }
 
-.RecipeDetail__Container--Ingredients {
+.RecipeDetail_ContainerMainFlex {
 
 }
 
-.RecipeDetail__Container--Image {
+.RecipeDetail__ContainerIngredients {
+
+}
+
+.RecipeDetail__ContainerImage {
   align-self: flex-start !important;
-
   align-items: flex-start !important;
 }
 
@@ -31,27 +34,39 @@
   padding-top: 0 !important;
 }
 
-.RecipeDetail__Button--Default {
+.RecipeDetail__ButtonDefault {
   margin-right: 0.5rem;
 }
 
+.RecipeDetail__ButtonAdd {
+  margin-top: 0.5rem;
+  color: white;
+  background-color: #ffca44;
+  border-style: none;
+}
+
 @media screen and (max-width: 768px) {
-  .RecipeDetail__Container--Top {
+  .RecipeDetail__ContainerTop {
     padding-right: 2rem;
-    padding-left: 2rem;
+    padding-left: 1.3rem;
   }
-  .RecipeDetail__Container--Bottom {
+  .RecipeDetail__ContainerBottom {
+    padding-right: 2rem;
+    padding-left: 1.3rem;
+  }
+
+  .RecipeDetail__ContainerSide {
     padding-right: 2rem;
     padding-left: 2rem;
   }
 
-  .RecipeDetail__Container--Side {
+  .RecipeDetail__ContainerMain {
     padding-right: 2rem;
     padding-left: 2rem;
   }
 
-  .RecipeDetail__Container--Main {
-    padding-right: 2rem;
-    padding-left: 2rem;
+  .RecipeDetail_ContainerMainFlex {
+    display: flex;
+    flex-direction: column-reverse;
   }
 }
