@@ -8,12 +8,15 @@
 }
 
 .RecipeDetail__ContainerBottom {
+
 }
 
 .RecipeDetail__ContainerSide {
+
 }
 
 .RecipeDetail__ContainerMain {
+
 }
 
 .RecipeDetail_ContainerMainFlex {
@@ -24,14 +27,8 @@
 
 }
 
-.RecipeDetail__ContainerImage {
-  align-self: flex-start !important;
-  align-items: flex-start !important;
-}
-
 .RecipeDetail__Image {
-  align-self: flex-start !important;
-  padding-top: 0 !important;
+  padding-top: 0;
 }
 
 .RecipeDetail__ButtonDefault {

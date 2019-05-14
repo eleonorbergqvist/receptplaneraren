@@ -146,7 +146,7 @@ class RecipeDetail extends Component<Props> {
                     ))}
                   </ul>
                 </div>
-                <div className="RecipeDetail__ContainerImage column">
+                <div className="column">
                   <img
                     className="RecipeDetail__Image image is-1by1"
                     src={getEnv('IMAGE_PREFIX')+this.state.recipe.image || getEnv('FALLBACK_IMAGE')}
