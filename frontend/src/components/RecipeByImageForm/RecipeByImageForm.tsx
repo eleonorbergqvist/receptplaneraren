@@ -94,7 +94,7 @@ class RecipeByImageForm extends Component<Props, RecipeByImageFormState> {
 
   getImageDataFromCrop = (crop: any) => {
     const croppedImageData = getCroppedImg(
-      this.imageRef, crop, 0.5
+      this.imageRef, crop, 0.3
     );
     return croppedImageData
   }

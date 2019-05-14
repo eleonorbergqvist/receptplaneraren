@@ -148,7 +148,7 @@ class RecipeDetail extends Component<Props> {
                 </div>
                 <div className="column">
                   <img
-                    className="RecipeDetail__Image image"
+                    className="RecipeDetail__Image"
                     src={getEnv('IMAGE_PREFIX')+this.state.recipe.image || getEnv('FALLBACK_IMAGE')}
                     alt=""
                   />
