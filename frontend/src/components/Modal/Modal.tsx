@@ -18,12 +18,12 @@ class Modal extends React.Component<ModalProps> {
         <div className="modal-content">
           <section className="Modal__CardBody modal-card-body">
             <h1>{this.props.text}</h1>
-            <a
+            <button
               className="Modal__Button button"
               onClick={this.handleClick}
             >
               Ok
-            </a>
+            </button>
           </section>
         </div>
       </div>
