@@ -12,6 +12,7 @@ import { iRootState } from "../../store";
 import { connect } from "react-redux";
 import { ApiResponse } from "apisauce";
 import Api from "../../services/Api";
+import "./AddDayMealModal.css";
 
 const mapState = (state: iRootState) => ({
   user: state.user,
@@ -174,7 +175,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
       <div className={`is-active modal`}>
         <div className="modal-background" />
         <div className="modal-content">
-          <section className="modal-card-body">
+          <section className="AddDayMealModal__CardBody modal-card-body">
 
 
             <Formik
@@ -195,7 +196,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
               }}
               render={(formikBag: FormikProps<iFormValues>) => (
                 <Form>
-                  <h1>{this.props.text}</h1>
+                  <h1 className="AddDayMealModal__CardTitle">{this.props.text}</h1>
+                  <label className="help">Week</label>
                   <Select
                     name="week"
                     options={this.state.weekList.map(x => String(x))}
@@ -209,6 +211,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   {formikBag.errors.week
                     && <p className="help is-danger">{formikBag.errors.week}</p>
                   }
+
+                  <label className="help">Day</label>
                   <Select
                     name="day"
                     options={this.state.dayList}
@@ -222,6 +226,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   {formikBag.errors.day
                     && <p className="help is-danger">{formikBag.errors.day}</p>
                   }
+                  <label className="help">Meal</label>
                   <Select
                     name="meal"
                     options={this.state.mealList}
@@ -237,13 +242,13 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   }
 
                   <button
-                    className="button is-info"
+                    className="AddDayMealModal__ButtonClose button is-dark is-outlined"
                     onClick={this.handleClick}
                   >
                     Close
                   </button>
                   <button
-                    className="button is-success"
+                    className="AddDayMealModal__ButtonAdd button"
                     type="submit"
                     // disabled={!formikBag.isValid}
                   >

@@ -53,6 +53,7 @@
     "not op_mini all"
   ],
   "proxy": "https://receptplaneraren-staging.herokuapp.com",
+  "_proxy": "http://localhost:8000",
   "devDependencies": {
     "@storybook/react": "^5.0.11",
     "@storybook/addon-actions": "^5.0.11",

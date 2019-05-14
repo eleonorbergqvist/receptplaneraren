@@ -1,0 +1,10 @@
+.Modal__CardBody {
+  padding: 40px;
+}
+
+.Modal__Button {
+  margin-top: 0.5rem;
+  color: white;
+  background-color: #ffca44;
+  border-style: none;
+}

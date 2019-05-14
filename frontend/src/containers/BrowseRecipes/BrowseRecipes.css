@@ -43,7 +43,7 @@
 
 .RecipeListItem__LevelLink {
   display: inline-block;
-  padding-right: 2rem;
+  margin-right: 2rem;
 }
 
 .RecipeListItem__LevelHr {

@@ -1,0 +1,19 @@
+.AddDayMealModal__CardBody {
+  padding: 40px;
+}
+
+.AddDayMealModal__CardTitle {
+  margin-bottom: 0.5rem;
+}
+
+.AddDayMealModal__ButtonClose {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.AddDayMealModal__ButtonAdd {
+  margin-top: 0.5rem;
+  color: white;
+  background-color: #ffca44;
+  border-style: none;
+}

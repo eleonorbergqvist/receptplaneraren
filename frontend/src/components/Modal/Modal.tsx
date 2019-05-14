@@ -1,4 +1,5 @@
 import React from "react";
+import "./Modal.css";
 
 export interface ModalProps {
   text: string;
@@ -15,14 +16,14 @@ class Modal extends React.Component<ModalProps> {
       <div className={`is-active modal`}>
         <div className="modal-background" />
         <div className="modal-content">
-          <section className="modal-card-body">
+          <section className="Modal__CardBody modal-card-body">
             <h1>{this.props.text}</h1>
-            <button
-              className="button is-success is-large"
+            <a
+              className="Modal__Button button"
               onClick={this.handleClick}
             >
               Ok
-            </button>
+            </a>
           </section>
         </div>
       </div>
