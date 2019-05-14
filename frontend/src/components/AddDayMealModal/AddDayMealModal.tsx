@@ -96,7 +96,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
   handleSubmit = async (values: any, actions: FormikActions<any>) => {
     console.log('AddDayMealModal.handleSubmit');
     console.log(values);
-    const api = Api.create();
 
     actions.setSubmitting(true);
 
@@ -125,10 +124,8 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
         break;
     }
     const recipeId = this.props.recipe.id;
-    console.log(date);
-    console.log(mealType);
-    console.log(recipeId);
 
+    const api = Api.create();
     const response: ApiResponse<any> = await api.daymealUpdate({
       date: date,
       meal_type: mealType,
@@ -147,8 +144,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
   }
 
   handleClick = (event: any) => {
-    const { onClose } = this.props
-    onClose();
+    this.props.onClose();
   };
 
   componentDidMount () {
@@ -164,7 +160,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
   render() {
     const onSubmit = this.handleSubmit;
 
-    let initialValues = {
+    const initialValues = {
       week: this.state.currentWeek,
       day: this.state.currentDay,
       meal: this.state.currentMeal,
@@ -176,8 +172,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
         <div className="modal-background" />
         <div className="modal-content">
           <section className="AddDayMealModal__CardBody modal-card-body">
-
-
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -196,7 +190,7 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
               }}
               render={(formikBag: FormikProps<iFormValues>) => (
                 <Form>
-                  <h1 className="AddDayMealModal__CardTitle">{this.props.text}</h1>
+                  <h1 className="AddDayMealModal__CardTitle title is-5">{this.props.text}</h1>
                   <label className="help">Week</label>
                   <Select
                     name="week"
@@ -204,9 +198,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     value={formikBag.values.week}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
-                    // error={
-                    //   formikBag.touched.week ? formikBag.errors.week || "" : ""
-                    // }
                   />
                   {formikBag.errors.week
                     && <p className="help is-danger">{formikBag.errors.week}</p>
@@ -219,9 +210,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     value={formikBag.values.day}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
-                    // error={
-                    //   formikBag.touched.day ? formikBag.errors.day || "" : ""
-                    // }
                   />
                   {formikBag.errors.day
                     && <p className="help is-danger">{formikBag.errors.day}</p>
@@ -233,9 +221,6 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                     value={formikBag.values.meal}
                     onChange={formikBag.handleChange}
                     onBlur={formikBag.handleBlur}
-                    // error={
-                    //   formikBag.touched.meal ? formikBag.errors.meal || "" : ""
-                    // }
                   />
                   {formikBag.errors.meal
                     && <p className="help is-danger">{formikBag.errors.meal}</p>
@@ -244,13 +229,11 @@ class AddDayMealModal extends React.Component<Props, AddDayMealModalState> {
                   <button
                     className="AddDayMealModal__ButtonClose button is-dark is-outlined"
                     onClick={this.handleClick}
-                  >
-                    Close
+                  >Close
                   </button>
                   <button
-                    className="AddDayMealModal__ButtonAdd button"
+                    className={`AddDayMealModal__ButtonAdd button ${formikBag.isSubmitting ? "is-loading": ""}`}
                     type="submit"
-                    // disabled={!formikBag.isValid}
                   >
                     Add
                   </button>
