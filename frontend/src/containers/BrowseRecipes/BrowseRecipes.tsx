@@ -194,6 +194,7 @@ class BrowseRecipes extends Component<Props> {
                 <>
                   <h6 className="title is-6">Tags for filtering</h6>
                   <RecipeTags
+                    className=""
                     tags={this.state.tags}
                     selectedTags={this.state.selectedTags}
                     onToggleTag={this.handleToggleTag}

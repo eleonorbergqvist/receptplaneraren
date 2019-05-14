@@ -128,6 +128,7 @@ class CreateRecipe extends Component<Props, CreateRecipeState> {
             <div className="CreateRecipe__Container--Left column is-two-fifths">
               <h5 className="title is-5">Create Recipe</h5>
               <RecipeTags
+                className=""
                 tags={this.state.tags}
                 selectedTags={this.state.selectedTags}
                 onToggleTag={this.handleToggleTag}

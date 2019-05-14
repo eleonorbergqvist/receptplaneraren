@@ -133,7 +133,15 @@ class StartLoggedIn extends Component<Props> {
     })
   }
 
+  handleRecipeItemClick = (mealType: number) => {
+    this.openChooseMealForDate(mealType);
+  }
+
   handleEmptyRecipeItemClick = (mealType:number) => {
+    this.openChooseMealForDate(mealType);
+  }
+
+  openChooseMealForDate = (mealType: number) => {
     const { history } = this.props
     const { mondayDate } = this.state;
     const dayDate = mondayDate.clone().add(
@@ -237,7 +245,13 @@ class StartLoggedIn extends Component<Props> {
                   )
                 }}
                 renderMealItem={(meal: any, index: number) => {
-                  return <RecipeItem key={meal.id} data={meal} />
+                  return (
+                    <RecipeItem
+                      key={meal.id}
+                      onClick={this.handleRecipeItemClick}
+                      data={meal}
+                    />
+                  )
                 }}
               />
             </div>

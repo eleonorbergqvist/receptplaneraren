@@ -2,6 +2,7 @@ import React, { FormEvent } from "react";
 import "./RecipeTags.css";
 
 export interface RecipeTagProps {
+  className: string,
   tags: iRecipeTag[];
   selectedTags: Number[];
   onToggleTag: any;
@@ -21,7 +22,7 @@ export const RecipeTags = (props: RecipeTagProps) => {
 
   const tags = props.tags || [];
   return (
-    <div className="RecipeTags">
+    <div className={`RecipeTags ${props.className}`}>
       {tags.map(tag => {
         const isSelected = props.selectedTags.includes(tag.id);
 

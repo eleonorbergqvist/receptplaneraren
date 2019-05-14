@@ -2,6 +2,18 @@
   padding: 0 10px 0 10px;
 }
 
+.RecipeItem__RecipeTitle {
+  font-weight: normal !important;
+}
+
+.RecipeItem__FooterTags {
+  font-size: 0.5rem;
+}
+
 .RecipeItem__EmptyDescription {
   text-align: center;
+}
+
+.RecipeItem__Separator {
+  color: grey;
 }

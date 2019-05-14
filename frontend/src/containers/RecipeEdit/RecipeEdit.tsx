@@ -189,6 +189,7 @@ class RecipeEdit extends Component<Props, RecipeEditState> {
 
               {!this.state.isLoading &&
                 <RecipeTags
+                  className=""
                   tags={this.state.tags}
                   selectedTags={this.state.selectedTags}
                   onToggleTag={this.handleToggleTag}
